@@ -45,8 +45,6 @@
 
 // REGISTERS
 //
-#define REG_SP__1					63
-//
 #define REG_TABLE_INDEX				64	// Commutation table index
 #define REG_TABLE_ACTION			65	// Boolean variable for action
 #define REG_RAW_BOARD				66	// Raw value for board number
@@ -65,8 +63,6 @@
 #define REG_PWD_3					93	// Unlock password location 3
 #define REG_PWD_4					94	// Unlock password location 4
 //
-#define REG_SP__2					95
-//
 // ----------------------------------------
 //
 #define REG_DEV_STATE				96	// Device state
@@ -84,7 +80,13 @@
 #define REG_CAN_DIAG_TEC			123	// CAN TEC
 #define REG_CAN_DIAG_REC			124	// CAN REC
 //
-#define REG_SP__3					127
+// ----------------------------------------
+//
+#define REG_FWINFO_SLAVE_NID		256	// Device CAN slave node ID
+#define REG_FWINFO_MASTER_NID		257	// Device CAN master node ID (if presented)
+// 258 - 259
+#define REG_FWINFO_STR_LEN			260	// Length of the information string record
+#define REG_FWINFO_STR_BEGIN		261	// Begining of the information string record
 
 // MODULE TYPES
 //
