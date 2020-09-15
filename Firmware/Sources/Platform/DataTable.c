@@ -88,5 +88,8 @@ void DT_SaveFirmwareInfo(Int16U SlaveNID, Int16U MasterNID)
 		DataTable[REG_FWINFO_STR_LEN] = FWINF_Compose((pInt16U)(&DataTable[REG_FWINFO_STR_BEGIN]),
 				(DATA_TABLE_SIZE - REG_FWINFO_STR_BEGIN) * 2);
 	}
+
+	if(DATA_TABLE_WR_START <= 64)
+		DataTable[REG_FWINFO_SHORT_DATATABLE] = 1;
 }
 // ----------------------------------------
