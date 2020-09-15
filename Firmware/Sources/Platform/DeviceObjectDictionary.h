@@ -27,6 +27,8 @@
 #define ACT_COMM2_BV_R				114 // Connect reverse BV tester
 #define ACT_COMM2_NO_PE				115	// Connect other blocks (disconnect protective earth from lines)
 //
+#define ACT_COMM2_VGNT				117	// Connect GTU and BVT for Vgnt/Ignt measurement
+//
 #define ACT_COMM6_NONE				120 // Disconnect all
 #define ACT_COMM6_GATE				121 // Connect Gate tester
 #define ACT_COMM6_SL				122 // Connect Static Losses tester
