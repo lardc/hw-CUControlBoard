@@ -134,6 +134,23 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
+		case ACT_COMM2_GATE_SL:
+			{
+				ZbIOE_OutputValuesReset();
+				// GTU
+				ZbIOE_OutputValuesCompose(T2_GATE_POW_A, TRUE);
+				ZbIOE_OutputValuesCompose(T2_GATE_POW_CTRL_C, TRUE);
+
+				// SL
+				ZbIOE_OutputValuesCompose(T2_SL_PWR, TRUE);
+				ZbIOE_OutputValuesCompose(T2_SL_POT_A, TRUE);
+				ZbIOE_OutputValuesCompose(T2_SL_POT_C, TRUE);
+				ZbIOE_OutputValuesCompose(T2_SL_CTL_A, TRUE);
+				ZbIOE_OutputValuesCompose(T2_SL_CTL_C, TRUE);
+				ZbIOE_RegisterFlushWrite();
+			}
+			break;
+
 		case ACT_COMM2_VGNT:
 			{
 				ZbIOE_OutputValuesReset();
