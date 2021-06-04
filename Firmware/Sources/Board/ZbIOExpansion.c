@@ -19,7 +19,6 @@
 // Variables
 //
 static Int16U CurrentOutputValues[COMMUTATION_EXT_BOARDS];
-static Boolean RequestUltimateReset = FALSE;
 
 
 // Functions
@@ -77,28 +76,12 @@ void ZbIOE_OutputValuesDirect(Int16U BoardID, Int16U Mask)
 }
 // ----------------------------------------
 
-void ZbIOE_RequestUltimateReset()
-{
-	RequestUltimateReset = TRUE;
-}
-// ----------------------------------------
-
 void ZbIOE_OutputValuesReset()
 {
 	Int16U i;
 
 	for (i = 0; i < COMMUTATION_EXT_BOARDS; ++i)
 		CurrentOutputValues[i] = 0;
-
-	if (RequestUltimateReset)
-	{
-		RequestUltimateReset = FALSE;
-	}
-	else
-	{
-		// Force to switch on safety relay
-		ZbIOE_OutputValuesCompose(T2_SAFETY_RELAY, TRUE);
-	}
 }
 // ----------------------------------------
 

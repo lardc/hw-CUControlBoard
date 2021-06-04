@@ -17,8 +17,6 @@ void ZbIOE_Init();
 void ZbIOE_ExternalOutput(Boolean Enable);
 // Reset output register to zero
 void ZbIOE_RegisterReset();
-// Request reset for all bits (even for safety relay)
-void ZbIOE_RequestUltimateReset();
 // Write cache to physical register
 void ZbIOE_RegisterFlushWrite();
 // Compose cached values

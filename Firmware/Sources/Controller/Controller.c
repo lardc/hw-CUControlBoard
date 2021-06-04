@@ -170,7 +170,6 @@ static void CONTROL_SafetyCircuitTrigger()
 	ZbGPIO_LightSafetySensorTrig(TRUE);
 
 	ZbIOE_ExternalOutput(FALSE);
-	ZbIOE_RequestUltimateReset();
 	CONTROL_CommutateNone();
 	ZbIOE_ExternalOutput(TRUE);
 

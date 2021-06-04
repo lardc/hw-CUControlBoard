@@ -60,8 +60,8 @@ const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
 						{BOARD1, PIN_D5},			// 15
 						{BOARD2, PIN_A1},			// 16
 						{BOARD2, PIN_A2},			// 17
-						{BOARD2, PIN_A4},			// 18	// BB:		Disconnect control
-						{BOARD2, PIN_A5},			// 19	// Safety output switch
+						{BOARD2, PIN_A4},			// 18
+						{BOARD2, PIN_A5},			// 19	// BB:		Disconnect control
 						{BOARD2, PIN_B1},			// 20
 						{BOARD2, PIN_B2},			// 21
 						{BOARD2, PIN_B4},			// 22

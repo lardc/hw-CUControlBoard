@@ -73,7 +73,6 @@ void ZbGPIO_SetSafetyLine4(Boolean Enabled)
 void ZbGPIO_SafetyRelay(Boolean Enabled)
 {
 	ZwGPIO_WritePin(CS_RELAY, Enabled);
-	ZwGPIO_WritePin(MOSFET_P6, Enabled);
 }
 // ----------------------------------------
 
