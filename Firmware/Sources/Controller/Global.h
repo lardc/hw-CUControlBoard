@@ -29,6 +29,6 @@
 //
 // Debug options
 #define DEBUG_USE_SAFETY			TRUE	// Safety circuit triggering
-#define DEBUG_USE_PRESSURE			FALSE	// Low pressure triggering
+#define DEBUG_USE_PRESSURE			TRUE	// Low pressure triggering
 
 #endif // __GLOBAL_H
