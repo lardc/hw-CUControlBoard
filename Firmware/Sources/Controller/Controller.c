@@ -110,10 +110,11 @@ void inline CONTROL_RequestDPC(FUNC_AsyncDelegate Action)
 #endif
 void CONTROL_UpdateLow()
 {
+	CONTROL_SelectSafetyConfiguration();
+
 	// Check safety circuit
 	if(CONTROL_State == DS_SafetyActive)
 	{
-		CONTROL_SelectSafetyConfiguration();
 		if(ZbGPIO_GetSafetyState(FALSE))
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 	}
