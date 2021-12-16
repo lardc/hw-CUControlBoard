@@ -213,6 +213,18 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 {
 	switch(ActionID)
 	{
+		case 12:
+			ZwGPIO_WritePin(MOSFET_P11, TRUE);
+			DELAY_US(100000);
+			ZwGPIO_WritePin(MOSFET_P11, FALSE);
+			break;
+
+		case 13:
+			ZwGPIO_WritePin(MOSFET_P13, TRUE);
+			DELAY_US(100000);
+			ZwGPIO_WritePin(MOSFET_P13, FALSE);
+			break;
+
 		case ACT_ENABLE_POWER:
 			if(CONTROL_State == DS_None)
 			{

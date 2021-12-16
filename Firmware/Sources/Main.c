@@ -45,7 +45,7 @@ void main()
 	InitializeTimers();
 	InitializeSPI();
 	InitializeSCI();
-	InitializeCAN();
+	// InitializeCAN();
 	InitializeBoard();
 
 	// Setup ISRs
