@@ -52,8 +52,8 @@ const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
 						{BOARD1, PIN_B5},			// 7
 						{BOARD1, PIN_C1},			// 8
 						{BOARD1, PIN_C2},			// 9
-						{BOARD1, PIN_C4},			// 10	// SL: 		SL Control Anode to CTRL_A
-						{BOARD1, PIN_C5},			// 11	// Gate:	Gate Control Anode to CTRL_A
+						{BOARD1, PIN_C4},			// 10	// Gate:	Gate Control Anode to CTRL_A
+						{BOARD1, PIN_C5},			// 11	// SL: 		SL Control Anode to CTRL_A
 						{BOARD1, PIN_D1},			// 12
 						{BOARD1, PIN_D2},			// 13
 						{BOARD1, PIN_D4},			// 14	// Gate		Gate Potential Control Anode to POTENTIAL_CTRL_A
