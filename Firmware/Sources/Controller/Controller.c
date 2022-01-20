@@ -90,12 +90,25 @@ void CONTROL_Idle()
 }
 // ----------------------------------------
 
-void CONTROL_SelectSafetyConfiguration()
+Boolean CONTROL_SelectSafetyConfiguration()
 {
-	ZbGPIO_SetSafetyLine1(DataTable[REG_EN_SFTY_IN1]);
-	ZbGPIO_SetSafetyLine2(DataTable[REG_EN_SFTY_IN2]);
-	ZbGPIO_SetSafetyLine3(DataTable[REG_EN_SFTY_IN3]);
-	ZbGPIO_SetSafetyLine4(DataTable[REG_EN_SFTY_IN4]);
+	static Int16U PrevConfig = 0;
+
+	Int16U r1 = DataTable[REG_EN_SFTY_IN1];
+	Int16U r2 = DataTable[REG_EN_SFTY_IN2];
+	Int16U r3 = DataTable[REG_EN_SFTY_IN3];
+	Int16U r4 = DataTable[REG_EN_SFTY_IN4];
+
+	Int16U NewConfig = (r4 << 3) | (r3 << 2) | (r2 << 1) | r1;
+	Boolean ConfigChanged = (NewConfig != PrevConfig);
+	PrevConfig = NewConfig;
+
+	ZbGPIO_SetSafetyLine1(r1);
+	ZbGPIO_SetSafetyLine2(r2);
+	ZbGPIO_SetSafetyLine3(r3);
+	ZbGPIO_SetSafetyLine4(r4);
+
+	return ConfigChanged;
 }
 // ----------------------------------------
 
@@ -110,11 +123,14 @@ void inline CONTROL_RequestDPC(FUNC_AsyncDelegate Action)
 #endif
 void CONTROL_UpdateLow()
 {
+	static Int64U IgnoreSafetyTimeout = 0;
+
 	// Check safety circuit
 	if(CONTROL_State == DS_SafetyActive)
 	{
-		CONTROL_SelectSafetyConfiguration();
-		if(ZbGPIO_GetSafetyState(FALSE))
+		if(CONTROL_SelectSafetyConfiguration())
+			IgnoreSafetyTimeout = CONTROL_TimeCounter + IGNORE_ON_SFTY_CHANGE_MS;
+		if((CONTROL_TimeCounter > IgnoreSafetyTimeout) && ZbGPIO_GetSafetyState(FALSE))
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 	}
 
