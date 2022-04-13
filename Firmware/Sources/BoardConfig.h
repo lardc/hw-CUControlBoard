@@ -29,7 +29,7 @@
 // Select commutation mode
 // define for CU_HV2
 // undefine for CU_HV6
-#define COMM_MODE_2
+#undef COMM_MODE_2
 //
 // Select BVT configuration
 // define if presented
