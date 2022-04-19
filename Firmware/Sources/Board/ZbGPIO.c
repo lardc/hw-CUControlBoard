@@ -87,7 +87,7 @@ void ZbGPIO_SafetyHWTriggering(Boolean Enabled)
 	if (DEBUG_USE_SAFETY)
 		ZwGPIO_WritePin(HW_SAFE_SW_PIN, !Enabled);
 	else
-		ZwGPIO_WritePin(HW_SAFE_SW_PIN, TRUE);
+		ZwGPIO_WritePin(HW_SAFE_SW_PIN, FALSE);
 }
 // ----------------------------------------
 
