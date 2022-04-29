@@ -193,7 +193,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 			{
 				ZbIOE_OutputValuesReset();
 
-				if(ModulePosition == 1)
+				if(ModulePosition == 1 && DataTable[REG_MODULE_TYPE] != 1)
 				{
 					ZbIOE_OutputValuesCompose(T6_GATE_CTL_A_1, TRUE);
 					ZbIOE_OutputValuesCompose(T6_GATE_CTL_C_1, TRUE);
