@@ -559,6 +559,13 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 			}
 			break;
 
+		case ACT_COMM6_NO_PE:
+			{
+				ZbIOE_OutputValuesReset();
+				ZbIOE_RegisterFlushWrite();
+			}
+			break;
+
 #ifdef BVT_LP
 		case ACT_COMM6_ISO:
 			{
