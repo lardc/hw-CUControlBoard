@@ -98,7 +98,7 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 #else
 											   {1, 2, 1},																// 71
 #endif
-											   {0, 0, 0},																// 72
+											   {0, INT16U_MAX, 0},														// 72
 											   {0, 0, 0},																// 73
 											   {0, 0, 0},																// 74
 											   {0, 0, 0},																// 75

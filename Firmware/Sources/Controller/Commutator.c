@@ -1,4 +1,4 @@
-// -----------------------------------------
+// ----------------------------------------
 // Commutation logic
 // ----------------------------------------
 
@@ -10,7 +10,6 @@
 #include "DeviceObjectDictionary.h"
 #include "CommutationTable.h"
 #include "Global.h"
-#include "DataTable.h"
 
 
 // Variables
@@ -177,7 +176,7 @@ void COMM2_Commutate(Int16U ActionID)
 }
 // ----------------------------------------
 
-void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, pInt16U pUserError)
+void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, Int16U Case, pInt16U pUserError)
 {
 	if (ActionID == OldActionID6) return;
 
@@ -193,7 +192,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 			{
 				ZbIOE_OutputValuesReset();
 
-				if(ModulePosition == 1 && DataTable[REG_MODULE_TYPE] != 1)
+				if(ModulePosition == 1 && ModuleType != MODULE_MT1)
 				{
 					ZbIOE_OutputValuesCompose(T6_GATE_CTL_A_1, TRUE);
 					ZbIOE_OutputValuesCompose(T6_GATE_CTL_C_1, TRUE);
@@ -209,6 +208,12 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 					switch(ModuleType)
 					{
 						case MODULE_MT1:
+							if(Case == MODULE_CASE_B1)
+							{
+								ZbIOE_OutputValuesCompose(T6_GATE_POW_A_2, TRUE);
+								ZbIOE_OutputValuesCompose(T6_GATE_POW_C_3, TRUE);
+							}
+							else
 							{
 								ZbIOE_OutputValuesCompose(T6_GATE_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_GATE_POW_C_3, TRUE);
@@ -277,53 +282,36 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 			{
 				ZbIOE_OutputValuesReset();
 
-				// Commutate gate lines
-				if(ModulePosition == 1)
+				if(ModulePosition == 1 && ModuleType != MODULE_MT1)
 				{
-					switch(ModuleType)
-					{
-						case MODULE_MT1:
-						case MODULE_MT3:
-						case MODULE_MT4:
-						case MODULE_MT5:
-						case MODULE_MTD3:
-						case MODULE_MTD4:
-						case MODULE_MTD5:
-							{
-								ZbIOE_OutputValuesCompose(T6_SL_CTL_A_1, TRUE);
-								ZbIOE_OutputValuesCompose(T6_SL_CTL_C_1, TRUE);
-							}
-							break;
-					}
+					ZbIOE_OutputValuesCompose(T6_GATE_CTL_A_1, TRUE);
+					ZbIOE_OutputValuesCompose(T6_GATE_CTL_C_1, TRUE);
 				}
 				else
 				{
-					switch(ModuleType)
-					{
-						case MODULE_MT3:
-						case MODULE_MT4:
-						case MODULE_MT5:
-						case MODULE_MDT3:
-						case MODULE_MDT4:
-						case MODULE_MDT5:
-							{
-								ZbIOE_OutputValuesCompose(T6_SL_CTL_A_2, TRUE);
-								ZbIOE_OutputValuesCompose(T6_SL_CTL_C_2, TRUE);
-							}
-							break;
-					}
+					ZbIOE_OutputValuesCompose(T6_GATE_CTL_A_2, TRUE);
+					ZbIOE_OutputValuesCompose(T6_GATE_CTL_C_2, TRUE);
 				}
 
-				// Commutate power lines
 				if(ModulePosition == 1)
 				{
 					switch(ModuleType)
 					{
 						case MODULE_MT1:
 						case MODULE_MD1:
+							if(Case == MODULE_CASE_B1)
+							{
+								ZbIOE_OutputValuesCompose(T6_SL_POT_A_2, TRUE);
+								ZbIOE_OutputValuesCompose(T6_SL_POT_C_3, TRUE);
+
+								ZbIOE_OutputValuesCompose(T6_SL_POW_A_2, TRUE);
+								ZbIOE_OutputValuesCompose(T6_SL_POW_C_3, TRUE);
+							}
+							else
 							{
 								ZbIOE_OutputValuesCompose(T6_SL_POT_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_SL_POT_C_3, TRUE);
+
 								ZbIOE_OutputValuesCompose(T6_SL_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_SL_POW_C_3, TRUE);
 							}
@@ -415,6 +403,12 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 					switch(ModuleType)
 					{
 						case MODULE_MT1:
+							if(Case == MODULE_CASE_B1)
+							{
+								ZbIOE_OutputValuesCompose(T6_BV_POS_POW_2, TRUE);
+								ZbIOE_OutputValuesCompose(T6_BV_NEG_POW_3, TRUE);
+							}
+							else
 							{
 								ZbIOE_OutputValuesCompose(T6_BV_POS_POW_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_BV_NEG_POW_3, TRUE);
@@ -489,6 +483,12 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 					{
 						case MODULE_MT1:
 						case MODULE_MD1:
+							if(Case == MODULE_CASE_B1)
+							{
+								ZbIOE_OutputValuesCompose(T6_BV_POS_POW_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_BV_NEG_POW_2, TRUE);
+							}
+							else
 							{
 								ZbIOE_OutputValuesCompose(T6_BV_POS_POW_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_BV_NEG_POW_1, TRUE);

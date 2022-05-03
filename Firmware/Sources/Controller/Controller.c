@@ -351,7 +351,8 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			else if(CONTROL_State == DS_None)
 				*pUserError = ERR_DEVICE_NOT_READY;
 			else
-				COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
+				COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS],
+						DataTable[REG_MODULE_CASE], pUserError);
 			break;
 
 	#endif
