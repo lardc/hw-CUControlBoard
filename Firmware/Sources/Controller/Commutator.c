@@ -284,13 +284,13 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 
 				if(ModulePosition == 1 && ModuleType != MODULE_MT1)
 				{
-					ZbIOE_OutputValuesCompose(T6_GATE_CTL_A_1, TRUE);
-					ZbIOE_OutputValuesCompose(T6_GATE_CTL_C_1, TRUE);
+					ZbIOE_OutputValuesCompose(T6_SL_CTL_A_1, TRUE);
+					ZbIOE_OutputValuesCompose(T6_SL_CTL_C_1, TRUE);
 				}
 				else
 				{
-					ZbIOE_OutputValuesCompose(T6_GATE_CTL_A_2, TRUE);
-					ZbIOE_OutputValuesCompose(T6_GATE_CTL_C_2, TRUE);
+					ZbIOE_OutputValuesCompose(T6_SL_CTL_A_2, TRUE);
+					ZbIOE_OutputValuesCompose(T6_SL_CTL_C_2, TRUE);
 				}
 
 				if(ModulePosition == 1)
