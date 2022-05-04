@@ -301,8 +301,8 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 						case MODULE_MD1:
 							if(Case == MODULE_CASE_B1)
 							{
-								ZbIOE_OutputValuesCompose(T6_SL_POT_A_2, TRUE);
-								ZbIOE_OutputValuesCompose(T6_SL_POT_C_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_SL_POT_A_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_SL_POT_C_2, TRUE);
 
 								ZbIOE_OutputValuesCompose(T6_SL_POW_A_2, TRUE);
 								ZbIOE_OutputValuesCompose(T6_SL_POW_C_3, TRUE);
@@ -310,7 +310,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 							else
 							{
 								ZbIOE_OutputValuesCompose(T6_SL_POT_A_1, TRUE);
-								ZbIOE_OutputValuesCompose(T6_SL_POT_C_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_SL_POT_C_2, TRUE);
 
 								ZbIOE_OutputValuesCompose(T6_SL_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_SL_POW_C_3, TRUE);
