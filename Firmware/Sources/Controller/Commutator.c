@@ -274,7 +274,8 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 
 				ZbIOE_RegisterFlushWrite();
 
-				DELAY_US(((OldActionID6 == ACT_COMM6_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
+				DELAY_US(((OldActionID6 == ACT_COMM6_SL || OldActionID6 == ACT_COMM6_GATE_SL) ?
+						COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 			}
 			break;
 
@@ -504,7 +505,8 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 
 				ZbIOE_RegisterFlushWrite();
 
-				DELAY_US(((OldActionID6 == ACT_COMM6_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
+				DELAY_US(((OldActionID6 == ACT_COMM6_SL || OldActionID6 == ACT_COMM6_GATE_SL) ?
+						COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 			}
 			break;
 
@@ -590,7 +592,8 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 
 				ZbIOE_RegisterFlushWrite();
 
-				DELAY_US(((OldActionID6 == ACT_COMM6_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
+				DELAY_US(((OldActionID6 == ACT_COMM6_SL || OldActionID6 == ACT_COMM6_GATE_SL) ?
+						COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 			}
 			break;
 
@@ -599,7 +602,8 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 				ZbIOE_OutputValuesReset();
 				ZbIOE_RegisterFlushWrite();
 
-				DELAY_US(((OldActionID6 == ACT_COMM6_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
+				DELAY_US(((OldActionID6 == ACT_COMM6_SL || OldActionID6 == ACT_COMM6_GATE_SL) ?
+						COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 			}
 			break;
 

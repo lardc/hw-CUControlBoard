@@ -346,6 +346,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_COMM6_BV_D:
 		case ACT_COMM6_BV_R:
 		case ACT_COMM6_NO_PE:
+		case ACT_COMM6_GATE_SL:
 			if(CONTROL_State == DS_Fault)
 				*pUserError = ERR_OPERATION_BLOCKED;
 			else if(CONTROL_State == DS_None)
