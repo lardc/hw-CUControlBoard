@@ -291,6 +291,17 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			DataTable[REG_WARNING] = WARNING_NONE;
 			break;
 
+		case ACT_DBG_INDICATORS:
+			if(CONTROL_State == DS_None)
+			{
+				ZbGPIO_LightSafetySensorTrig(TRUE);
+				ZbGPIO_LightPressureFault(TRUE);
+				DELAY_US(1000000);
+				ZbGPIO_LightSafetySensorTrig(FALSE);
+				ZbGPIO_LightPressureFault(FALSE);
+			}
+			break;
+
 		case ACT_WRITE_PIN:
 			if(CONTROL_State == DS_None)
 				ZbIOE_OutputValuesCompose(DataTable[REG_TABLE_INDEX], DataTable[REG_TABLE_ACTION]);
