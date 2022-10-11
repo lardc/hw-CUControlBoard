@@ -90,6 +90,7 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesCompose(T2_GATE_CTL_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_GATE_POT_CTL_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_GATE_POT_CTL_C, TRUE);
+				ZbIOE_OutputValuesCompose(T2_BB_CONNECT, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;
@@ -102,6 +103,7 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesCompose(T2_SL_POT_C, TRUE);
 				ZbIOE_OutputValuesCompose(T2_SL_CTL_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_SL_CTL_C, TRUE);
+				ZbIOE_OutputValuesCompose(T2_BB_CONNECT, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;
@@ -111,7 +113,7 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesReset();
 				ZbIOE_OutputValuesCompose(T2_BV_POS_POW_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_BV_NEG_POW_C, TRUE);
-				ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
+			//	ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;
@@ -121,7 +123,7 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesReset();
 				ZbIOE_OutputValuesCompose(T2_BV_NEG_POW_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_BV_POS_POW_C, TRUE);
-				ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
+			//	ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;
@@ -129,7 +131,7 @@ void COMM2_Commutate(Int16U ActionID)
 		case ACT_COMM2_NO_PE:
 			{
 				ZbIOE_OutputValuesReset();
-				ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
+			//	ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;
@@ -137,6 +139,9 @@ void COMM2_Commutate(Int16U ActionID)
 		case ACT_COMM2_GATE_SL:
 			{
 				ZbIOE_OutputValuesReset();
+
+				ZbIOE_OutputValuesCompose(T2_BB_CONNECT, TRUE);
+
 				// GTU
 				ZbIOE_OutputValuesCompose(T2_GATE_POW_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_GATE_POW_CTRL_C, TRUE);
@@ -159,6 +164,7 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesCompose(T2_GATE_CTL_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_GATE_POT_CTL_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_GATE_POT_CTL_C, TRUE);
+				ZbIOE_OutputValuesCompose(T2_BB_CONNECT, TRUE);
 				// BVT direct
 				ZbIOE_OutputValuesCompose(T2_BV_POS_POW_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_BV_NEG_POW_C, TRUE);
