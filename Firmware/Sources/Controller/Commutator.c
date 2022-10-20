@@ -113,7 +113,6 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesReset();
 				ZbIOE_OutputValuesCompose(T2_BV_POS_POW_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_BV_NEG_POW_C, TRUE);
-			//	ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;
@@ -123,7 +122,6 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesReset();
 				ZbIOE_OutputValuesCompose(T2_BV_NEG_POW_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_BV_POS_POW_C, TRUE);
-			//	ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;
@@ -131,7 +129,6 @@ void COMM2_Commutate(Int16U ActionID)
 		case ACT_COMM2_NO_PE:
 			{
 				ZbIOE_OutputValuesReset();
-			//	ZbIOE_OutputValuesCompose(T2_BB_DISCONNECT, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;
