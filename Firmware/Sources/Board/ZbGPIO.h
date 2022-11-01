@@ -32,6 +32,6 @@ void ZbGPIO_SetSafetyLine1(Boolean Enabled);
 void ZbGPIO_SetSafetyLine2(Boolean Enabled);
 void ZbGPIO_SetSafetyLine3(Boolean Enabled);
 void ZbGPIO_SetSafetyLine4(Boolean Enabled);
-
+void ZbGPIO_PowerSafetyRelay(Boolean State);
 
 #endif // __ZBGPIO_H

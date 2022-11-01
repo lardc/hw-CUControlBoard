@@ -169,11 +169,7 @@ static Boolean CONTROL_FilterPressure(Boolean Triggered)
 
 static void CONTROL_CommutateNone()
 {
-	#ifdef COMM_MODE_2
-		COMM2_CommutateNone();
-	#else
-		COMM6_CommutateNone();
-	#endif
+	ZbGPIO_PowerSafetyRelay(FALSE);
 }
 // ----------------------------------------
 
@@ -181,10 +177,7 @@ static void CONTROL_SafetyCircuitTrigger()
 {
 	ZbGPIO_SafetyRelay(FALSE);
 	ZbGPIO_LightSafetySensorTrig(TRUE);
-
-	ZbIOE_ExternalOutput(FALSE);
 	CONTROL_CommutateNone();
-	ZbIOE_ExternalOutput(TRUE);
 
 	CONTROL_SetDeviceState(DS_SafetyTrig);
 }
@@ -296,6 +289,23 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				DELAY_US(1000000);
 				ZbGPIO_LightSafetySensorTrig(FALSE);
 				ZbGPIO_LightPressureFault(FALSE);
+			}
+			break;
+
+		case ACT_COMM2_NO_PE:
+			if(CONTROL_State == DS_Fault)
+				*pUserError = ERR_OPERATION_BLOCKED;
+			else if(CONTROL_State == DS_None)
+				*pUserError = ERR_DEVICE_NOT_READY;
+			else
+			{
+				ZbGPIO_PowerSafetyRelay(TRUE);
+				if (CONTROL_State == DS_SafetyTrig)
+				{
+					CONTROL_CommutateNone();
+					ZbGPIO_LightSafetySensorTrig(FALSE);
+					CONTROL_SetDeviceState(DS_SafetyActive);
+				}
 			}
 			break;
 

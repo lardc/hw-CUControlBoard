@@ -46,6 +46,12 @@ void ZbGPIO_Init()
 }
 // ----------------------------------------
 
+void ZbGPIO_PowerSafetyRelay(Boolean State)
+{
+	ZwGPIO_WritePin(MOSFET_P6, State);
+}
+// ----------------------------------------
+
 void ZbGPIO_SetSafetyLine1(Boolean Enabled)
 {
 	ZwGPIO_WritePin(SAFETY_CTRL1, !Enabled);
