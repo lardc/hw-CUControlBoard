@@ -20,7 +20,6 @@
 #include "stdinc.h"
 //
 #include "ZbGPIO.h"
-#include "ZbIOExpansion.h"
 #include "ZbWatchDog.h"
 
 #endif // end __ZB_BOARD_H

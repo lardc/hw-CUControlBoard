@@ -10,12 +10,9 @@
 #include "ZwDSP.h"
 #include "ZbBoard.h"
 #include "DataTable.h"
-#include "CommutationTable.h"
 #include "DeviceObjectDictionary.h"
 #include "SCCISlave.h"
 #include "DeviceProfile.h"
-#include "CommutationTable.h"
-#include "Commutator.h"
 
 
 // Types
@@ -301,70 +298,6 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				ZbGPIO_LightPressureFault(FALSE);
 			}
 			break;
-
-		case ACT_WRITE_PIN:
-			if(CONTROL_State == DS_None)
-				ZbIOE_OutputValuesCompose(DataTable[REG_TABLE_INDEX], DataTable[REG_TABLE_ACTION]);
-			else
-				*pUserError = ERR_OPERATION_BLOCKED;
-			break;
-
-		case ACT_RAW_ACCESS:
-			if(CONTROL_State == DS_None)
-				ZbIOE_OutputValuesDirect(DataTable[REG_RAW_BOARD], DataTable[REG_RAW_MASK]);
-			else
-				*pUserError = ERR_OPERATION_BLOCKED;
-			break;
-
-		case ACT_FLUSH_REG:
-			if(CONTROL_State == DS_None)
-				ZbIOE_RegisterFlushWrite();
-			else
-				*pUserError = ERR_OPERATION_BLOCKED;
-			break;
-
-	#ifdef COMM_MODE_2
-
-		case ACT_COMM2_NONE:
-		case ACT_COMM2_GATE:
-		case ACT_COMM2_SL:
-		case ACT_COMM2_BV_D:
-		case ACT_COMM2_BV_R:
-		case ACT_COMM2_NO_PE:
-		case ACT_COMM2_GATE_SL:
-		case ACT_COMM2_VGNT:
-			if(CONTROL_State == DS_Fault)
-				*pUserError = ERR_OPERATION_BLOCKED;
-			else if(CONTROL_State == DS_None)
-				*pUserError = ERR_DEVICE_NOT_READY;
-			else
-			{
-				COMM2_Commutate(ActionID);
-				if (CONTROL_State == DS_SafetyTrig)
-				{
-					CONTROL_CommutateNone();
-					ZbGPIO_LightSafetySensorTrig(FALSE);
-					CONTROL_SetDeviceState(DS_SafetyActive);
-				}
-			}
-			break;
-
-	#else
-
-		case ACT_COMM6_NONE:
-		case ACT_COMM6_GATE:
-		case ACT_COMM6_SL:
-		case ACT_COMM6_BV_D:
-		case ACT_COMM6_BV_R:
-			if(CONTROL_State == DS_Fault)
-				*pUserError = ERR_OPERATION_BLOCKED;
-			else if(CONTROL_State == DS_None)
-				*pUserError = ERR_DEVICE_NOT_READY;
-			else
-				COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
-			break;
-
-	#endif
 
 		default:
 			return FALSE;

@@ -148,8 +148,7 @@ void InitializeBoard()
 {
 	// Init board GPIO
    	ZbGPIO_Init();
-   	// Init IO expansion
-   	ZbIOE_Init();
+
    	// Init on-board watch-dog
    	ZbWatchDog_Init();
 }
@@ -216,9 +215,6 @@ ISRCALL IllegalInstruction_ISR(void)
 
 	// Close gates
 	GpioDataRegs.GPASET.bit.GPIO4 = 0;
-
-	// Try set IOE to default state
-	ZbIOE_RegisterReset();
 
 	// Reset system using WD
 	ZwSystem_ForceDog();

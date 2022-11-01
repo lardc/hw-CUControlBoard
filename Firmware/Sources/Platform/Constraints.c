@@ -5,7 +5,6 @@
 // Header
 #include "Constraints.h"
 #include "DeviceObjectDictionary.h"
-#include "CommutationTable.h"
 
 #define NO		0	// equal to FALSE
 #define YES		1	// equal to TRUE
@@ -82,9 +81,9 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 
 const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START] =
                                       {
-											   {0, COMMUTATION_TABLE_SIZE - 1, 0},										// 64
+											   {0, INT16U_MAX, 0},														// 64
 											   {0, INT16U_MAX, 0},														// 65
-											   {0, COMMUTATION_EXT_BOARDS - 1, 0},										// 66
+											   {0, INT16U_MAX, 0},														// 66
 											   {0, INT16U_MAX, 0},														// 67
 											   {0, 0, 0},																// 68
 											   {0, 0, 0},																// 69
