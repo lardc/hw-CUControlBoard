@@ -269,6 +269,11 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 								*pUserError = ERR_WRONG_CMD;
 							}
 							break;
+						case MODULE_REVERSE:
+							{
+								ZbGPIO_ConnectProtectiveEarth(TRUE);
+							}
+							break;
 					}
 				}
 
@@ -500,6 +505,11 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 								*pUserError = ERR_WRONG_CMD;
 							}
 							break;
+						case MODULE_REVERSE:
+							{
+								ZbGPIO_ConnectProtectiveEarth(TRUE);
+							}
+							break;
 					}
 				}
 
@@ -581,10 +591,16 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 								ZbIOE_OutputValuesCompose(T6_BV_NEG_POW_1, TRUE);
 							}
 							break;
+
 						default:
 							{
 								ZbIOE_OutputValuesReset();
 								*pUserError = ERR_WRONG_CMD;
+							}
+							break;
+						case MODULE_REVERSE:
+							{
+								ZbGPIO_ConnectProtectiveEarth(TRUE);
 							}
 							break;
 					}

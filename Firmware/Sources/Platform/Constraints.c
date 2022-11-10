@@ -91,7 +91,7 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 #ifdef COMM_MODE_2
 											   {MODULE_DIRECT, MODULE_REVERSE, MODULE_DIRECT},							// 70
 #else
-											   {MODULE_MT1, MODULE_MDT5, MODULE_MT1},									// 70
+											   {MODULE_MT1, MODULE_REVERSE, MODULE_MT1},									// 70
 #endif
 #ifdef COMM_MODE_2
 											   {1, 1, 1},																// 71
