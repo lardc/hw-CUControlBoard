@@ -172,9 +172,12 @@ static Boolean CONTROL_FilterPressure(Boolean Triggered)
 
 static void CONTROL_CommutateNone()
 {
+
 	#ifdef COMM_MODE_2
 		COMM2_CommutateNone();
-	#else
+	#elif COMM_MODE_4
+		COMM4_CommutateNone();
+	#elif COMM_MODE_6
 		COMM6_CommutateNone();
 	#endif
 }
@@ -348,8 +351,33 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				}
 			}
 			break;
+	#elif COMM_MODE_4
 
-	#else
+		case ACT_COMM4_NONE:
+		case ACT_COMM4_GATE:
+		case ACT_COMM4_SL:
+		case ACT_COMM4_BV_D:
+		case ACT_COMM4_BV_R:
+		case ACT_COMM4_NO_PE:
+		case ACT_COMM4_GATE_SL:
+		case ACT_COMM4_VGNT:
+			if(CONTROL_State == DS_Fault)
+				*pUserError = ERR_OPERATION_BLOCKED;
+			else if(CONTROL_State == DS_None)
+				*pUserError = ERR_DEVICE_NOT_READY;
+			else
+			{
+				COMM4_Commutate(ActionID);
+				if (CONTROL_State == DS_SafetyTrig)
+				{
+					CONTROL_CommutateNone();
+					ZbGPIO_LightSafetySensorTrig(FALSE);
+					CONTROL_SetDeviceState(DS_SafetyActive);
+				}
+			}
+			break;
+
+	#elif COMM_MODE_6
 
 		case ACT_COMM6_NONE:
 		case ACT_COMM6_GATE:

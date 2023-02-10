@@ -13,7 +13,9 @@
 //
 #ifdef COMM_MODE_2
 	#define COMMUTATION_EXT_BOARDS	2
-#else
+#elif defined COMM_MODE_4
+	#define COMMUTATION_EXT_BOARDS	2
+#elif defined COMM_MODE_6
 	#define COMMUTATION_EXT_BOARDS	4
 #endif
 
