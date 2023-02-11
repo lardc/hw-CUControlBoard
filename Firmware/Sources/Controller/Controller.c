@@ -175,9 +175,9 @@ static void CONTROL_CommutateNone()
 
 	#ifdef COMM_MODE_2
 		COMM2_CommutateNone();
-	#elif COMM_MODE_4
+	#elif defined COMM_MODE_4
 		COMM4_CommutateNone();
-	#elif COMM_MODE_6
+	#elif defined COMM_MODE_6
 		COMM6_CommutateNone();
 	#endif
 }
@@ -351,7 +351,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				}
 			}
 			break;
-	#elif COMM_MODE_4
+	#elif defined COMM_MODE_4
 
 		case ACT_COMM4_NONE:
 		case ACT_COMM4_GATE:
@@ -367,7 +367,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				*pUserError = ERR_DEVICE_NOT_READY;
 			else
 			{
-				COMM4_Commutate(ActionID);
+				COMM4_Commutate(ActionID, DataTable[REG_MODULE_TYPE], pUserError);
 				if (CONTROL_State == DS_SafetyTrig)
 				{
 					CONTROL_CommutateNone();
@@ -377,7 +377,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			}
 			break;
 
-	#elif COMM_MODE_6
+	#elif defined COMM_MODE_6
 
 		case ACT_COMM6_NONE:
 		case ACT_COMM6_GATE:

@@ -90,12 +90,16 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											   {0, 0, 0},																// 69
 #ifdef COMM_MODE_2
 											   {MODULE_DIRECT, MODULE_REVERSE, MODULE_DIRECT},							// 70
-#else
+#elif defined COMM_MODE_4
+											   {MODULE_DIRECT, MODULE_REVERSE, MODULE_DIRECT},							// 70
+#elif defined COMM_MODE_6
 											   {MODULE_MT1, MODULE_MDT5, MODULE_MT1},									// 70
 #endif
 #ifdef COMM_MODE_2
 											   {1, 1, 1},																// 71
-#else
+#elif defined COMM_MODE_4
+											   {1, 1, 1},																// 71
+#elif defined COMM_MODE_6
 											   {1, 2, 1},																// 71
 #endif
 											   {0, 0, 0},																// 72

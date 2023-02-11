@@ -43,6 +43,35 @@
 //
 #define T2_BB_DISCONNECT		19
 //
+// Commutation type 4
+//
+#define T4_SL_POT_A_1			10
+#define T4_SL_POT_A_2			11
+#define T4_SL_POT_C_1			12
+#define T4_SL_POT_C_2			13
+#define T4_SL_CTL_A				30
+#define T4_SL_CTL_C_1			8
+#define T4_SL_CTL_C_2			9
+#define T4_SL_CUHC_1			22
+#define T4_SL_CUHC_2			23
+//
+#define T4_GATE_POW_A_1			2
+#define T4_GATE_POW_A_2			3
+#define T4_GATE_POW_CTRL_C_1	6
+#define T4_GATE_POW_CTRL_C_2	7
+#define T4_GATE_CTL_A			26
+#define T4_GATE_POT_CTL_A		27
+#define T4_GATE_POT_CTL_C_1		14
+#define T4_GATE_POT_CTL_C_2		15
+//
+#define T4_BV_POS_POW_1			0
+#define T4_BV_NEG_POW_1			4
+//
+#define T4_BV_POS_POW_2			1
+#define T4_BV_NEG_POW_2			5
+//
+#define T4_BB_DISCONNECT		19
+//
 // Commutation type 6
 //
 #define T6_SL_POT_A_1			10

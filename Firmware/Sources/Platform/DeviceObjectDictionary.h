@@ -31,12 +31,21 @@
 #define ACT_COMM2_GATE_SL			116	// Connect GTU and SL for Ih - GOST measurement
 #define ACT_COMM2_VGNT				117	// Connect GTU and BVT for Vgnt/Ignt measurement
 //
-#define ACT_COMM6_NONE				120 // Disconnect all
-#define ACT_COMM6_GATE				121 // Connect Gate tester
-#define ACT_COMM6_SL				122 // Connect Static Losses tester
-#define ACT_COMM6_BV_D				123 // Connect direct BV tester
-#define ACT_COMM6_BV_R				124 // Connect reverse BV tester
-#define ACT_COMM6_ISO				125 // Isolation test
+#define ACT_COMM4_NONE				120 // Disconnect all
+#define ACT_COMM4_GATE				121 // Connect Gate tester
+#define ACT_COMM4_SL				122 // Connect Static Losses tester
+#define ACT_COMM4_BV_D				123 // Connect direct BV tester
+#define ACT_COMM4_BV_R				124 // Connect reverse BV tester
+#define ACT_COMM4_NO_PE				125	// Connect other blocks (disconnect protective earth from lines)
+#define ACT_COMM4_GATE_SL			126	// Connect GTU and SL for Ih - GOST measurement
+#define ACT_COMM4_VGNT				127	// Connect GTU and BVT for Vgnt/Ignt measurement
+//
+#define ACT_COMM6_NONE				130 // Disconnect all
+#define ACT_COMM6_GATE				131 // Connect Gate tester
+#define ACT_COMM6_SL				132 // Connect Static Losses tester
+#define ACT_COMM6_BV_D				133 // Connect direct BV tester
+#define ACT_COMM6_BV_R				134 // Connect reverse BV tester
+#define ACT_COMM6_ISO				135 // Isolation test
 //
 #define ACT_SAVE_TO_ROM				200	// Save parameters to EEPROM module
 #define ACT_RESTORE_FROM_ROM		201	// Restore parameters from EEPROM module
