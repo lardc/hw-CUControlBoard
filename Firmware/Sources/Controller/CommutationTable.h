@@ -65,10 +65,10 @@
 #define T4_GATE_POT_CTL_C_2		15
 //
 #define T4_BV_POS_POW_1			0
-#define T4_BV_NEG_POW_1			4
+#define T4_BV_NEG_POW_1			5
 //
 #define T4_BV_POS_POW_2			1
-#define T4_BV_NEG_POW_2			5
+#define T4_BV_NEG_POW_2			4
 //
 #define T4_BB_DISCONNECT		19
 //

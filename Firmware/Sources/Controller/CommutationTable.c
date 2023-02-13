@@ -83,8 +83,8 @@ const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
 						{BOARD1, PIN_A2},			// 1	// BVT:		HV+ to POW_C
 						{BOARD1, PIN_A4},			// 2	// Gate:	Power Anode to POW_A
 						{BOARD1, PIN_A5},			// 3	// Gate:	Power Anode to POW_C
-						{BOARD1, PIN_B1},			// 4	// BVT:		HV- to POW_A
-						{BOARD1, PIN_B2},			// 5	// BVT:		HV- to POW_C
+						{BOARD1, PIN_B1},			// 4	// BVT:		HV- to POW_C
+						{BOARD1, PIN_B2},			// 5	// BVT:		HV- to POW_A
 						{BOARD1, PIN_B4},			// 6	// Gate: 	Power and Control Cathode to POW_A
 						{BOARD1, PIN_B5},			// 7	// Gate: 	Power and Control Cathode to POW_C
 						{BOARD1, PIN_C1},			// 8	// SL: 		Control Cathode (C-) to POW_A
