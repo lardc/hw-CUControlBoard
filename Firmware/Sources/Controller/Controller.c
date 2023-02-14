@@ -190,8 +190,8 @@ static void CONTROL_PressureTrigger()
 
 static void CONTROL_FillWPPartDefault()
 {
-	// Set volatile states
-	DataTable[REG_DEV_STATE] = (Int16U)DS_None;
+	CONTROL_SetDeviceState(DS_None);
+
 	DataTable[REG_FAULT_REASON] = FAULT_NONE;
 	DataTable[REG_DISABLE_REASON] = DISABLE_NONE;
 	DataTable[REG_WARNING] = WARNING_NONE;
