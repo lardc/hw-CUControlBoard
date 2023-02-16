@@ -106,10 +106,10 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											   {0, 0, 0},																// 77
 											   {0, 0, 0},																// 78
 											   {0, 0, 0},																// 79
-											   {NO, YES, YES},															// 80
-											   {NO, YES, YES},															// 81
-											   {NO, YES, YES},															// 82
-											   {NO, YES, YES},															// 83
+											   {NO, YES, NO},															// 80
+											   {NO, YES, NO},															// 81
+											   {NO, YES, NO},															// 82
+											   {NO, YES, NO},															// 83
 											   {0, 0, 0},																// 84
 											   {0, 0, 0},																// 85
 											   {0, 0, 0},																// 86
