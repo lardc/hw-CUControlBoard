@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//Debug/Sources/Interfaces/subdir_rules.mk=UTF-8
 encoding//Debug/Sources/Interfaces/subdir_vars.mk=UTF-8
+encoding//Release/FlashAPI/subdir_rules.mk=UTF-8
+encoding//Release/FlashAPI/subdir_vars.mk=UTF-8
 encoding//Release/Linker/subdir_rules.mk=UTF-8
 encoding//Release/Linker/subdir_vars.mk=UTF-8
 encoding//Release/Sources/Board/subdir_rules.mk=UTF-8
