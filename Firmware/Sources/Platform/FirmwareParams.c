@@ -13,6 +13,7 @@ typedef struct __Label
 } Label;
 
 // Variables
+static Int16U LabelReadPointer = 0;
 static SelectorIndex LabelSelector = SID_None;
 const Label BoardLabels[] =
 {
@@ -38,6 +39,8 @@ void FWPAR_LoadBoardLabel()
 		// Проверка на попадание в диапазон ASCII
 		if(0x20 <= Symbol && Symbol <= 0x7E)
 			CurrentLabel[i] = Symbol;
+		else
+			break;
 	}
 
 	// Определение индекса метки
@@ -66,5 +69,23 @@ Boolean FWPAR_AreNamesEqual(char *a, char *b)
 SelectorIndex FWPAR_GetSelector()
 {
 	return LabelSelector;
+}
+// ----------------------------------------
+
+void FWPAR_PrepareLabelRead()
+{
+	LabelReadPointer = 0;
+}
+// ----------------------------------------
+
+Int16U FWPAR_ReadLabelSymbol()
+{
+	if(LabelReadPointer < LABEL_NAME_MAX_LENGTH)
+	{
+		Int16U Symbol = *((pInt16U)(LABEL_START_ADDRESS + LabelReadPointer++));
+		return (0x20 <= Symbol && Symbol <= 0x7E) ? Symbol : 0;
+	}
+	else
+		return 0;
 }
 // ----------------------------------------

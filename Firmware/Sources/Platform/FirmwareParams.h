@@ -17,4 +17,7 @@ typedef enum __SelectorIndex
 void FWPAR_LoadBoardLabel();
 SelectorIndex FWPAR_GetSelector();
 
+void FWPAR_PrepareLabelRead();
+Int16U FWPAR_ReadLabelSymbol();
+
 #endif // __FIRMWARE_PARAMS_H
