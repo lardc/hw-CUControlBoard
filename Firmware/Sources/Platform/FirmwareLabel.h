@@ -4,6 +4,9 @@
 // Include
 #include "stdinc.h"
 
+// Definitions
+#define LABEL_NAME_MAX_LENGTH		64
+
 // Types
 typedef enum __SelectorIndex
 {
@@ -12,6 +15,12 @@ typedef enum __SelectorIndex
 	SID_PCB2_3_Manuf,
 	SID_PCB2_3
 } SelectorIndex;
+
+typedef struct __Label
+{
+	char Name[LABEL_NAME_MAX_LENGTH];
+	SelectorIndex Index;
+} Label;
 
 // Functions
 void FWLB_LoadBoardLabel();

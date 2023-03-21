@@ -1,26 +1,12 @@
 // Header
 #include "FirmwareLabel.h"
 
-// Definitions
-#define LABEL_START_ADDRESS			0x3DC000	// Sector G
-#define LABEL_NAME_MAX_LENGTH		64
-
-// Types
-typedef struct __Label
-{
-	char Name[LABEL_NAME_MAX_LENGTH];
-	SelectorIndex Index;
-} Label;
+// Include
+#include "LabelDescription.h"
 
 // Variables
 static Int16U LabelReadPointer = 0;
 static SelectorIndex LabelSelector = SID_None;
-const Label BoardLabels[] =
-{
-		{"CUControlBoard v.2.4 [Manufacturing]",	SID_PCB2_4_Manuf},
-		{"CUControlBoard v.2.3 [Manufacturing]",	SID_PCB2_3_Manuf},
-		{"CUControlBoard v.2.3",					SID_PCB2_3}
-};
 
 // Forward functions
 Boolean FWLB_AreNamesEqual(char *a, char *b);
@@ -44,12 +30,14 @@ void FWLB_LoadBoardLabel()
 	}
 
 	// Определение индекса метки
-	for(i = 0; i < sizeof(BoardLabels) / sizeof(BoardLabels[0]); i++)
+	for(i = 0; i < BoardLabelsSize; i++)
+	{
 		if(FWLB_AreNamesEqual(CurrentLabel, (char *)BoardLabels[i].Name))
 		{
 			LabelSelector = BoardLabels[i].Index;
 			break;
 		}
+	}
 }
 // ----------------------------------------
 
