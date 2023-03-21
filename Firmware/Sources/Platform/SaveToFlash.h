@@ -6,6 +6,7 @@
 
 // Definition
 #define MAX_DESCRIPTION_LEN			64
+#define MAX_CYCLE_DESCRIPTION_LEN	16
 
 // Types
 typedef enum __DataType
@@ -25,6 +26,12 @@ typedef struct __RecordDescription
 	Int16U Length;
 	Boolean UseRead;
 } RecordDescription;
+
+typedef struct __CycleRecordDescription
+{
+	char Description[MAX_CYCLE_DESCRIPTION_LEN];
+	// Cycle record data is always 32bit unsigned value
+} CycleRecordDescription;
 
 // Functions
 void STF_AssignPointer(Int16U Index, Int32U Pointer);
