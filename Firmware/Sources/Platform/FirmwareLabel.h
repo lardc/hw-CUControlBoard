@@ -1,5 +1,5 @@
-#ifndef __FIRMWARE_PARAMS_H
-#define __FIRMWARE_PARAMS_H
+#ifndef __FIRMWARE_LABEL_H
+#define __FIRMWARE_LABEL_H
 
 // Include
 #include "stdinc.h"
@@ -14,10 +14,10 @@ typedef enum __SelectorIndex
 } SelectorIndex;
 
 // Functions
-void FWPAR_LoadBoardLabel();
-SelectorIndex FWPAR_GetSelector();
+void FWLB_LoadBoardLabel();
+SelectorIndex FWLB_GetSelector();
 
-void FWPAR_PrepareLabelRead();
-Int16U FWPAR_ReadLabelSymbol();
+void FWLB_PrepareLabelRead();
+Int16U FWLB_ReadLabelSymbol();
 
-#endif // __FIRMWARE_PARAMS_H
+#endif // __FIRMWARE_LABEL_H

@@ -1,5 +1,5 @@
 // Header
-#include "FirmwareParams.h"
+#include "FirmwareLabel.h"
 
 // Definitions
 #define LABEL_START_ADDRESS			0x3DC000	// Sector G
@@ -23,11 +23,11 @@ const Label BoardLabels[] =
 };
 
 // Forward functions
-Boolean FWPAR_AreNamesEqual(char *a, char *b);
+Boolean FWLB_AreNamesEqual(char *a, char *b);
 
 // Functions
 //
-void FWPAR_LoadBoardLabel()
+void FWLB_LoadBoardLabel()
 {
 	// Чтение сохранённой метки
 	Int16U i;
@@ -45,7 +45,7 @@ void FWPAR_LoadBoardLabel()
 
 	// Определение индекса метки
 	for(i = 0; i < sizeof(BoardLabels) / sizeof(BoardLabels[0]); i++)
-		if(FWPAR_AreNamesEqual(CurrentLabel, (char *)BoardLabels[i].Name))
+		if(FWLB_AreNamesEqual(CurrentLabel, (char *)BoardLabels[i].Name))
 		{
 			LabelSelector = BoardLabels[i].Index;
 			break;
@@ -53,7 +53,7 @@ void FWPAR_LoadBoardLabel()
 }
 // ----------------------------------------
 
-Boolean FWPAR_AreNamesEqual(char *a, char *b)
+Boolean FWLB_AreNamesEqual(char *a, char *b)
 {
 	Int16U i;
 	for(i = 0; i < LABEL_NAME_MAX_LENGTH; i++)
@@ -66,19 +66,19 @@ Boolean FWPAR_AreNamesEqual(char *a, char *b)
 }
 // ----------------------------------------
 
-SelectorIndex FWPAR_GetSelector()
+SelectorIndex FWLB_GetSelector()
 {
 	return LabelSelector;
 }
 // ----------------------------------------
 
-void FWPAR_PrepareLabelRead()
+void FWLB_PrepareLabelRead()
 {
 	LabelReadPointer = 0;
 }
 // ----------------------------------------
 
-Int16U FWPAR_ReadLabelSymbol()
+Int16U FWLB_ReadLabelSymbol()
 {
 	if(LabelReadPointer < LABEL_NAME_MAX_LENGTH)
 	{
