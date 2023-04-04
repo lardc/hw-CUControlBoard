@@ -16,6 +16,7 @@
 // Forward functions
 Int16U STF_StartAddressShift(Int16U Index, Boolean Readable);
 Int16U STF_GetTypeLength(DataType CurrentType);
+void STF_Save(Boolean Readable);
 
 // Functions
 //
@@ -41,7 +42,19 @@ void STF_LoadFromFlash()
 }
 // ----------------------------------------
 
-void STF_SaveToFlash(Boolean Readable)
+void STF_SaveUserData()
+{
+	STF_Save(TRUE);
+}
+// ----------------------------------------
+
+void STF_SaveFaultData()
+{
+	STF_Save(FALSE);
+}
+// ----------------------------------------
+
+void STF_Save(Boolean Readable)
 {
 	ZwSystem_DisableDog();
 	DINT;
