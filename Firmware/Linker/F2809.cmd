@@ -73,7 +73,6 @@ MEMORY
 PAGE 0:    /* Program Memory */
            /* Memory (RAM/FLASH/OTP) blocks can be moved to PAGE1 for data allocation */
 
-   RAML0L10     : origin = 0x008000, length = 0x001500     /* on-chip RAM block L0 & L1(0)*/
    OTP          : origin = 0x3D7800, length = 0x000400     /* on-chip OTP */
    FLASHH       : origin = 0x3D8000, length = 0x004000     /* on-chip FLASH */
    FLASHG       : origin = 0x3DC000, length = 0x004000     /* on-chip FLASH */
@@ -87,6 +86,8 @@ PAGE 0:    /* Program Memory */
    LOADER_BEGIN : origin = 0x3F7FF6, length = 0x000002     /* Part of FLASHA.  Used for "boot to Flash" bootloader mode. */
    CSM_PWL      : origin = 0x3F7FF8, length = 0x000008     /* Part of FLASHA.  CSM password locations in FLASHA */
    
+   RAM          : origin = 0x3F8000, length = 0x004000     /* on-chip RAM full range */
+
    ROM          : origin = 0x3FF000, length = 0x000FC0     /* Boot ROM */
    RESET        : origin = 0x3FFFC0, length = 0x000002     /* part of boot ROM  */
    VECTORS      : origin = 0x3FFFC2, length = 0x00003E     /* part of boot ROM  */
@@ -99,8 +100,6 @@ PAGE 1 :   /* Data Memory */
    RAMM0_FL    : origin = 0x0003FF, length = 0x000001     /* on-chip RAM block M0 for boot flag */
    RAMM1       : origin = 0x000480, length = 0x000380     /* on-chip RAM block M1 */
    BOOT_RSVD   : origin = 0x000400, length = 0x000080     /* Part of M1, BOOT rom will use this for stack */
-   RAML11      : origin = 0x009500, length = 0x000B00     /* on-chip RAM block L1(1) */
-   RAMH0       : origin = 0x3FA000, length = 0x002000     /* on-chip RAM block H0 */
 }
 
 /* Allocate sections to memory blocks.
@@ -117,25 +116,19 @@ Flash28_API:
         -lFlash2809_API_V100.lib(.econst)
         -lFlash2809_API_V100.lib(.text)
    }                   LOAD = FLASHC,
-                       RUN = RAML0L10,
-                       /* ¬ переменную Flash28_API_LoadStart зап-ем нач. адр.
-                          сектора  Flash28_API */
+                       RUN = RAM,
                        LOAD_START(_Flash28_API_LoadStart),
-                       /* ¬ переменную Flash28_API_LoadEnd записываем кон. адр.
-                          сектора  Flash28_API */
                        LOAD_END(_Flash28_API_LoadEnd),
-					   /* ¬ переменную Flash28_API_RunStart записываем адр.
-                          дл€ записи API functions в RAM */
                        RUN_START(_Flash28_API_RunStart),
                        PAGE = 0
- 
+
    /* Allocate program areas: */
    .cinit              : > FLASHC      PAGE = 0
    .pinit              : > FLASHC      PAGE = 0
    .text               : > FLASHC      PAGE = 0
    codestart           : > BEGIN       PAGE = 0
    ramfuncs            : LOAD = FLASHD,
-                         RUN = RAML0L10,
+                         RUN = RAM,
                          LOAD_START(_RamfuncsLoadStart),
                          LOAD_END(_RamfuncsLoadEnd),
                          RUN_START(_RamfuncsRunStart),
@@ -147,7 +140,7 @@ Flash28_API:
    /* Allocate uninitalized data sections: */
    .stack              : > RAMM1       PAGE = 1
    .esysmem            : > RAMM1       PAGE = 1
-   .ebss               : > RAML11      PAGE = 1
+   .ebss               : > RAM         PAGE = 0
 
    /* Initalized sections go in Flash */
    /* For SDFlash to program these, they must be allocated to page 0 */
@@ -156,7 +149,7 @@ Flash28_API:
 
    /* Allocate IQ math areas: */
    IQmath              : LOAD = FLASHD,
-                         RUN = RAML0L10,
+                         RUN = RAM,
                          LOAD_START(_IQmathLoadStart),
                          LOAD_END(_IQmathLoadEnd),
                          RUN_START(_IQmathRunStart),
@@ -177,10 +170,6 @@ Flash28_API:
                          LOAD_END(_RamconstsLoadEnd),
 						 RUN_START(_RamconstsRunStart)
 
-   /* Allocate large memory blocks section: */
-   data_mem	           : > RAMH0       PAGE = 1
-   /* Allocate special memory blocks section: */
-   data_mem2           : > RAMM0       PAGE = 1
    /* Allocate special memory boot-loader flag: */
    bl_flag             : > RAMM0_FL    PAGE = 1
 
