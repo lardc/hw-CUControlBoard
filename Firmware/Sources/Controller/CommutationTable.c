@@ -61,7 +61,7 @@ const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
 						{BOARD2, PIN_A1},			// 16
 						{BOARD2, PIN_A2},			// 17
 						{BOARD2, PIN_A4},			// 18
-						{BOARD2, PIN_A5},			// 19	// BB:		Disconnect control
+						{BOARD2, PIN_A5},			// 19	// BB:		Упраление реле в BlackBox в зависимости от типа (НО / НЗ)
 						{BOARD2, PIN_B1},			// 20
 						{BOARD2, PIN_B2},			// 21
 						{BOARD2, PIN_B4},			// 22

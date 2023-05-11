@@ -39,7 +39,7 @@
 #define T2_BV_POS_POW_C			4
 #define T2_BV_NEG_POW_C			5
 //
-#define T2_BB_DISCONNECT		19
+#define T2_BB_RELAY_ACTIVATE	19
 //
 // Commutation type 6
 //

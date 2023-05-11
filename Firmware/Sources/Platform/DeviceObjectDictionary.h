@@ -49,6 +49,9 @@
 
 // REGISTERS
 //
+// Конфигурация аппаратных особенностей блока
+#define REG_BB_NC_RELAY				0	// Флаг использования НЗ-реле в BlackBox
+
 #define REG_TABLE_INDEX				64	// Commutation table index
 #define REG_TABLE_ACTION			65	// Boolean variable for action
 #define REG_RAW_BOARD				66	// Raw value for board number
