@@ -1,4 +1,4 @@
-// Header
+п»ї// Header
 #include "SaveToFlash.h"
 
 // Includes
@@ -66,21 +66,21 @@ void STF_Save(Boolean Readable)
 		Int16U AddressShift = STF_StartAddressShift(i, Readable);
 		static const Int16U DescriptionHeader[2] = {DT_Char, MAX_DESCRIPTION_LEN};
 
-		// Запись заголовка описания
+		// Р—Р°РїРёСЃСЊ Р·Р°РіРѕР»РѕРІРєР° РѕРїРёСЃР°РЅРёСЏ
 		Int32U StartAddr = Readable ? FLASH_RW_START_ADDR : FLASH_WO_START_ADDR;
 		Status = Flash_Program((pInt16U)(StartAddr + AddressShift), (pInt16U)DescriptionHeader, 2,
 				(FLASH_ST *)&FlashStatus);
 
-		// Запись описания
+		// Р—Р°РїРёСЃСЊ РѕРїРёСЃР°РЅРёСЏ
 		Status = Flash_Program((pInt16U)(StartAddr + AddressShift + 2), (pInt16U)StorageDescription[i].Description,
 				MAX_DESCRIPTION_LEN, (FLASH_ST *)&FlashStatus);
 
-		// Запись заголовка данных
+		// Р—Р°РїРёСЃСЊ Р·Р°РіРѕР»РѕРІРєР° РґР°РЅРЅС‹С…
 		Int16U DataHeader[2] = {StorageDescription[i].Type, StorageDescription[i].Length};
 		Status = Flash_Program((pInt16U)(StartAddr + AddressShift + 2 + MAX_DESCRIPTION_LEN),
 				(pInt16U)DataHeader, 2, (FLASH_ST *)&FlashStatus);
 
-		// Запись данных при наличии указателя
+		// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РїСЂРё РЅР°Р»РёС‡РёРё СѓРєР°Р·Р°С‚РµР»СЏ
 		if(TablePointers[i])
 		{
 			Int16U DataWriteLength = StorageDescription[i].Length * STF_GetTypeLength(StorageDescription[i].Type);
@@ -107,9 +107,9 @@ Int16U STF_StartAddressShift(Int16U Index, Boolean Readable)
 	{
 		if((Readable && StorageDescription[i].UseRead) || (!Readable && !StorageDescription[i].UseRead))
 		{
-			// На каждую запись выделяется дополнительно:
-			// 2 поля для хранения типа и длины описания
-			// 2 поля для хранения типа и длины самих данных
+			// РќР° РєР°Р¶РґСѓСЋ Р·Р°РїРёСЃСЊ РІС‹РґРµР»СЏРµС‚СЃСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ:
+			// 2 РїРѕР»СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С‚РёРїР° Рё РґР»РёРЅС‹ РѕРїРёСЃР°РЅРёСЏ
+			// 2 РїРѕР»СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С‚РёРїР° Рё РґР»РёРЅС‹ СЃР°РјРёС… РґР°РЅРЅС‹С…
 			Shift += STF_GetTypeLength(StorageDescription[i].Type) * StorageDescription[i].Length + MAX_DESCRIPTION_LEN + 4;
 		}
 	}

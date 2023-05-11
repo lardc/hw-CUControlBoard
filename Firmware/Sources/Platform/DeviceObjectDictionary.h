@@ -1,4 +1,4 @@
-// -----------------------------------------
+п»ї// -----------------------------------------
 // Device object dictionary
 // ----------------------------------------
 
@@ -13,7 +13,7 @@
 #define ACT_CLR_FAULT				3	// Clear fault
 #define ACT_CLR_WARNING				4	// Clear warning
 //
-#define ACT_DBG_INDICATORS			50	// Проверка индикаторов Safety и Pressure
+#define ACT_DBG_INDICATORS			50	// РџСЂРѕРІРµСЂРєР° РёРЅРґРёРєР°С‚РѕСЂРѕРІ Safety Рё Pressure
 //
 #define ACT_SET_ACTIVE				100	// Switch block to active mode
 #define ACT_SET_INACTIVE			101	// Switch block to inactive mode

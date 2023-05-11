@@ -1,4 +1,4 @@
-// -----------------------------------------
+п»ї// -----------------------------------------
 // Global definitions
 // ----------------------------------------
 
@@ -26,7 +26,7 @@
 #define COMM_DELAY_NONE_MS			100
 #define COMM_DELAY_SHORT_MS			20
 #define PRESSURE_FILTER_T			750
-#define IGNORE_ON_SFTY_CHANGE_MS	100		// Таймаут игнорирования входа безопасности после переконфигурации, мс
+#define IGNORE_ON_SFTY_CHANGE_MS	100		// РўР°Р№РјР°СѓС‚ РёРіРЅРѕСЂРёСЂРѕРІР°РЅРёСЏ РІС…РѕРґР° Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё РїРѕСЃР»Рµ РїРµСЂРµРєРѕРЅС„РёРіСѓСЂР°С†РёРё, РјСЃ
 //
 // Debug options
 #define DEBUG_USE_SAFETY			TRUE	// Safety circuit triggering

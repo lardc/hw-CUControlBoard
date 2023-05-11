@@ -1,4 +1,4 @@
-#ifndef __FIRMWARE_LABEL_H
+﻿#ifndef __FIRMWARE_LABEL_H
 #define __FIRMWARE_LABEL_H
 
 // Include

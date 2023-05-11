@@ -1,4 +1,4 @@
-#ifndef __STORAGE_DESCRIPTION_H
+﻿#ifndef __STORAGE_DESCRIPTION_H
 #define __STORAGE_DESCRIPTION_H
 
 // Include

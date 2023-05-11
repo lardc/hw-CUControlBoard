@@ -1,4 +1,4 @@
-// Header
+п»ї// Header
 #include "FirmwareLabel.h"
 
 // Include
@@ -15,21 +15,21 @@ Boolean FWLB_AreNamesEqual(char *a, char *b);
 //
 void FWLB_LoadBoardLabel()
 {
-	// Чтение сохранённой метки
+	// Р§С‚РµРЅРёРµ СЃРѕС…СЂР°РЅС‘РЅРЅРѕР№ РјРµС‚РєРё
 	Int16U i;
 	char CurrentLabel[LABEL_NAME_MAX_LENGTH] = {0};
 	for(i = 0; i < LABEL_NAME_MAX_LENGTH; i++)
 	{
 		Int16U Symbol = *((pInt16U)(i + LABEL_START_ADDRESS));
 
-		// Проверка на попадание в диапазон ASCII
+		// РџСЂРѕРІРµСЂРєР° РЅР° РїРѕРїР°РґР°РЅРёРµ РІ РґРёР°РїР°Р·РѕРЅ ASCII
 		if(0x20 <= Symbol && Symbol <= 0x7E)
 			CurrentLabel[i] = Symbol;
 		else
 			break;
 	}
 
-	// Определение индекса метки
+	// РћРїСЂРµРґРµР»РµРЅРёРµ РёРЅРґРµРєСЃР° РјРµС‚РєРё
 	for(i = 0; i < BoardLabelsSize; i++)
 	{
 		if(FWLB_AreNamesEqual(CurrentLabel, (char *)BoardLabels[i].Name))
