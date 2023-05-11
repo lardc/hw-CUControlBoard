@@ -1,4 +1,4 @@
-﻿// -----------------------------------------
+﻿// ----------------------------------------
 // Device profile
 // ----------------------------------------
 
@@ -350,4 +350,4 @@ static Int16U DEVPROFILE_CallbackReadX(Int16U Endpoint, pInt16U *Buffer, Boolean
 }
 
 
-// No more
+

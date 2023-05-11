@@ -1,4 +1,4 @@
-﻿// -----------------------------------------
+﻿// ----------------------------------------
 // Global definitions
 // ----------------------------------------
 
@@ -129,4 +129,4 @@ const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
 				};
 #endif
 
-// No more
+

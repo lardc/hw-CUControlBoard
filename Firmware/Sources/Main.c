@@ -1,4 +1,4 @@
-﻿// -----------------------------------------
+﻿// ----------------------------------------
 // Program entry point
 // ----------------------------------------
 
@@ -14,7 +14,7 @@
 #include "Flash.h"
 
 // FORWARD FUNCTIONS
-// -----------------------------------------
+// ----------------------------------------
 Boolean InitializeCPU();
 void InitializeTimers();
 void InitializeSPI();
@@ -22,20 +22,20 @@ void InitializeSCI();
 void InitializeCAN();
 void InitializeBoard();
 void InitializeController();
-// -----------------------------------------
+// ----------------------------------------
 
 // FORWARD ISRs
-// -----------------------------------------
+// ----------------------------------------
 // CPU Timer 2 ISR
 ISRCALL Timer2_ISR();
 // CAN Line 0 ISR
 ISRCALL CAN0_ISR();
 // ILLEGAL ISR
 ISRCALL IllegalInstruction_ISR();
-// -----------------------------------------
+// ----------------------------------------
 
 // FUNCTIONS
-// -----------------------------------------
+// ----------------------------------------
 // Program main function
 void main()
 {
@@ -73,7 +73,7 @@ void main()
 	while(TRUE)
 		CONTROL_Idle();
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // Initialize and prepare DSP
 Boolean InitializeCPU()
@@ -99,7 +99,7 @@ Boolean InitializeCPU()
 
    	return clockInitResult;
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // Initialize CPU timers
 void InitializeTimers()
@@ -108,7 +108,7 @@ void InitializeTimers()
  	ZwTimer_SetT2(TIMER2_PERIOD);
 	ZwTimer_EnableInterruptsT2(TRUE);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // Initialize and prepare SCI modules
 void InitializeSCI()
@@ -120,14 +120,14 @@ void InitializeSCI()
 
 	ZwSCI_EnableInterruptsGlobal(FALSE);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeSPI()
 {
 	// Common (ABCD)
 	ZwSPI_EnableInterruptsGlobal(FALSE);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeCAN()
 {
@@ -141,7 +141,7 @@ void InitializeCAN()
     ZwCANa_InitInterrupts(TRUE);
     ZwCANa_EnableInterrupts(TRUE);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeBoard()
 {
@@ -152,16 +152,16 @@ void InitializeBoard()
    	// Init on-board watch-dog
    	ZbWatchDog_Init();
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeController()
 {
 	CONTROL_Init();
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // ISRs
-// -----------------------------------------
+// ----------------------------------------
 #ifdef BOOT_FROM_FLASH
 	#pragma CODE_SECTION(Timer2_ISR, "ramfuncs");
 	#pragma CODE_SECTION(CAN0_ISR, "ramfuncs");
@@ -195,7 +195,7 @@ ISRCALL Timer2_ISR(void)
 	// no PIE
 	TIMER2_ISR_DONE;
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // Line 0 ISR
 ISRCALL CAN0_ISR(void)
@@ -205,7 +205,7 @@ ISRCALL CAN0_ISR(void)
 	// allow other interrupts from group 9
 	CAN_ISR_DONE;
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // ILLEGAL ISR
 ISRCALL IllegalInstruction_ISR(void)
@@ -222,6 +222,6 @@ ISRCALL IllegalInstruction_ISR(void)
 	// Reset system using WD
 	ZwSystem_ForceDog();
 }
-// -----------------------------------------
+// ----------------------------------------
 
-// No more.
+
