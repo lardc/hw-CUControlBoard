@@ -59,14 +59,11 @@ void COMM6_CommutateNone()
 
 void COMM2_CommDelay(Int16U ActionID)
 {
-	if (ActionID == ACT_COMM2_SL)
-	{
-		DELAY_US(COMM_DELAY_LONG_MS * 1000L);
-	}
-	else
-	{
-		DELAY_US(((OldActionID2 == ACT_COMM2_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
-	}
+	DELAY_US((( \
+			ActionID == ACT_COMM2_SL || \
+			ActionID == ACT_COMM2_GATE_SL || \
+			OldActionID2 == ACT_COMM2_SL || \
+			OldActionID2 == ACT_COMM2_GATE_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 }
 // ----------------------------------------
 
