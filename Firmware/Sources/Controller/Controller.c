@@ -52,10 +52,10 @@ static Boolean CONTROL_FilterPressure(Boolean Triggered);
 void CONTROL_Init()
 {
 	// Data-table EPROM service configuration
-	EPROMServiceConfig EPROMService = { NULL, NULL };
+	EPROMServiceConfig EPROMService = { &ZbMemory_WriteValuesEPROM, &ZbMemory_ReadValuesEPROM };
 
 	// Init data table
-	DT_Init(EPROMService, TRUE);
+	DT_Init(EPROMService, FALSE);
 	DT_SaveFirmwareInfo(DEVICE_CAN_ADDRESS, 0);
 	// Fill state variables with default values
 	CONTROL_FillWPPartDefault();

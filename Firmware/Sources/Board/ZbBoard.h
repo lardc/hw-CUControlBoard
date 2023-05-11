@@ -19,6 +19,7 @@
 // Include
 #include "stdinc.h"
 //
+#include "ZbMemory.h"
 #include "ZbGPIO.h"
 #include "ZbIOExpansion.h"
 #include "ZbWatchDog.h"
