@@ -6,7 +6,9 @@
 #include "FirmwareLabel.h"
 
 // Definitions
-#define LABEL_START_ADDRESS			0x3DC000	// Sector G
+#define LABEL_START_ADDRESS_SECTOR			0x3F0000	// Sector B
+#define LABEL_START_ADDRESS_SHIFT			0x2000
+#define LABEL_START_ADDRESS					(LABEL_START_ADDRESS_SECTOR + LABEL_START_ADDRESS_SHIFT)
 
 // Variables
 extern const Label BoardLabels[];
