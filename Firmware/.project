@@ -407,6 +407,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/hw-TMS-libs/Firmware/FirmwareInfo.h</locationURI>
 		</link>
 		<link>
+			<name>Sources/Platform/FirmwareLabel.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/hw-TMS-libs/Firmware/FirmwareLabel.c</locationURI>
+		</link>
+		<link>
+			<name>Sources/Platform/FirmwareLabel.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/hw-TMS-libs/Firmware/FirmwareLabel.h</locationURI>
+		</link>
+		<link>
 			<name>Sources/RTS/boot28.asm</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/hw-TMS-libs/RTS/boot28.asm</locationURI>
