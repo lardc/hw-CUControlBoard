@@ -19,8 +19,8 @@ void ZbGPIO_ToggleLED();
 void ZbGPIO_SafetyHWTriggering(Boolean Enabled);
 void ZbGPIO_ConnectProtectiveEarth(Boolean Enabled);
 // Get pin state
-Boolean ZbGPIO_GetSafetyState(Boolean IgnoreEmulation);
-Boolean ZbGPIO_GetPressureState(Boolean IgnoreEmulation);
+Boolean ZbGPIO_GetSafetyState(Boolean DisableSafety);
+Boolean ZbGPIO_GetPressureState(Boolean DisablePressure, Boolean Invert);
 // Indication switches
 void ZbGPIO_LightPressureFault(Boolean Enabled);
 void ZbGPIO_LightSafetySensorTrig(Boolean Enabled);

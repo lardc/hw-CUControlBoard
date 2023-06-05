@@ -45,6 +45,7 @@ static void CONTROL_FillWPPartDefault();
 static void CONTROL_SetDeviceState(DeviceState NewState);
 static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError);
 static Boolean CONTROL_FilterPressure(Boolean Triggered);
+static void CONTROL_SafetyHWTrigger(Boolean Enable);
 
 
 // Functions
@@ -130,17 +131,17 @@ void CONTROL_UpdateLow()
 	{
 		if(CONTROL_SelectSafetyConfiguration())
 			IgnoreSafetyTimeout = CONTROL_TimeCounter + IGNORE_ON_SFTY_CHANGE_MS;
-		if((CONTROL_TimeCounter > IgnoreSafetyTimeout) && ZbGPIO_GetSafetyState(FALSE))
+		if((CONTROL_TimeCounter > IgnoreSafetyTimeout) && ZbGPIO_GetSafetyState(DataTable[REG_SAFETY_DISABLE]))
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 	}
 
 	// Check pressure
 	if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive || CONTROL_State == DS_SafetyTrig)
-		if(CONTROL_FilterPressure(ZbGPIO_GetPressureState(FALSE)))
+		if(CONTROL_FilterPressure(ZbGPIO_GetPressureState(DataTable[REG_PRESSURE_DISABLE], DataTable[REG_PRESSURE_INVERT])))
 			CONTROL_RequestDPC(&CONTROL_PressureTrigger);
 
-	DataTable[REG_PRES_SEN_STATE] = ZbGPIO_GetPressureState(TRUE);
-	DataTable[REG_SC_STATE] = ZbGPIO_GetSafetyState(TRUE);
+	DataTable[REG_PRES_SEN_STATE] = ZbGPIO_GetPressureState(FALSE, DataTable[REG_PRESSURE_INVERT]);
+	DataTable[REG_SC_STATE] = ZbGPIO_GetSafetyState(FALSE);
 }
 // ----------------------------------------
 
@@ -225,6 +226,12 @@ static void CONTROL_SetDeviceState(DeviceState NewState)
 }
 // ----------------------------------------
 
+static void CONTROL_SafetyHWTrigger(Boolean Enable)
+{
+	ZbGPIO_SafetyHWTriggering(DataTable[REG_SAFETY_DISABLE] ? FALSE : Enable);
+}
+// ----------------------------------------
+
 static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 {
 	switch(ActionID)
@@ -233,7 +240,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			if(CONTROL_State == DS_None)
 			{
 				CONTROL_CommutateNone();
-				ZbGPIO_SafetyHWTriggering(FALSE);
+				CONTROL_SafetyHWTrigger(FALSE);
 				CONTROL_SetDeviceState(DS_Enabled);
 			}
 			else if(CONTROL_State != DS_Enabled)
@@ -244,7 +251,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive || CONTROL_State == DS_SafetyTrig)
 			{
 				CONTROL_CommutateNone();
-				ZbGPIO_SafetyHWTriggering(FALSE);
+				CONTROL_SafetyHWTrigger(FALSE);
 				ZbGPIO_LightSafetySensorTrig(FALSE);
 				CONTROL_SetDeviceState(DS_None);
 			}
@@ -255,7 +262,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_SET_ACTIVE:
 			if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive)
 			{
-				ZbGPIO_SafetyHWTriggering(TRUE);
+				CONTROL_SafetyHWTrigger(TRUE);
 				CONTROL_SetDeviceState(DS_SafetyActive);
 			}
 			else
@@ -268,7 +275,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				if (CONTROL_State == DS_SafetyTrig)
 					CONTROL_CommutateNone();
 
-				ZbGPIO_SafetyHWTriggering(FALSE);
+				CONTROL_SafetyHWTrigger(FALSE);
 				ZbGPIO_LightSafetySensorTrig(FALSE);
 				CONTROL_SetDeviceState(DS_Enabled);
 			}

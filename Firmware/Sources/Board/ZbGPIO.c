@@ -84,10 +84,7 @@ void ZbGPIO_ToggleLED()
 
 void ZbGPIO_SafetyHWTriggering(Boolean Enabled)
 {
-	if (DEBUG_USE_SAFETY)
-		ZwGPIO_WritePin(HW_SAFE_SW_PIN, !Enabled);
-	else
-		ZwGPIO_WritePin(HW_SAFE_SW_PIN, TRUE);
+	ZwGPIO_WritePin(HW_SAFE_SW_PIN, !Enabled);
 }
 // ----------------------------------------
 
@@ -97,21 +94,21 @@ void ZbGPIO_ConnectProtectiveEarth(Boolean Enabled)
 }
 // ----------------------------------------
 
-Boolean ZbGPIO_GetSafetyState(Boolean IgnoreEmulation)
+Boolean ZbGPIO_GetSafetyState(Boolean DisableSafety)
 {
-	if (DEBUG_USE_SAFETY || IgnoreEmulation)
-		return !ZwGPIO_ReadPin(SAFETY_PIN);
-	else
-		return FALSE;
+	return DisableSafety ? FALSE : !ZwGPIO_ReadPin(SAFETY_PIN);
 }
 // ----------------------------------------
 
-Boolean ZbGPIO_GetPressureState(Boolean IgnoreEmulation)
+Boolean ZbGPIO_GetPressureState(Boolean DisablePressure, Boolean Invert)
 {
-	if (DEBUG_USE_PRESSURE || IgnoreEmulation)
-		return (PRESSURE_SEN_INVERT ? (!ZwGPIO_ReadPin(PRESSURE_PIN)) : ZwGPIO_ReadPin(PRESSURE_PIN));
-	else
+	if(DisablePressure)
 		return FALSE;
+	else
+	{
+		Boolean InputValue = ZwGPIO_ReadPin(PRESSURE_PIN);
+		return Invert ? !InputValue : InputValue;
+	}
 }
 // ----------------------------------------
 

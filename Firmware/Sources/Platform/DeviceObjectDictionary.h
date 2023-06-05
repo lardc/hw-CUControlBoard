@@ -45,7 +45,6 @@
 //
 #define ACT_BOOT_LOADER_REQUEST		320	// Request reboot to bootloader
 #define ACT_WRITE_LABEL1			321	// Записать первую метку: CUControlBoard v.2.4 [Manufacturing]
-#define ACT_WRITE_LABEL2			322	// Записать первую метку: CUControlBoard v.2.4 [Manufacturing]
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
@@ -55,6 +54,9 @@
 // Конфигурация аппаратных особенностей блока
 #define REG_BB_NC_RELAY				0	// Флаг использования НЗ-реле в BlackBox
 #define REG_USE_VGT_2WIRE_MODE		1	// Использовать двухпроводную схему при измерении Vgt
+#define REG_PRESSURE_DISABLE		2	// Запретить мониторинг давления
+#define REG_PRESSURE_INVERT			3	// Инвертировать сигнал с датчика давления (истинно для PCB v.2.0)
+#define REG_SAFETY_DISABLE			4	// Запретить мониторинг контура безопасности
 //
 #define REG_TABLE_INDEX				64	// Commutation table index
 #define REG_TABLE_ACTION			65	// Boolean variable for action
