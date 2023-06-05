@@ -43,6 +43,10 @@
 //
 #define T2_BB_RELAY_ACTIVATE	19
 //
+// Для PCB v.2.2 и ниже
+#define T2_OLD_BB_RELAY			18
+#define T2_OLD_SAFETY_RELAY		19
+//
 // Commutation type 6
 //
 #define T6_SL_POT_A_1			10

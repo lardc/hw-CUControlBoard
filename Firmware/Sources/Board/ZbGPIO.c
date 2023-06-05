@@ -7,6 +7,7 @@
 #include "ZbGPIO.h"
 #include "SysConfig.h"
 #include "BoardConfig.h"
+#include "FirmwareLabel.h"
 
 // Functions
 //
@@ -100,14 +101,14 @@ Boolean ZbGPIO_GetSafetyState(Boolean DisableSafety)
 }
 // ----------------------------------------
 
-Boolean ZbGPIO_GetPressureState(Boolean DisablePressure, Boolean Invert)
+Boolean ZbGPIO_GetPressureState(Boolean DisablePressure)
 {
 	if(DisablePressure)
 		return FALSE;
 	else
 	{
 		Boolean InputValue = ZwGPIO_ReadPin(PRESSURE_PIN);
-		return Invert ? !InputValue : InputValue;
+		return (FWLB_GetSelector() == SID_PCB2_0) ? !InputValue : InputValue;
 	}
 }
 // ----------------------------------------

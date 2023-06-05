@@ -137,10 +137,10 @@ void CONTROL_UpdateLow()
 
 	// Check pressure
 	if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive || CONTROL_State == DS_SafetyTrig)
-		if(CONTROL_FilterPressure(ZbGPIO_GetPressureState(DataTable[REG_PRESSURE_DISABLE], DataTable[REG_PRESSURE_INVERT])))
+		if(CONTROL_FilterPressure(ZbGPIO_GetPressureState(DataTable[REG_PRESSURE_DISABLE])))
 			CONTROL_RequestDPC(&CONTROL_PressureTrigger);
 
-	DataTable[REG_PRES_SEN_STATE] = ZbGPIO_GetPressureState(FALSE, DataTable[REG_PRESSURE_INVERT]);
+	DataTable[REG_PRES_SEN_STATE] = ZbGPIO_GetPressureState(FALSE);
 	DataTable[REG_SC_STATE] = ZbGPIO_GetSafetyState(FALSE);
 }
 // ----------------------------------------
@@ -187,6 +187,7 @@ static void CONTROL_SafetyCircuitTrigger()
 	ZbGPIO_LightSafetySensorTrig(TRUE);
 
 	ZbIOE_ExternalOutput(FALSE);
+	ZbIOE_SafetyTrigFlag();
 	CONTROL_CommutateNone();
 	ZbIOE_ExternalOutput(TRUE);
 

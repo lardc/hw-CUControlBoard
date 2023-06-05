@@ -23,6 +23,7 @@ void ZbIOE_RegisterFlushWrite();
 void ZbIOE_OutputValuesCompose(Int16U TableID, Boolean TurnOn);
 // Reset cached values to zero
 void ZbIOE_OutputValuesReset();
+void ZbIOE_SafetyTrigFlag();
 // Direct access to the cached values
 void ZbIOE_OutputValuesDirect(Int16U BoardID, Int16U Mask);
 

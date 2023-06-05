@@ -8,6 +8,7 @@
 #include "SysConfig.h"
 #include "ZwDSP.h"
 #include "CommutationTable.h"
+#include "FirmwareLabel.h"
 
 
 // Constants
@@ -19,6 +20,7 @@
 // Variables
 //
 static Int16U CurrentOutputValues[COMMUTATION_EXT_BOARDS];
+static Boolean SafetyTrig = FALSE;
 
 
 // Functions
@@ -76,12 +78,25 @@ void ZbIOE_OutputValuesDirect(Int16U BoardID, Int16U Mask)
 }
 // ----------------------------------------
 
+void ZbIOE_SafetyTrigFlag()
+{
+	SafetyTrig = TRUE;
+}
+// ----------------------------------------
+
 void ZbIOE_OutputValuesReset()
 {
 	Int16U i;
-
 	for (i = 0; i < COMMUTATION_EXT_BOARDS; ++i)
 		CurrentOutputValues[i] = 0;
+
+	if(SafetyTrig)
+		SafetyTrig = FALSE;
+	else
+	{
+		if(FWLB_GetSelector() == SID_PCB2_0 || FWLB_GetSelector() == SID_PCB2_1 || FWLB_GetSelector() == SID_PCB2_2)
+			ZbIOE_OutputValuesCompose(T2_OLD_SAFETY_RELAY, TRUE);
+	}
 }
 // ----------------------------------------
 
