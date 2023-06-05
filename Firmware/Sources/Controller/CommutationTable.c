@@ -57,7 +57,7 @@ const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
 						{BOARD1, PIN_D1},			// 12
 						{BOARD1, PIN_D2},			// 13
 						{BOARD1, PIN_D4},			// 14	// Gate		Gate Potential Control Anode to POTENTIAL_CTRL_A
-						{BOARD1, PIN_D5},			// 15
+						{BOARD1, PIN_D5},			// 15	// SL:		SL control Cathode to CTRL_C (для двухпроводной схемы Vgt)
 						{BOARD2, PIN_A1},			// 16
 						{BOARD2, PIN_A2},			// 17
 						{BOARD2, PIN_A4},			// 18

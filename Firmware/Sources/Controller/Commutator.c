@@ -78,6 +78,7 @@ void COMM2_Commutate(Int16U ActionID)
 		ZbGPIO_ConnectProtectiveEarth(FALSE);
 
 	Boolean BlackBoxNCRelay = DataTable[REG_BB_NC_RELAY];
+	Boolean Vgt2WireMode = DataTable[REG_USE_VGT_2WIRE_MODE];
 	switch(ActionID)
 	{
 		case ACT_COMM2_GATE:
@@ -86,8 +87,15 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesCompose(T2_GATE_POW_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_GATE_POW_CTRL_C, TRUE);
 				ZbIOE_OutputValuesCompose(T2_GATE_CTL_A, TRUE);
-				ZbIOE_OutputValuesCompose(T2_GATE_POT_CTL_A, TRUE);
-				ZbIOE_OutputValuesCompose(T2_GATE_POT_CTL_C, TRUE);
+				if(Vgt2WireMode)
+				{
+					ZbIOE_OutputValuesCompose(T2_GATE_CTL_C_2WIRE, TRUE);
+				}
+				else
+				{
+					ZbIOE_OutputValuesCompose(T2_GATE_POT_CTL_A, TRUE);
+					ZbIOE_OutputValuesCompose(T2_GATE_POT_CTL_C, TRUE);
+				}
 				if(!BlackBoxNCRelay)
 					ZbIOE_OutputValuesCompose(T2_BB_RELAY_ACTIVATE, TRUE);
 				ZbIOE_RegisterFlushWrite();
@@ -101,7 +109,7 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesCompose(T2_SL_POT_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_SL_POT_C, TRUE);
 				ZbIOE_OutputValuesCompose(T2_SL_CTL_A, TRUE);
-				ZbIOE_OutputValuesCompose(T2_SL_CTL_C, TRUE);
+				ZbIOE_OutputValuesCompose(Vgt2WireMode ? T2_SL_CTL_C_2WIRE : T2_SL_CTL_C, TRUE);
 				if(!BlackBoxNCRelay)
 					ZbIOE_OutputValuesCompose(T2_BB_RELAY_ACTIVATE, TRUE);
 				ZbIOE_RegisterFlushWrite();
@@ -154,7 +162,7 @@ void COMM2_Commutate(Int16U ActionID)
 				ZbIOE_OutputValuesCompose(T2_SL_POT_A, TRUE);
 				ZbIOE_OutputValuesCompose(T2_SL_POT_C, TRUE);
 				ZbIOE_OutputValuesCompose(T2_SL_CTL_A, TRUE);
-				ZbIOE_OutputValuesCompose(T2_SL_CTL_C, TRUE);
+				ZbIOE_OutputValuesCompose(Vgt2WireMode ? T2_SL_CTL_C_2WIRE : T2_SL_CTL_C, TRUE);
 				ZbIOE_RegisterFlushWrite();
 			}
 			break;

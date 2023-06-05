@@ -25,6 +25,7 @@
 #define T2_SL_POT_C				30
 #define T2_SL_CTL_A				11
 #define T2_SL_CTL_C				6
+#define T2_SL_CTL_C_2WIRE		15
 #define T2_SL_PWR				23
 //
 #define T2_GATE_POW_A			2
@@ -32,6 +33,7 @@
 #define T2_GATE_CTL_A			10
 #define T2_GATE_POT_CTL_A		14
 #define T2_GATE_POT_CTL_C		31
+#define T2_GATE_CTL_C_2WIRE		14
 //
 #define T2_BV_POS_POW_A			0
 #define T2_BV_NEG_POW_A			1
