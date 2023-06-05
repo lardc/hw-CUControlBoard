@@ -81,20 +81,9 @@
 #define T6_BV_NEG_POW_2			17
 #define T6_BV_NEG_POW_3			21
 //
-#if defined(BVT_HP) && defined(BVT_LP)
-	#define T6_ISOL_POS_POW_1		8
-	#define T6_ISOL_POS_POW_2		12
-	#define T6_ISOL_POS_POW_3		24
-#else
-	#define T6_BV_POS_POW_1			28
-	#define T6_BV_POS_POW_2			16
-	#define T6_BV_POS_POW_3			20
-#endif
-#define T6_ISOL_POS_A_1			40
-#define T6_ISOL_POS_A_2			32
-#define T6_ISOL_POS_C_1			44
-#define T6_ISOL_POS_C_2			36
-#define T6_ISOL_NEG_ISO			4
+#define T6_BV_POS_POW_1			28
+#define T6_BV_POS_POW_2			16
+#define T6_BV_POS_POW_3			20
 
 
 // Types

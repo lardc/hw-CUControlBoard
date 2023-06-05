@@ -31,14 +31,6 @@
 // undefine for CU_HV6
 #define COMM_MODE_2
 //
-// Select BVT configuration
-// define if presented
-// undefine if unrepresented
-#define BVT_HP
-// define if presented
-// undefine if unrepresented
-#undef BVT_LP
-//
 // Invert behavior of pressure sensing pin
 // TRUE for PCB v.2.0
 // FALSE for PCB v.2.1, v.2.2, v.2.4
