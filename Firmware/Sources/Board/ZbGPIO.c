@@ -7,7 +7,8 @@
 #include "ZbGPIO.h"
 #include "SysConfig.h"
 #include "BoardConfig.h"
-#include "FirmwareLabel.h"
+#include "DeviceObjectDictionary.h"
+#include "DataTable.h"
 
 // Functions
 //
@@ -108,7 +109,7 @@ Boolean ZbGPIO_GetPressureState(Boolean DisablePressure)
 	else
 	{
 		Boolean InputValue = ZwGPIO_ReadPin(PRESSURE_PIN);
-		return (FWLB_GetSelector() == SID_PCB2_0) ? !InputValue : InputValue;
+		return DataTable[REG_PCB_V20] ? !InputValue : InputValue;
 	}
 }
 // ----------------------------------------

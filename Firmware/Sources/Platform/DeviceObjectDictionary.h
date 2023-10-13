@@ -44,11 +44,6 @@
 #define ACT_UNLOCK_NV_AREA			204	// Unlock modifications of parameters area (password-protected)
 //
 #define ACT_BOOT_LOADER_REQUEST		320	// Request reboot to bootloader
-#define ACT_WRITE_LABEL1			321	// Записать метку: CUControlBoard v.2.4 [Manufacturing]
-#define ACT_WRITE_LABEL2			321	// Записать метку: CUControlBoard v.2.3
-#define ACT_WRITE_LABEL3			321	// Записать метку: CUControlBoard v.2.2
-#define ACT_WRITE_LABEL4			321	// Записать метку: CUControlBoard v.2.1
-#define ACT_WRITE_LABEL5			321	// Записать метку: CUControlBoard v.2.0
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
@@ -60,6 +55,8 @@
 #define REG_USE_VGT_2WIRE_MODE		1	// Использовать двухпроводную схему при измерении Vgt
 #define REG_PRESSURE_DISABLE		2	// Запретить мониторинг давления
 #define REG_SAFETY_DISABLE			3	// Запретить мониторинг контура безопасности
+#define REG_PCB_V20					4	// Для PCB v.2.0 используется инверсия сигнала давления
+#define REG_PCB_V22_AND_LOWER		5	// Для PCB v.2.2 и ниже используются особые линии реле безопасности и BlackBox
 //
 #define REG_TABLE_INDEX				64	// Commutation table index
 #define REG_TABLE_ACTION			65	// Boolean variable for action

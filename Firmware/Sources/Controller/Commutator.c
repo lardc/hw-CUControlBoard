@@ -11,7 +11,6 @@
 #include "CommutationTable.h"
 #include "Global.h"
 #include "DataTable.h"
-#include "FirmwareLabel.h"
 
 
 // Variables
@@ -80,9 +79,7 @@ void COMM2_Commutate(Int16U ActionID)
 
 	Boolean BlackBoxNCRelay = DataTable[REG_BB_NC_RELAY];
 	Boolean Vgt2WireMode = DataTable[REG_USE_VGT_2WIRE_MODE];
-	Int16U BBRelayIndex =
-			(FWLB_GetSelector() == SID_PCB2_0 || FWLB_GetSelector() == SID_PCB2_1 || FWLB_GetSelector() == SID_PCB2_2) ?
-					T2_OLD_BB_RELAY : T2_BB_RELAY_ACTIVATE;
+	Int16U BBRelayIndex = DataTable[REG_PCB_V22_AND_LOWER] ? T2_OLD_BB_RELAY : T2_BB_RELAY_ACTIVATE;
 	switch(ActionID)
 	{
 		case ACT_COMM2_GATE:

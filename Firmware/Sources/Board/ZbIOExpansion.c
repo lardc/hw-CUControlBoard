@@ -8,7 +8,8 @@
 #include "SysConfig.h"
 #include "ZwDSP.h"
 #include "CommutationTable.h"
-#include "FirmwareLabel.h"
+#include "DeviceObjectDictionary.h"
+#include "DataTable.h"
 
 
 // Constants
@@ -94,7 +95,7 @@ void ZbIOE_OutputValuesReset()
 		SafetyTrig = FALSE;
 	else
 	{
-		if(FWLB_GetSelector() == SID_PCB2_0 || FWLB_GetSelector() == SID_PCB2_1 || FWLB_GetSelector() == SID_PCB2_2)
+		if(DataTable[REG_PCB_V22_AND_LOWER])
 			ZbIOE_OutputValuesCompose(T2_OLD_SAFETY_RELAY, TRUE);
 	}
 }

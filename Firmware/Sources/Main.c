@@ -12,7 +12,6 @@
 //
 #include "Controller.h"
 #include "Flash.h"
-#include "FirmwareLabel.h"
 
 // FORWARD FUNCTIONS
 // ----------------------------------------
@@ -43,7 +42,6 @@ void main()
 	// Boot process
 	InitializeCPU();
 	FLASH_Init();
-	FWLB_LoadBoardLabel();
 
 	// Init peripheral modules
 	InitializeTimers();
