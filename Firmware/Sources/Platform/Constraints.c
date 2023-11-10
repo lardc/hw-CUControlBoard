@@ -80,24 +80,16 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
                                     		   {INT16U_MAX, 0, 0}														// 63
                                       };
 
-const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START] =
+TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START] =
                                       {
-											   {0, COMMUTATION_TABLE_SIZE - 1, 0},										// 64
+											   {0, COMMUTATION2_TABLE_SIZE - 1, 0},										// 64
 											   {0, INT16U_MAX, 0},														// 65
-											   {0, COMMUTATION_EXT_BOARDS - 1, 0},										// 66
+											   {0, COMMUTATION2_TABLE_SIZE - 1, 0},										// 66
 											   {0, INT16U_MAX, 0},														// 67
 											   {0, 0, 0},																// 68
 											   {0, 0, 0},																// 69
-#ifdef COMM_MODE_2
 											   {MODULE_DIRECT, MODULE_REVERSE, MODULE_DIRECT},							// 70
-#else
-											   {MODULE_MT1, MODULE_MDT5, MODULE_MT1},									// 70
-#endif
-#ifdef COMM_MODE_2
 											   {1, 1, 1},																// 71
-#else
-											   {1, 2, 1},																// 71
-#endif
 											   {0, 0, 0},																// 72
 											   {0, 0, 0},																// 73
 											   {0, 0, 0},																// 74
@@ -123,5 +115,3 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											   {0, 0, 0},																// 94
                                     		   {INT16U_MAX, 0, 0}														// 95
                                       };
-
-

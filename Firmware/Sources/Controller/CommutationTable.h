@@ -8,17 +8,16 @@
 // Include
 #include "stdinc.h"
 
+// Definitions
+#define COMMUTATION2_EXT_BOARDS		2
+#define COMMUTATION4_EXT_BOARDS		2
+#define COMMUTATION6_EXT_BOARDS		3
 
-// Constants
-//
-#ifdef COMM_MODE_2
-	#define COMMUTATION_EXT_BOARDS	2
-#else
-	#define COMMUTATION_EXT_BOARDS	4
-#endif
+#define COMMUTATION2_TABLE_SIZE		(COMMUTATION2_EXT_BOARDS * 16)
+#define COMMUTATION4_TABLE_SIZE		(COMMUTATION4_EXT_BOARDS * 16)
+#define COMMUTATION6_TABLE_SIZE		(COMMUTATION6_EXT_BOARDS * 16)
 
-#define COMMUTATION_TABLE_SIZE	(COMMUTATION_EXT_BOARDS * 16)
-//
+
 // Commutation type 2
 //
 #define T2_SL_POT_A				26
@@ -46,7 +45,8 @@
 // Для PCB v.2.2 и ниже
 #define T2_OLD_BB_RELAY			18
 #define T2_OLD_SAFETY_RELAY		19
-//
+
+
 // Commutation type 6
 //
 #define T6_SL_POT_A_1			10
@@ -91,17 +91,15 @@
 
 
 // Types
-//
 typedef struct __CommutationTableItem
 {
 	Int16U BoardNum;
 	Int16U Bit;
 } CommutationTableItem;
 
-
 // Variables
-//
-extern const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE];
-
+extern const CommutationTableItem CommutationTable2[];
+extern const CommutationTableItem CommutationTable4[];
+extern const CommutationTableItem CommutationTable6[];
 
 #endif // __COMMTABLE_H

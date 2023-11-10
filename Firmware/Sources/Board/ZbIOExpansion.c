@@ -16,12 +16,16 @@
 //
 #define IOE_OUT_CL					16
 #define IO_REGISTER_WRITE_DELAY_US	10
+#define MAX_OUT_BOARDS				COMMUTATION6_TABLE_SIZE
 
 
 // Variables
 //
-static Int16U CurrentOutputValues[COMMUTATION_EXT_BOARDS];
+static Int16U CurrentOutputValues[MAX_OUT_BOARDS];
 static Boolean SafetyTrig = FALSE;
+
+static CommutationTableItem *UsedCommutationTable = (CommutationTableItem *)CommutationTable2;
+static Int16U UsedBoardsCount = COMMUTATION2_EXT_BOARDS;
 
 
 // Functions
@@ -64,15 +68,15 @@ void ZbIOE_RegisterReset()
 void ZbIOE_OutputValuesCompose(Int16U TableID, Boolean TurnOn)
 {
 	if (TurnOn)
-		CurrentOutputValues[CommutationTable[TableID].BoardNum] |= CommutationTable[TableID].Bit;
+		CurrentOutputValues[UsedCommutationTable[TableID].BoardNum] |= UsedCommutationTable[TableID].Bit;
 	else
-		CurrentOutputValues[CommutationTable[TableID].BoardNum] &= ~CommutationTable[TableID].Bit;
+		CurrentOutputValues[UsedCommutationTable[TableID].BoardNum] &= ~UsedCommutationTable[TableID].Bit;
 }
 // ----------------------------------------
 
 void ZbIOE_OutputValuesDirect(Int16U BoardID, Int16U Mask)
 {
-	if (BoardID >= COMMUTATION_EXT_BOARDS)
+	if (BoardID >= MAX_OUT_BOARDS)
 		return;
 
 	CurrentOutputValues[BoardID] = Mask;
@@ -88,7 +92,7 @@ void ZbIOE_SafetyTrigFlag()
 void ZbIOE_OutputValuesReset()
 {
 	Int16U i;
-	for (i = 0; i < COMMUTATION_EXT_BOARDS; ++i)
+	for (i = 0; i < MAX_OUT_BOARDS; ++i)
 		CurrentOutputValues[i] = 0;
 
 	if(SafetyTrig)
@@ -103,13 +107,13 @@ void ZbIOE_OutputValuesReset()
 
 void ZbIOE_RegisterFlushWrite()
 {
-	Int16U i, CurrentOutputValuesCopy[COMMUTATION_EXT_BOARDS];
+	Int16U i, CurrentOutputValuesCopy[MAX_OUT_BOARDS];
 
 	// Change bytes order
-	for (i = 0; i < COMMUTATION_EXT_BOARDS; ++i)
-		CurrentOutputValuesCopy[i] = CurrentOutputValues[COMMUTATION_EXT_BOARDS - 1 - i];
+	for (i = 0; i < UsedBoardsCount; ++i)
+		CurrentOutputValuesCopy[i] = CurrentOutputValues[UsedBoardsCount - 1 - i];
 
-	ZwSPId_Send(CurrentOutputValuesCopy, sizeof(Int16U) * COMMUTATION_EXT_BOARDS, IOE_OUT_CL, STTNormal);
+	ZwSPId_Send(CurrentOutputValuesCopy, sizeof(Int16U) * UsedBoardsCount, IOE_OUT_CL, STTNormal);
 }
 // ----------------------------------------
 

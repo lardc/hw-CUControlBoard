@@ -27,20 +27,13 @@
 #define PIN_D4	BIT10
 #define PIN_D5	BIT11
 
-// Extension board indexes
-//---------------------------------
-// Board 0 is the most distant extension board
-// to the control board
-//---------------------------------
-//
 #define BOARD1	0
 #define BOARD2	1
 #define BOARD3	2
 
 // Constants
 //
-#ifdef COMM_MODE_2
-const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
+const CommutationTableItem CommutationTable2[COMMUTATION2_TABLE_SIZE] =
 				{
 						{BOARD1, PIN_A1},			// 0	// BV:		HV2 to POWER_A
 						{BOARD1, PIN_A2},			// 1	// BV:		HV1 to POWER_A
@@ -75,8 +68,8 @@ const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
 						{BOARD2, PIN_D4},			// 30	// SL: 		Potential Cathode to POTENTIAL_C
 						{BOARD2, PIN_D5},			// 31	// Gate		Gate Potential Control Cathode to POTENTIAL_CTRL_C
 				};
-#else
-const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
+
+const CommutationTableItem CommutationTable6[COMMUTATION6_TABLE_SIZE] =
 				{
 						{BOARD1, PIN_A1},			// 0	// SL:		HC+ to POWER_2		// 2-top
 						{BOARD1, PIN_A2},			// 1	// SL:		HC+ to POWER_3		// 3-top
@@ -127,6 +120,3 @@ const CommutationTableItem CommutationTable[COMMUTATION_TABLE_SIZE] =
 						{BOARD3, PIN_D4},			// 46	// SL:		Control Cathode to CTRL_C1
 						{BOARD3, PIN_D5}			// 47	// Gate:	Control Cathode to CTRL_C1
 				};
-#endif
-
-
