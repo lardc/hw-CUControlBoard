@@ -22,11 +22,10 @@ extern CommutationMode CurrentCommMode;
 // Functions
 //
 void COMM_Init();
-// Switch commutation to none
 void COMM_CommutateNone();
-// Switch in commutation mode 2
+
 void COMM2_Commutate(Int16U ActionID);
-// Switch in commutation mode 6
+void COMM4_Commutate(Int16U ActionID, Int16U ModuleType, pInt16U pUserError);
 void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, pInt16U pUserError);
 
 #endif // __COMMUTATOR_H

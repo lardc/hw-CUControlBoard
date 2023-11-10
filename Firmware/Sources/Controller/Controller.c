@@ -329,15 +329,15 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				*pUserError = ERR_OPERATION_BLOCKED;
 			break;
 
-		case ACT_COMM2_NONE:
-		case ACT_COMM2_GATE:
-		case ACT_COMM2_SL:
-		case ACT_COMM2_BV_D:
-		case ACT_COMM2_BV_R:
-		case ACT_COMM2_NO_PE:
-		case ACT_COMM2_GATE_SL:
-		case ACT_COMM2_VGNT:
-			if(CurrentCommMode != CM_CUHV2)
+		case ACT_COMM2_4_NONE:
+		case ACT_COMM2_4_GATE:
+		case ACT_COMM2_4_SL:
+		case ACT_COMM2_4_BV_D:
+		case ACT_COMM2_4_BV_R:
+		case ACT_COMM2_4_NO_PE:
+		case ACT_COMM2_4_GATE_SL:
+		case ACT_COMM2_4_VGNT:
+			if(CurrentCommMode == CM_CUHV6)
 				return FALSE;
 			else
 			{
@@ -347,13 +347,16 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 					*pUserError = ERR_DEVICE_NOT_READY;
 				else
 				{
-					COMM2_Commutate(ActionID);
-					if (CONTROL_State == DS_SafetyTrig)
+					if(CONTROL_State == DS_SafetyTrig)
 					{
 						CONTROL_CommutateNone();
 						ZbGPIO_LightSafetySensorTrig(FALSE);
 						CONTROL_SetDeviceState(DS_SafetyActive);
 					}
+					else if(CurrentCommMode == CM_CUHV2)
+						COMM2_Commutate(ActionID);
+					else
+						COMM4_Commutate(ActionID, DataTable[REG_MODULE_TYPE], pUserError);
 				}
 			}
 			break;

@@ -22,14 +22,14 @@
 #define ACT_RAW_ACCESS				103 // Raw access to the cache
 #define ACT_FLUSH_REG				104	// Flush values to physical register
 //
-#define ACT_COMM2_NONE				110 // Disconnect all
-#define ACT_COMM2_GATE				111 // Connect Gate tester
-#define ACT_COMM2_SL				112 // Connect Static Losses tester
-#define ACT_COMM2_BV_D				113 // Connect direct BV tester
-#define ACT_COMM2_BV_R				114 // Connect reverse BV tester
-#define ACT_COMM2_NO_PE				115	// Connect other blocks (disconnect protective earth from lines)
-#define ACT_COMM2_GATE_SL			116	// Connect GTU and SL for Ih - GOST measurement
-#define ACT_COMM2_VGNT				117	// Connect GTU and BVT for Vgnt/Ignt measurement
+#define ACT_COMM2_4_NONE			110 // Disconnect all
+#define ACT_COMM2_4_GATE			111 // Connect Gate tester
+#define ACT_COMM2_4_SL				112 // Connect Static Losses tester
+#define ACT_COMM2_4_BV_D			113 // Connect direct BV tester
+#define ACT_COMM2_4_BV_R			114 // Connect reverse BV tester
+#define ACT_COMM2_4_NO_PE			115	// Connect other blocks (disconnect protective earth from lines)
+#define ACT_COMM2_4_GATE_SL			116	// Connect GTU and SL for Ih - GOST measurement
+#define ACT_COMM2_4_VGNT			117	// Connect GTU and BVT for Vgnt/Ignt measurement
 //
 #define ACT_COMM6_NONE				120 // Disconnect all
 #define ACT_COMM6_GATE				121 // Connect Gate tester

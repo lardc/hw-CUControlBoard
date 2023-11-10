@@ -15,15 +15,14 @@
 
 // Variables
 //
-static Int16U OldActionID2 = ACT_COMM2_NONE, OldActionID6 = ACT_COMM6_NONE;
+static Int16U OldActionID = ACT_COMM2_4_NONE;
 CommutationMode CurrentCommMode = CM_CUHV2;
 
 
 // Forward functions
 //
-void COMM2_CommDelay(Int16U ActionID);
-void COMM2_CommutateNone();
-void COMM6_CommutateNone();
+void COMM_CommDelay(Int16U ActionID);
+void COMM_CommutateNone();
 
 
 // Functions
@@ -45,6 +44,7 @@ void COMM_Init()
 			CurrentCommMode = CM_CUHV6;
 			break;
 	}
+	OldActionID = (CurrentCommMode == CM_CUHV6) ? ACT_COMM6_NONE : ACT_COMM2_4_NONE;
 
 	// Привязка таблиц коммутации и переопределение ограничений
 	ZbIOE_MakeTablesBinding(CurrentCommMode);
@@ -53,77 +53,52 @@ void COMM_Init()
 
 void COMM_CommutateNone()
 {
-	switch(CurrentCommMode)
-	{
-		case CM_CUHV2:
-			COMM2_CommutateNone();
-			break;
-
-		case CM_CUHV6:
-			COMM6_CommutateNone();
-			break;
-	}
-}
-// ----------------------------------------
-
-void COMM2_CommutateNone()
-{
-	// Reset registers anyway
 	ZbIOE_RegisterReset();
+	if (OldActionID == ACT_COMM2_4_NONE || OldActionID == ACT_COMM6_NONE)
+		return;
 
-	if (OldActionID2 == ACT_COMM2_NONE) return;
-
-	COMM2_CommDelay(ACT_COMM2_NONE);
+	Int16U Action = CurrentCommMode == CM_CUHV6 ? ACT_COMM6_NONE : ACT_COMM2_4_NONE;
+	COMM_CommDelay(Action);
 
 	ZbGPIO_ConnectProtectiveEarth(TRUE);
 	DELAY_US(COMM_DELAY_NONE_MS * 1000L);
 
-	OldActionID2 = ACT_COMM2_NONE;
+	OldActionID = Action;
 }
 // ----------------------------------------
 
-void COMM6_CommutateNone()
+void COMM_CommDelay(Int16U ActionID)
 {
-	// Reset registers anyway
-	ZbIOE_RegisterReset();
+	Boolean LongDelay = \
+			ActionID == ACT_COMM2_4_SL || \
+			ActionID == ACT_COMM2_4_GATE_SL || \
+			ActionID == ACT_COMM6_SL || \
 
-	if (OldActionID6 == ACT_COMM6_NONE) return;
+			OldActionID == ACT_COMM2_4_SL || \
+			OldActionID == ACT_COMM2_4_GATE_SL || \
+			OldActionID == ACT_COMM6_SL;
 
-	DELAY_US(((OldActionID6 == ACT_COMM6_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
-
-	ZbGPIO_ConnectProtectiveEarth(TRUE);
-	DELAY_US(COMM_DELAY_NONE_MS * 1000L);
-
-	OldActionID6 = ACT_COMM6_NONE;
-}
-// ----------------------------------------
-
-void COMM2_CommDelay(Int16U ActionID)
-{
-	DELAY_US((( \
-			ActionID == ACT_COMM2_SL || \
-			ActionID == ACT_COMM2_GATE_SL || \
-			OldActionID2 == ACT_COMM2_SL || \
-			OldActionID2 == ACT_COMM2_GATE_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
+	DELAY_US((LongDelay ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 }
 // ----------------------------------------
 
 void COMM2_Commutate(Int16U ActionID)
 {
-	if (ActionID == OldActionID2) return;
+	if (ActionID == OldActionID) return;
 
-	if (ActionID != ACT_COMM2_NONE && OldActionID2 != ACT_COMM2_NONE)
-		COMM2_CommutateNone();
+	if (ActionID != ACT_COMM2_4_NONE && OldActionID != ACT_COMM2_4_NONE)
+		COMM_CommutateNone();
 
-	if (ActionID != ACT_COMM2_NONE)
+	if (ActionID != ACT_COMM2_4_NONE)
 		ZbGPIO_ConnectProtectiveEarth(FALSE);
 
 	Boolean BlackBoxNCRelay = DataTable[REG_BB_NC_RELAY];
 	Boolean Vgt2WireMode = DataTable[REG_USE_VGT_2WIRE_MODE];
 	Int16U BBRelayIndex = DataTable[REG_PCB_V22_AND_LOWER] ? T2_OLD_BB_RELAY : T2_BB_RELAY_ACTIVATE;
+
 	switch(ActionID)
 	{
-		case ACT_COMM2_GATE:
+		case ACT_COMM2_4_GATE:
 			{
 				ZbIOE_OutputValuesReset();
 				ZbIOE_OutputValuesCompose(T2_GATE_POW_A, TRUE);
@@ -144,7 +119,7 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
-		case ACT_COMM2_SL:
+		case ACT_COMM2_4_SL:
 			{
 				ZbIOE_OutputValuesReset();
 				ZbIOE_OutputValuesCompose(T2_SL_PWR, TRUE);
@@ -158,7 +133,7 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
-		case ACT_COMM2_BV_D:
+		case ACT_COMM2_4_BV_D:
 			{
 				ZbIOE_OutputValuesReset();
 				ZbIOE_OutputValuesCompose(T2_BV_POS_POW_A, TRUE);
@@ -169,7 +144,7 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
-		case ACT_COMM2_BV_R:
+		case ACT_COMM2_4_BV_R:
 			{
 				ZbIOE_OutputValuesReset();
 				ZbIOE_OutputValuesCompose(T2_BV_NEG_POW_A, TRUE);
@@ -180,7 +155,7 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
-		case ACT_COMM2_NO_PE:
+		case ACT_COMM2_4_NO_PE:
 			{
 				ZbIOE_OutputValuesReset();
 				if(BlackBoxNCRelay)
@@ -189,7 +164,7 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
-		case ACT_COMM2_GATE_SL:
+		case ACT_COMM2_4_GATE_SL:
 			{
 				ZbIOE_OutputValuesReset();
 				if(!BlackBoxNCRelay)
@@ -209,7 +184,7 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
-		case ACT_COMM2_VGNT:
+		case ACT_COMM2_4_VGNT:
 			{
 				ZbIOE_OutputValuesReset();
 				if(!BlackBoxNCRelay)
@@ -227,23 +202,289 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
-		case ACT_COMM2_NONE:
+		case ACT_COMM2_4_NONE:
 		default:
-			COMM2_CommutateNone();
+			COMM_CommutateNone();
 			break;
 	}
 
-	COMM2_CommDelay(ActionID);
-	OldActionID2 = ActionID;
+	COMM_CommDelay(ActionID);
+	OldActionID = ActionID;
+}
+// ----------------------------------------
+
+void COMM4_Commutate(Int16U ActionID, Int16U ModuleType, pInt16U pUserError)
+{
+	if (ActionID == OldActionID) return;
+
+	if (ActionID != ACT_COMM2_4_NONE && OldActionID != ACT_COMM2_4_NONE)
+		COMM_CommutateNone();
+
+	if (ActionID != ACT_COMM2_4_NONE)
+		ZbGPIO_ConnectProtectiveEarth(FALSE);
+
+	switch(ActionID)
+	{
+		case ACT_COMM2_4_GATE:
+		{
+			switch(ModuleType)
+			{
+				case MODULE_DIRECT:
+					{
+						ZbIOE_OutputValuesReset();
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_A_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_CTRL_C_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POT_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POT_CTL_C_2, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				case MODULE_REVERSE:
+					{
+						ZbIOE_OutputValuesReset();
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_A_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_CTRL_C_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POT_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POT_CTL_C_1, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				default:
+					{
+						ZbIOE_OutputValuesReset();
+						*pUserError = ERR_WRONG_CMD;
+					}
+					break;
+			}
+		}
+		break;
+
+		case ACT_COMM2_4_SL:
+		{
+			switch(ModuleType)
+			{
+				case MODULE_DIRECT:
+					{
+						ZbIOE_OutputValuesReset();
+						ZbIOE_OutputValuesCompose(T4_SL_CUHC_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_POT_A_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_POT_C_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CTL_C_2, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				case MODULE_REVERSE:
+					{
+						ZbIOE_OutputValuesReset();
+						ZbIOE_OutputValuesCompose(T4_SL_CUHC_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_POT_A_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_POT_C_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CTL_C_1, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				default:
+					{
+						ZbIOE_OutputValuesReset();
+						*pUserError = ERR_WRONG_CMD;
+					}
+					break;
+			}
+		}
+		break;
+
+		case ACT_COMM2_4_BV_D:
+		{
+			switch(ModuleType)
+			{
+				case MODULE_DIRECT:
+					{
+						ZbIOE_OutputValuesReset();
+						ZbIOE_OutputValuesCompose(T4_BV_POS_POW_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BV_NEG_POW_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BB_DISCONNECT, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				case MODULE_REVERSE:
+					{
+						ZbIOE_OutputValuesReset();
+						ZbIOE_OutputValuesCompose(T4_BV_POS_POW_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BV_NEG_POW_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BB_DISCONNECT, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				default:
+					{
+						ZbIOE_OutputValuesReset();
+						*pUserError = ERR_WRONG_CMD;
+					}
+					break;
+			}
+		}
+		break;
+
+		case ACT_COMM2_4_BV_R:
+		{
+			switch(ModuleType)
+			{
+				case MODULE_DIRECT:
+					{
+						ZbIOE_OutputValuesReset();
+						ZbIOE_OutputValuesCompose(T4_BV_NEG_POW_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BV_POS_POW_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BB_DISCONNECT, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+				case MODULE_REVERSE:
+					{
+						ZbIOE_OutputValuesReset();
+						ZbIOE_OutputValuesCompose(T4_BV_NEG_POW_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BV_POS_POW_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BB_DISCONNECT, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				default:
+					{
+						ZbIOE_OutputValuesReset();
+						*pUserError = ERR_WRONG_CMD;
+					}
+					break;
+			}
+		}
+		break;
+
+		case ACT_COMM2_4_NO_PE:
+		{
+			ZbIOE_OutputValuesReset();
+			ZbIOE_OutputValuesCompose(T4_BB_DISCONNECT, TRUE);
+			ZbIOE_RegisterFlushWrite();
+		}
+		break;
+
+		case ACT_COMM2_4_GATE_SL:
+		{
+			switch(ModuleType)
+			{
+				case MODULE_DIRECT:
+					{
+						ZbIOE_OutputValuesReset();
+						// GTU
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_A_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_CTRL_C_2, TRUE);
+
+						// SL
+						ZbIOE_OutputValuesCompose(T4_SL_CUHC_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_POT_A_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_POT_C_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CTL_C_2, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				case MODULE_REVERSE:
+					{
+						ZbIOE_OutputValuesReset();
+						// GTU
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_A_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_CTRL_C_1, TRUE);
+
+						// SL
+						ZbIOE_OutputValuesCompose(T4_SL_CUHC_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_POT_A_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_POT_C_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CTL_C_1, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+				default:
+					{
+						ZbIOE_OutputValuesReset();
+						*pUserError = ERR_WRONG_CMD;
+					}
+					break;
+
+			}
+		}
+		break;
+
+		case ACT_COMM2_4_VGNT:
+		{
+			switch(ModuleType)
+			{
+				case MODULE_DIRECT:
+					{
+						ZbIOE_OutputValuesReset();
+						// GTU
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_CTRL_C_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POT_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POT_CTL_C_2, TRUE);
+						// BVT direct
+						ZbIOE_OutputValuesCompose(T4_BV_POS_POW_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_BV_NEG_POW_2, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+
+				case MODULE_REVERSE:
+					{
+						ZbIOE_OutputValuesReset();
+						// GTU
+						ZbIOE_OutputValuesCompose(T4_GATE_POW_CTRL_C_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POT_CTL_A, TRUE);
+						ZbIOE_OutputValuesCompose(T4_GATE_POT_CTL_C_1, TRUE);
+						// BVT direct
+						ZbIOE_OutputValuesCompose(T2_BV_POS_POW_C, TRUE);
+						ZbIOE_OutputValuesCompose(T2_BV_NEG_POW_A, TRUE);
+						ZbIOE_RegisterFlushWrite();
+					}
+					break;
+				default:
+					{
+						ZbIOE_OutputValuesReset();
+						*pUserError = ERR_WRONG_CMD;
+					}
+					break;
+
+			}
+		}
+		break;
+
+		case ACT_COMM2_4_NONE:
+		default:
+			COMM_CommutateNone();
+			break;
+	}
+
+	COMM_CommDelay(ActionID);
+	OldActionID = ActionID;
 }
 // ----------------------------------------
 
 void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, pInt16U pUserError)
 {
-	if (ActionID == OldActionID6) return;
+	if (ActionID == OldActionID) return;
 
-	if (ActionID != ACT_COMM6_NONE && OldActionID6 != ACT_COMM6_NONE)
-		COMM6_CommutateNone();
+	if (ActionID != ACT_COMM6_NONE && OldActionID != ACT_COMM6_NONE)
+		COMM_CommutateNone();
 
 	if (ActionID != ACT_COMM6_NONE)
 		ZbGPIO_ConnectProtectiveEarth(FALSE);
@@ -327,10 +568,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 							break;
 					}
 				}
-
 				ZbIOE_RegisterFlushWrite();
-
-				DELAY_US(((OldActionID6 == ACT_COMM6_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 			}
 			break;
 
@@ -461,9 +699,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 							break;
 					}
 				}
-
 				ZbIOE_RegisterFlushWrite();
-				DELAY_US(COMM_DELAY_LONG_MS * 1000L);
 			}
 			break;
 
@@ -533,10 +769,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 							break;
 					}
 				}
-
 				ZbIOE_RegisterFlushWrite();
-
-				DELAY_US(((OldActionID6 == ACT_COMM6_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 			}
 			break;
 
@@ -613,21 +846,17 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 							break;
 					}
 				}
-
 				ZbIOE_RegisterFlushWrite();
-
-				DELAY_US(((OldActionID6 == ACT_COMM6_SL) ? COMM_DELAY_LONG_MS : COMM_DELAY_SHORT_MS) * 1000L);
 			}
 			break;
 
 		case ACT_COMM6_NONE:
 		default:
-			COMM6_CommutateNone();
+			COMM_CommutateNone();
 			break;
 	}
 
-	OldActionID6 = ActionID;
+	COMM_CommDelay(ActionID);
+	OldActionID = ActionID;
 }
 // ----------------------------------------
-
-

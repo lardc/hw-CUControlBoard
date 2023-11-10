@@ -69,7 +69,41 @@ const CommutationTableItem CommutationTable2[COMMUTATION2_TABLE_SIZE] =
 						{BOARD2, PIN_D5},			// 31	// Gate		Gate Potential Control Cathode to POTENTIAL_CTRL_C
 				};
 
-const CommutationTableItem CommutationTable4[COMMUTATION4_TABLE_SIZE] = {};
+const CommutationTableItem CommutationTable4[COMMUTATION4_TABLE_SIZE] =
+				{
+						{BOARD1, PIN_A1},			// 0	// BVT:		HV+ to POW_A
+						{BOARD1, PIN_A2},			// 1	// BVT:		HV+ to POW_C
+						{BOARD1, PIN_A4},			// 2	// Gate:	Power Anode to POW_A
+						{BOARD1, PIN_A5},			// 3	// Gate:	Power Anode to POW_C
+						{BOARD1, PIN_B1},			// 4	// BVT:		HV- to POW_C
+						{BOARD1, PIN_B2},			// 5	// BVT:		HV- to POW_A
+						{BOARD1, PIN_B4},			// 6	// Gate: 	Power and Control Cathode to POW_A
+						{BOARD1, PIN_B5},			// 7	// Gate: 	Power and Control Cathode to POW_C
+						{BOARD1, PIN_C1},			// 8	// SL: 		Control Cathode (C-) to POW_A
+						{BOARD1, PIN_C2},			// 9	// SL: 		Control Cathode	(C-) to POW_C
+						{BOARD1, PIN_C4},			// 10	// SL: 		Potential Anode to POT_A
+						{BOARD1, PIN_C5},			// 11	// SL: 		Potential Anode to POT_C
+						{BOARD1, PIN_D1},			// 12	// SL: 		Potential Cathode to POT_A
+						{BOARD1, PIN_D2},			// 13	// SL: 		Potential Cathode to POT_C
+						{BOARD1, PIN_D4},			// 14	// Gate: 	Potential Control Cathode to POT_A
+						{BOARD1, PIN_D5},			// 15	// Gate: 	Potential Control Cathode to POT_C
+						{BOARD2, PIN_A1},			// 16
+						{BOARD2, PIN_A2},			// 17
+						{BOARD2, PIN_A4},			// 18
+						{BOARD2, PIN_A5},			// 19	// BB:		Disconnect control
+						{BOARD2, PIN_B1},			// 20
+						{BOARD2, PIN_B2},			// 21
+						{BOARD2, PIN_B4},			// 22	// BCUHC4:	IN+/IN- to OUI-/OUT+
+						{BOARD2, PIN_B5},			// 23	// BCUHC4:	IN+/IN- to OUT+/OUT-
+						{BOARD2, PIN_C1},			// 24
+						{BOARD2, PIN_C2},			// 25
+						{BOARD2, PIN_C4},			// 26	// Gate:	Control Anode to CTRL_A
+						{BOARD2, PIN_C5},			// 27	// Gate:	Potential Control Anode to POT_CTRL_A
+						{BOARD2, PIN_D1},			// 28
+						{BOARD2, PIN_D2},			// 29
+						{BOARD2, PIN_D4},			// 30	// SL:		Control Anode (C+) to CTRL_A
+						{BOARD2, PIN_D5},			// 31
+				};
 
 const CommutationTableItem CommutationTable6[COMMUTATION6_TABLE_SIZE] =
 				{
