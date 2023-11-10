@@ -125,7 +125,7 @@ Flash28_API:
    /* Allocate program areas: */
    .cinit              : > FLASHC      PAGE = 0
    .pinit              : > FLASHC      PAGE = 0
-   .text               : > FLASHC      PAGE = 0
+   .text               : > FLASHD      PAGE = 0
    codestart           : > BEGIN       PAGE = 0
    ramfuncs            : LOAD = FLASHD,
                          RUN = RAM,

@@ -69,6 +69,8 @@ const CommutationTableItem CommutationTable2[COMMUTATION2_TABLE_SIZE] =
 						{BOARD2, PIN_D5},			// 31	// Gate		Gate Potential Control Cathode to POTENTIAL_CTRL_C
 				};
 
+const CommutationTableItem CommutationTable4[COMMUTATION4_TABLE_SIZE] = {};
+
 const CommutationTableItem CommutationTable6[COMMUTATION6_TABLE_SIZE] =
 				{
 						{BOARD1, PIN_A1},			// 0	// SL:		HC+ to POWER_2		// 2-top

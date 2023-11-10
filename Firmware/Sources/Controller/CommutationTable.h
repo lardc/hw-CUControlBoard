@@ -97,6 +97,7 @@ typedef struct __CommutationTableItem
 	Int16U Bit;
 } CommutationTableItem;
 
+
 // Variables
 extern const CommutationTableItem CommutationTable2[];
 extern const CommutationTableItem CommutationTable4[];

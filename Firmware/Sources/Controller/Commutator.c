@@ -16,15 +16,56 @@
 // Variables
 //
 static Int16U OldActionID2 = ACT_COMM2_NONE, OldActionID6 = ACT_COMM6_NONE;
+CommutationMode CurrentCommMode = CM_CUHV2;
 
 
 // Forward functions
 //
 void COMM2_CommDelay(Int16U ActionID);
+void COMM2_CommutateNone();
+void COMM6_CommutateNone();
 
 
 // Functions
 //
+void COMM_Init()
+{
+	switch(DataTable[REG_COMM_NUM])
+	{
+		case 0:
+		case 2:
+			CurrentCommMode = CM_CUHV2;
+			break;
+
+		case 4:
+			CurrentCommMode = CM_CUHV4;
+			break;
+
+		case 6:
+			CurrentCommMode = CM_CUHV6;
+			break;
+	}
+
+	// Привязка таблиц коммутации и переопределение ограничений
+	ZbIOE_MakeTablesBinding(CurrentCommMode);
+}
+// ----------------------------------------
+
+void COMM_CommutateNone()
+{
+	switch(CurrentCommMode)
+	{
+		case CM_CUHV2:
+			COMM2_CommutateNone();
+			break;
+
+		case CM_CUHV6:
+			COMM6_CommutateNone();
+			break;
+	}
+}
+// ----------------------------------------
+
 void COMM2_CommutateNone()
 {
 	// Reset registers anyway

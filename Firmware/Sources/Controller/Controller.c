@@ -61,6 +61,8 @@ void CONTROL_Init()
 	// Fill state variables with default values
 	CONTROL_FillWPPartDefault();
 
+	COMM_Init();
+
 	// Device profile initialization
 	DEVPROFILE_Init(&CONTROL_DispatchAction, &CycleActive);
 	// Reset control values
@@ -173,11 +175,7 @@ static Boolean CONTROL_FilterPressure(Boolean Triggered)
 
 static void CONTROL_CommutateNone()
 {
-	#ifdef COMM_MODE_2
-		COMM2_CommutateNone();
-	#else
-		COMM6_CommutateNone();
-	#endif
+	COMM_CommutateNone();
 }
 // ----------------------------------------
 
@@ -331,8 +329,6 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				*pUserError = ERR_OPERATION_BLOCKED;
 			break;
 
-	#ifdef COMM_MODE_2
-
 		case ACT_COMM2_NONE:
 		case ACT_COMM2_GATE:
 		case ACT_COMM2_SL:
@@ -341,38 +337,44 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_COMM2_NO_PE:
 		case ACT_COMM2_GATE_SL:
 		case ACT_COMM2_VGNT:
-			if(CONTROL_State == DS_Fault)
-				*pUserError = ERR_OPERATION_BLOCKED;
-			else if(CONTROL_State == DS_None)
-				*pUserError = ERR_DEVICE_NOT_READY;
+			if(CurrentCommMode != CM_CUHV2)
+				return FALSE;
 			else
 			{
-				COMM2_Commutate(ActionID);
-				if (CONTROL_State == DS_SafetyTrig)
+				if(CONTROL_State == DS_Fault)
+					*pUserError = ERR_OPERATION_BLOCKED;
+				else if(CONTROL_State == DS_None)
+					*pUserError = ERR_DEVICE_NOT_READY;
+				else
 				{
-					CONTROL_CommutateNone();
-					ZbGPIO_LightSafetySensorTrig(FALSE);
-					CONTROL_SetDeviceState(DS_SafetyActive);
+					COMM2_Commutate(ActionID);
+					if (CONTROL_State == DS_SafetyTrig)
+					{
+						CONTROL_CommutateNone();
+						ZbGPIO_LightSafetySensorTrig(FALSE);
+						CONTROL_SetDeviceState(DS_SafetyActive);
+					}
 				}
 			}
 			break;
-
-	#else
 
 		case ACT_COMM6_NONE:
 		case ACT_COMM6_GATE:
 		case ACT_COMM6_SL:
 		case ACT_COMM6_BV_D:
 		case ACT_COMM6_BV_R:
-			if(CONTROL_State == DS_Fault)
-				*pUserError = ERR_OPERATION_BLOCKED;
-			else if(CONTROL_State == DS_None)
-				*pUserError = ERR_DEVICE_NOT_READY;
+			if(CurrentCommMode != CM_CUHV6)
+				return FALSE;
 			else
-				COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
+			{
+				if(CONTROL_State == DS_Fault)
+					*pUserError = ERR_OPERATION_BLOCKED;
+				else if(CONTROL_State == DS_None)
+					*pUserError = ERR_DEVICE_NOT_READY;
+				else
+					COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
+			}
 			break;
-
-	#endif
 
 		default:
 			return FALSE;

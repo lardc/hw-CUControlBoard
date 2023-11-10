@@ -8,12 +8,22 @@
 // Include
 #include "stdinc.h"
 
+// Types
+typedef enum __CommutationMode
+{
+	CM_CUHV2,
+	CM_CUHV4,
+	CM_CUHV6
+} CommutationMode;
+
+// Variables
+extern CommutationMode CurrentCommMode;
 
 // Functions
 //
+void COMM_Init();
 // Switch commutation to none
-void COMM2_CommutateNone();
-void COMM6_CommutateNone();
+void COMM_CommutateNone();
 // Switch in commutation mode 2
 void COMM2_Commutate(Int16U ActionID);
 // Switch in commutation mode 6

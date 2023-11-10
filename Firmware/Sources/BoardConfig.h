@@ -24,13 +24,6 @@
 //
 #define ZW_PWM_DUTY_BASE	1024
 
-// Mode
-//
-// Select commutation mode
-// define for CU_HV2
-// undefine for CU_HV6
-#define COMM_MODE_2
-
 // Peripheral options
 #define HWUSE_SPI_D
 #define HWUSE_SCI_B

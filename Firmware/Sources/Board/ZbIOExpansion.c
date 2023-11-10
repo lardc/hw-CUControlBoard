@@ -10,6 +10,7 @@
 #include "CommutationTable.h"
 #include "DeviceObjectDictionary.h"
 #include "DataTable.h"
+#include "Constraints.h"
 
 
 // Constants
@@ -47,6 +48,32 @@ void ZbIOE_Init()
 	// Enable /OE
 	DELAY_US(IO_REGISTER_WRITE_DELAY_US);
 	ZwGPIO_WritePin(IOE_OE, TRUE);
+}
+// ----------------------------------------
+
+void ZbIOE_MakeTablesBinding(CommutationMode Mode)
+{
+	switch(Mode)
+	{
+		case CM_CUHV2:
+			UsedCommutationTable = (CommutationTableItem *)CommutationTable2;
+			UsedBoardsCount = COMMUTATION2_EXT_BOARDS;
+			break;
+
+		case CM_CUHV4:
+			UsedCommutationTable = (CommutationTableItem *)CommutationTable4;
+			UsedBoardsCount = COMMUTATION4_EXT_BOARDS;
+			break;
+
+		case CM_CUHV6:
+			UsedCommutationTable = (CommutationTableItem *)CommutationTable6;
+			UsedBoardsCount = COMMUTATION6_EXT_BOARDS;
+			break;
+	}
+
+	VConstraint[REG_TABLE_INDEX	- DATA_TABLE_WR_START].Max = UsedBoardsCount - 1;
+	VConstraint[REG_RAW_BOARD	- DATA_TABLE_WR_START].Max = UsedBoardsCount - 1;
+	VConstraint[REG_MODULE_POS	- DATA_TABLE_WR_START].Max = (Mode == CM_CUHV6) ? 2 : 1;
 }
 // ----------------------------------------
 
