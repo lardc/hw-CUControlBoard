@@ -301,10 +301,24 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			if(CONTROL_State == DS_None)
 			{
 				ZbGPIO_LightSafetySensorTrig(TRUE);
-				ZbGPIO_LightPressureFault(TRUE);
-				DELAY_US(1000000);
+				DELAY_US(500000);
 				ZbGPIO_LightSafetySensorTrig(FALSE);
+				ZbGPIO_LightPressureFault(TRUE);
+				DELAY_US(500000);
 				ZbGPIO_LightPressureFault(FALSE);
+			}
+			break;
+
+		case ACT_DBG_TEST_BLACK_BOX:
+			if(CONTROL_State == DS_None)
+			{
+				Int16U BBRelayIndex = DataTable[REG_PCB_V22_AND_LOWER] ? T2_OLD_BB_RELAY : T2_BB_RELAY_ACTIVATE;
+				ZbIOE_OutputValuesReset();
+				ZbIOE_OutputValuesCompose(BBRelayIndex, TRUE);
+				ZbIOE_RegisterFlushWrite();
+				DELAY_US(500000);
+				ZbIOE_OutputValuesCompose(BBRelayIndex, FALSE);
+				ZbIOE_RegisterFlushWrite();
 			}
 			break;
 
