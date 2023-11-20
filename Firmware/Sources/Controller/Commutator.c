@@ -270,7 +270,7 @@ void COMM4_Commutate(Int16U ActionID, Int16U ModuleType, pInt16U pUserError)
 				case MODULE_DIRECT:
 					{
 						ZbIOE_OutputValuesReset();
-						ZbIOE_OutputValuesCompose(T4_SL_CUHC_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CUHC_DIR, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_POT_A_1, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_POT_C_2, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_CTL_A, TRUE);
@@ -282,7 +282,7 @@ void COMM4_Commutate(Int16U ActionID, Int16U ModuleType, pInt16U pUserError)
 				case MODULE_REVERSE:
 					{
 						ZbIOE_OutputValuesReset();
-						ZbIOE_OutputValuesCompose(T4_SL_CUHC_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CUHC_REV, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_POT_A_2, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_POT_C_1, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_CTL_A, TRUE);
@@ -388,7 +388,7 @@ void COMM4_Commutate(Int16U ActionID, Int16U ModuleType, pInt16U pUserError)
 						ZbIOE_OutputValuesCompose(T4_GATE_POW_CTRL_C_2, TRUE);
 
 						// SL
-						ZbIOE_OutputValuesCompose(T4_SL_CUHC_1, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CUHC_DIR, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_POT_A_1, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_POT_C_2, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_CTL_A, TRUE);
@@ -405,7 +405,7 @@ void COMM4_Commutate(Int16U ActionID, Int16U ModuleType, pInt16U pUserError)
 						ZbIOE_OutputValuesCompose(T4_GATE_POW_CTRL_C_1, TRUE);
 
 						// SL
-						ZbIOE_OutputValuesCompose(T4_SL_CUHC_2, TRUE);
+						ZbIOE_OutputValuesCompose(T4_SL_CUHC_REV, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_POT_A_2, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_POT_C_1, TRUE);
 						ZbIOE_OutputValuesCompose(T4_SL_CTL_A, TRUE);
