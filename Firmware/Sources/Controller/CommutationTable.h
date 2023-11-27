@@ -56,8 +56,8 @@
 #define T4_SL_CTL_A				30
 #define T4_SL_CTL_C_1			8
 #define T4_SL_CTL_C_2			9
-#define T4_SL_CUHC_1			22
-#define T4_SL_CUHC_2			23
+#define T4_SL_CUHC_DIR			23
+#define T4_SL_CUHC_REV			22
 //
 #define T4_GATE_POW_A_1			2
 #define T4_GATE_POW_A_2			3
