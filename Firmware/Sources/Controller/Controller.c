@@ -97,21 +97,33 @@ Boolean CONTROL_SelectSafetyConfiguration()
 {
 	static Int16U PrevConfig = 0;
 
-	Int16U r1 = DataTable[REG_EN_SFTY_IN1];
-	Int16U r2 = DataTable[REG_EN_SFTY_IN2];
-	Int16U r3 = DataTable[REG_EN_SFTY_IN3];
-	Int16U r4 = DataTable[REG_EN_SFTY_IN4];
+	if(DataTable[REG_SAFETY_HW_MODE])
+	{
+		ZbGPIO_SetSafetyLine1(TRUE);
+		ZbGPIO_SetSafetyLine2(TRUE);
+		ZbGPIO_SetSafetyLine3(TRUE);
+		ZbGPIO_SetSafetyLine4(TRUE);
 
-	Int16U NewConfig = (r4 << 3) | (r3 << 2) | (r2 << 1) | r1;
-	Boolean ConfigChanged = (NewConfig != PrevConfig);
-	PrevConfig = NewConfig;
+		return FALSE;
+	}
+	else
+	{
+		Int16U r1 = DataTable[REG_EN_SFTY_IN1];
+		Int16U r2 = DataTable[REG_EN_SFTY_IN2];
+		Int16U r3 = DataTable[REG_EN_SFTY_IN3];
+		Int16U r4 = DataTable[REG_EN_SFTY_IN4];
 
-	ZbGPIO_SetSafetyLine1(r1);
-	ZbGPIO_SetSafetyLine2(r2);
-	ZbGPIO_SetSafetyLine3(r3);
-	ZbGPIO_SetSafetyLine4(r4);
+		Int16U NewConfig = (r4 << 3) | (r3 << 2) | (r2 << 1) | r1;
+		Boolean ConfigChanged = (NewConfig != PrevConfig);
+		PrevConfig = NewConfig;
 
-	return ConfigChanged;
+		ZbGPIO_SetSafetyLine1(r1);
+		ZbGPIO_SetSafetyLine2(r2);
+		ZbGPIO_SetSafetyLine3(r3);
+		ZbGPIO_SetSafetyLine4(r4);
+
+		return ConfigChanged;
+	}
 }
 // ----------------------------------------
 
@@ -128,8 +140,17 @@ void CONTROL_UpdateLow()
 {
 	static Int64U IgnoreSafetyTimeout = 0;
 
-	// Check safety circuit
-	if(CONTROL_State == DS_SafetyActive)
+	// Аппаратный режим работы контура безопасности без возможности отключения
+	if(DataTable[REG_SAFETY_HW_MODE])
+	{
+		if(ZbGPIO_GetSafetyState(FALSE))
+			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
+		else if(CONTROL_State != DS_SafetyTrig)
+			ZbGPIO_LightSafetySensorTrig(FALSE);
+	}
+
+	// Режим работы контура безопасности с возможностью отключения
+	else if(CONTROL_State == DS_SafetyActive)
 	{
 		if(CONTROL_SelectSafetyConfiguration())
 			IgnoreSafetyTimeout = CONTROL_TimeCounter + IGNORE_ON_SFTY_CHANGE_MS;
@@ -137,7 +158,7 @@ void CONTROL_UpdateLow()
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 	}
 
-	// Check pressure
+	// Проверка давления
 	if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive || CONTROL_State == DS_SafetyTrig)
 		if(CONTROL_FilterPressure(ZbGPIO_GetPressureState(DataTable[REG_PRESSURE_DISABLE])))
 			CONTROL_RequestDPC(&CONTROL_PressureTrigger);
@@ -189,7 +210,8 @@ static void CONTROL_SafetyCircuitTrigger()
 	CONTROL_CommutateNone();
 	ZbIOE_ExternalOutput(TRUE);
 
-	CONTROL_SetDeviceState(DS_SafetyTrig);
+	if(!DataTable[REG_SAFETY_HW_MODE] || CONTROL_State == DS_SafetyActive)
+		CONTROL_SetDeviceState(DS_SafetyTrig);
 }
 // ----------------------------------------
 
