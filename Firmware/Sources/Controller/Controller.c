@@ -21,7 +21,12 @@
 // Types
 //
 typedef void (*FUNC_AsyncDelegate)();
-
+enum __SafetyState
+{
+	SS_Undef,
+	SS_Good,
+	SS_Trigged
+};
 
 // Variables
 //
@@ -31,6 +36,7 @@ static volatile FUNC_AsyncDelegate DPCDelegate = NULL;
 static volatile Boolean CycleActive = FALSE;
 volatile Int64U CONTROL_TimeCounter = 0;
 volatile DeviceState CONTROL_State = DS_None;
+volatile enum __SafetyState SafetyState = SS_Undef;
 //
 // Boot-loader flag
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
@@ -39,8 +45,10 @@ volatile Int16U CONTROL_BootLoaderRequest = 0;
 
 // Forward functions
 //
+static void CONTROL_CommonSafetyTrigAction();
 static void CONTROL_SafetyCircuitTrigger();
 static void CONTROL_PressureTrigger();
+static void CONTROL_SafetyGood();
 static void CONTROL_FillWPPartDefault();
 static void CONTROL_SetDeviceState(DeviceState NewState);
 static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError);
@@ -145,8 +153,8 @@ void CONTROL_UpdateLow()
 	{
 		if(ZbGPIO_GetSafetyState(FALSE))
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
-		else if(CONTROL_State != DS_SafetyTrig)
-			ZbGPIO_LightSafetySensorTrig(FALSE);
+		else
+			CONTROL_SafetyGood();
 	}
 
 	// Режим работы контура безопасности с возможностью отключения
@@ -200,16 +208,40 @@ static void CONTROL_CommutateNone()
 }
 // ----------------------------------------
 
+static void CONTROL_SafetyGood()
+{
+	if(SafetyState != SS_Good && CONTROL_State != DS_SafetyTrig && CONTROL_State != DS_Fault)
+	{
+		ZbGPIO_SafetyRelay(TRUE);
+		CONTROL_CommutateNone();
+		ZbGPIO_LightSafetySensorTrig(FALSE);
+
+		SafetyState = SS_Good;
+	}
+}
+// ----------------------------------------
+
+static void CONTROL_CommonSafetyTrigAction()
+{
+	if(SafetyState != SS_Trigged)
+	{
+		ZbGPIO_SafetyRelay(FALSE);
+
+		ZbIOE_ExternalOutput(FALSE);
+		ZbIOE_SafetyTrigFlag();
+		CONTROL_CommutateNone();
+		ZbIOE_ExternalOutput(TRUE);
+
+		SafetyState = SS_Trigged;
+	}
+}
+// ----------------------------------------
+
 static void CONTROL_SafetyCircuitTrigger()
 {
-	ZbGPIO_SafetyRelay(FALSE);
+	CONTROL_CommonSafetyTrigAction();
+
 	ZbGPIO_LightSafetySensorTrig(TRUE);
-
-	ZbIOE_ExternalOutput(FALSE);
-	ZbIOE_SafetyTrigFlag();
-	CONTROL_CommutateNone();
-	ZbIOE_ExternalOutput(TRUE);
-
 	if(!DataTable[REG_SAFETY_HW_MODE] || CONTROL_State == DS_SafetyActive)
 		CONTROL_SetDeviceState(DS_SafetyTrig);
 }
@@ -217,8 +249,7 @@ static void CONTROL_SafetyCircuitTrigger()
 
 static void CONTROL_PressureTrigger()
 {
-	ZbGPIO_SafetyRelay(FALSE);
-	CONTROL_CommutateNone();
+	CONTROL_CommonSafetyTrigAction();
 
 	DataTable[REG_FAULT_REASON] = FAULT_LOW_PRESSURE;
 	ZbGPIO_LightPressureFault(TRUE);
@@ -238,9 +269,6 @@ static void CONTROL_FillWPPartDefault()
 
 static void CONTROL_SetDeviceState(DeviceState NewState)
 {
-	if (NewState == DS_None || NewState == DS_Enabled || NewState == DS_SafetyActive)
-		ZbGPIO_SafetyRelay(TRUE);
-
 	// Set new state
 	CONTROL_State = NewState;
 	DataTable[REG_DEV_STATE] = NewState;
