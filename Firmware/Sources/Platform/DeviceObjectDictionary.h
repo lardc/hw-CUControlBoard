@@ -59,7 +59,7 @@
 #define REG_PCB_V20					4	// Для PCB v.2.0 используется инверсия сигнала давления
 #define REG_PCB_V22_AND_LOWER		5	// Для PCB v.2.2 и ниже используются особые линии реле безопасности и BlackBox
 #define REG_COMM_NUM				6	// Выбор режима коммутации (0 или 2 - режим CUHV2, 4 - режим CUHV4, 6 - режим CUHV6)
-#define REG_SAFETY_HW_MODE			7	// Аппаратный режим контура безопасности без возможности отключения
+#define REG_SAFETY_HW_MODE			7	// Аппаратный режим контура безопасности без возможности отключения (игнорирует регистр 3)
 //
 #define REG_TABLE_INDEX				64	// Commutation table index
 #define REG_TABLE_ACTION			65	// Boolean variable for action
