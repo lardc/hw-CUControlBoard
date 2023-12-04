@@ -63,6 +63,8 @@
 										// 4 - режим CUHV4 на базе ЭМ CURelyBoard v.3.x
 										// 6 - режим CUHV6
 #define REG_SAFETY_HW_MODE			7	// Аппаратный режим контура безопасности без возможности отключения (игнорирует регистр 3)
+#define REG_IGNORE_SAFETY_SEN3		8	// Отключение обработки входа безопасности 3 (используется при заданном регистре 7)
+#define REG_IGNORE_SAFETY_SEN4		9	// Отключение обработки входа безопасности 4 (используется при заданном регистре 7)
 //
 #define REG_TABLE_INDEX				64	// Commutation table index
 #define REG_TABLE_ACTION			65	// Boolean variable for action
