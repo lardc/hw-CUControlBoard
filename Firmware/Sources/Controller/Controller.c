@@ -360,7 +360,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			}
 			break;
 
-		case ACT_DBG_TEST_BLACK_BOX:
+		case ACT_DBG_BLACK_BOX:
 			if(CONTROL_State == DS_None)
 			{
 				Int16U BBRelayIndex = DataTable[REG_PCB_V22_AND_LOWER] ? T2_OLD_BB_RELAY : T2_BB_RELAY_ACTIVATE;
@@ -370,6 +370,35 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				DELAY_US(500000);
 				ZbIOE_OutputValuesCompose(BBRelayIndex, FALSE);
 				ZbIOE_RegisterFlushWrite();
+				DELAY_US(500000);
+			}
+			break;
+
+		case ACT_DBG_CS_STOP_OFF:
+			if(CONTROL_State == DS_None)
+			{
+				if(DataTable[REG_PCB_V22_AND_LOWER])
+				{
+					ZbIOE_OutputValuesReset();
+					ZbIOE_OutputValuesCompose(T2_OLD_SAFETY_RELAY, TRUE);
+					ZbIOE_RegisterFlushWrite();
+				}
+				else
+					ZbGPIO_SafetyRelay(TRUE);
+			}
+			break;
+
+		case ACT_DBG_CS_STOP_ON:
+			if(CONTROL_State == DS_None)
+			{
+				if(DataTable[REG_PCB_V22_AND_LOWER])
+				{
+					ZbIOE_OutputValuesReset();
+					ZbIOE_OutputValuesCompose(T2_OLD_SAFETY_RELAY, FALSE);
+					ZbIOE_RegisterFlushWrite();
+				}
+				else
+					ZbGPIO_SafetyRelay(FALSE);
 			}
 			break;
 

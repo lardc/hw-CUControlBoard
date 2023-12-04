@@ -13,8 +13,10 @@
 #define ACT_CLR_FAULT				3	// Clear fault
 #define ACT_CLR_WARNING				4	// Clear warning
 //
-#define ACT_DBG_INDICATORS			10	// Проверка индикаторов Safety и Pressure
-#define ACT_DBG_TEST_BLACK_BOX		11	// Подача импульса на реле BlackBox
+#define ACT_DBG_INDICATORS			10	// Подача импульса на индикаторы Safety и Pressure
+#define ACT_DBG_BLACK_BOX			11	// Подача импульса на реле BlackBox
+#define ACT_DBG_CS_STOP_OFF			12	// Отключение реле остановки ЗУ
+#define ACT_DBG_CS_STOP_ON			13	// Включение реле остановки ЗУ
 //
 #define ACT_SET_ACTIVE				100	// Switch block to active mode
 #define ACT_SET_INACTIVE			101	// Switch block to inactive mode
