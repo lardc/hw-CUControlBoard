@@ -27,6 +27,11 @@
 #define T2_SL_CTL_C_2WIRE		15
 #define T2_SL_PWR				23
 //
+// Обратная коммутация для стат. потерь
+#define T2_SL_POT_A_R			27
+#define T2_SL_POT_C_R			31
+#define T2_SL_PWR_R				22
+//
 #define T2_GATE_POW_A			2
 #define T2_GATE_POW_CTRL_C		6
 #define T2_GATE_CTL_A			10

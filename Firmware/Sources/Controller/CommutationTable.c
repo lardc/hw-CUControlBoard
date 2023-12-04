@@ -57,16 +57,17 @@ const CommutationTableItem CommutationTable2[COMMUTATION2_TABLE_SIZE] =
 						{BOARD2, PIN_A5},			// 19	// BB:		Упраление реле в BlackBox в зависимости от типа (НО / НЗ)
 						{BOARD2, PIN_B1},			// 20
 						{BOARD2, PIN_B2},			// 21
-						{BOARD2, PIN_B4},			// 22
+						{BOARD2, PIN_B4},			// 22	// SL:		HC POWER (REVERSE)
 						{BOARD2, PIN_B5},			// 23	// SL:		HC POWER
 						{BOARD2, PIN_C1},			// 24
 						{BOARD2, PIN_C2},			// 25
 						{BOARD2, PIN_C4},			// 26	// SL: 		Potential Anode to POTENTIAL_A
-						{BOARD2, PIN_C5},			// 27
+						{BOARD2, PIN_C5},			// 27	// SL:		Potential Anode to POTENTIAL_A (REVERSE)
 						{BOARD2, PIN_D1},			// 28
 						{BOARD2, PIN_D2},			// 29
 						{BOARD2, PIN_D4},			// 30	// SL: 		Potential Cathode to POTENTIAL_C
 						{BOARD2, PIN_D5},			// 31	// Gate		Gate Potential Control Cathode to POTENTIAL_CTRL_C
+															// SL: 		Potential Cathode to POTENTIAL_C (REVERSE)
 				};
 
 const CommutationTableItem CommutationTable4[COMMUTATION4_TABLE_SIZE] =
