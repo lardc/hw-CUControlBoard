@@ -121,15 +121,28 @@ void COMM2_Commutate(Int16U ActionID)
 
 		case ACT_COMM2_4_SL:
 			{
-				ZbIOE_OutputValuesReset();
-				ZbIOE_OutputValuesCompose(T2_SL_PWR, TRUE);
-				ZbIOE_OutputValuesCompose(T2_SL_POT_A, TRUE);
-				ZbIOE_OutputValuesCompose(T2_SL_POT_C, TRUE);
-				ZbIOE_OutputValuesCompose(T2_SL_CTL_A, TRUE);
-				ZbIOE_OutputValuesCompose(Vgt2WireMode ? T2_SL_CTL_C_2WIRE : T2_SL_CTL_C, TRUE);
-				if(!BlackBoxNCRelay)
-					ZbIOE_OutputValuesCompose(BBRelayIndex, TRUE);
-				ZbIOE_RegisterFlushWrite();
+				if(DataTable[REG_MODULE_TYPE] == MODULE_DIRECT)
+				{
+					ZbIOE_OutputValuesReset();
+					ZbIOE_OutputValuesCompose(T2_SL_PWR, TRUE);
+					ZbIOE_OutputValuesCompose(T2_SL_POT_A, TRUE);
+					ZbIOE_OutputValuesCompose(T2_SL_POT_C, TRUE);
+					ZbIOE_OutputValuesCompose(T2_SL_CTL_A, TRUE);
+					ZbIOE_OutputValuesCompose(Vgt2WireMode ? T2_SL_CTL_C_2WIRE : T2_SL_CTL_C, TRUE);
+					if(!BlackBoxNCRelay)
+						ZbIOE_OutputValuesCompose(BBRelayIndex, TRUE);
+					ZbIOE_RegisterFlushWrite();
+				}
+				else if(DataTable[REG_MODULE_TYPE] == MODULE_REVERSE)
+				{
+					ZbIOE_OutputValuesReset();
+					ZbIOE_OutputValuesCompose(T2_SL_PWR_R, TRUE);
+					ZbIOE_OutputValuesCompose(T2_SL_POT_A_R, TRUE);
+					ZbIOE_OutputValuesCompose(T2_SL_POT_C_R, TRUE);
+					if(!BlackBoxNCRelay)
+						ZbIOE_OutputValuesCompose(BBRelayIndex, TRUE);
+					ZbIOE_RegisterFlushWrite();
+				}
 			}
 			break;
 
