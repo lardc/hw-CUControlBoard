@@ -109,8 +109,8 @@ Boolean CONTROL_SelectSafetyConfiguration()
 	{
 		ZbGPIO_SetSafetyLine1(TRUE);
 		ZbGPIO_SetSafetyLine2(TRUE);
-		ZbGPIO_SetSafetyLine3(TRUE);
-		ZbGPIO_SetSafetyLine4(TRUE);
+		ZbGPIO_SetSafetyLine3(!DataTable[REG_IGNORE_SAFETY_SEN3]);
+		ZbGPIO_SetSafetyLine4(!DataTable[REG_IGNORE_SAFETY_SEN4]);
 
 		return FALSE;
 	}
@@ -151,6 +151,7 @@ void CONTROL_UpdateLow()
 	// Аппаратный режим работы контура безопасности без возможности отключения
 	if(DataTable[REG_SAFETY_HW_MODE])
 	{
+		CONTROL_SelectSafetyConfiguration();
 		if(ZbGPIO_GetSafetyState(FALSE))
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 		else
