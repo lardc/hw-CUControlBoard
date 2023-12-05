@@ -307,6 +307,8 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				DELAY_US(500000);
 				ZbGPIO_LightPressureFault(FALSE);
 			}
+			else
+				*pUserError = ERR_OPERATION_BLOCKED;
 			break;
 
 		case ACT_DBG_TEST_BLACK_BOX:
@@ -320,6 +322,8 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				ZbIOE_OutputValuesCompose(BBRelayIndex, FALSE);
 				ZbIOE_RegisterFlushWrite();
 			}
+			else
+				*pUserError = ERR_OPERATION_BLOCKED;
 			break;
 
 		case ACT_WRITE_PIN:
