@@ -224,10 +224,9 @@ static void CONTROL_SafetyGood()
 
 static void CONTROL_CommonSafetyTrigAction()
 {
-	if(SafetyState != SS_Trigged)
+	if(SafetyState != SS_Trigged || !DataTable[REG_SAFETY_HW_MODE])
 	{
 		ZbGPIO_SafetyRelay(FALSE);
-
 		ZbIOE_ExternalOutput(FALSE);
 		ZbIOE_SafetyTrigFlag();
 		CONTROL_CommutateNone();
@@ -270,6 +269,12 @@ static void CONTROL_FillWPPartDefault()
 
 static void CONTROL_SetDeviceState(DeviceState NewState)
 {
+	if(!DataTable[REG_SAFETY_HW_MODE] && \
+			(NewState == DS_None || NewState == DS_Enabled || NewState == DS_SafetyActive))
+	{
+		ZbGPIO_SafetyRelay(TRUE);
+	}
+
 	// Set new state
 	CONTROL_State = NewState;
 	DataTable[REG_DEV_STATE] = NewState;
