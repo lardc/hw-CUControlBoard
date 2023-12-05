@@ -21,7 +21,12 @@
 // Types
 //
 typedef void (*FUNC_AsyncDelegate)();
-
+enum __SafetyState
+{
+	SS_Undef,
+	SS_Good,
+	SS_Trigged
+};
 
 // Variables
 //
@@ -31,6 +36,7 @@ static volatile FUNC_AsyncDelegate DPCDelegate = NULL;
 static volatile Boolean CycleActive = FALSE;
 volatile Int64U CONTROL_TimeCounter = 0;
 volatile DeviceState CONTROL_State = DS_None;
+volatile enum __SafetyState SafetyState = SS_Undef;
 //
 // Boot-loader flag
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
@@ -39,8 +45,10 @@ volatile Int16U CONTROL_BootLoaderRequest = 0;
 
 // Forward functions
 //
+static void CONTROL_CommonSafetyTrigAction();
 static void CONTROL_SafetyCircuitTrigger();
 static void CONTROL_PressureTrigger();
+static void CONTROL_SafetyGood();
 static void CONTROL_FillWPPartDefault();
 static void CONTROL_SetDeviceState(DeviceState NewState);
 static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError);
@@ -97,21 +105,33 @@ Boolean CONTROL_SelectSafetyConfiguration()
 {
 	static Int16U PrevConfig = 0;
 
-	Int16U r1 = DataTable[REG_EN_SFTY_IN1];
-	Int16U r2 = DataTable[REG_EN_SFTY_IN2];
-	Int16U r3 = DataTable[REG_EN_SFTY_IN3];
-	Int16U r4 = DataTable[REG_EN_SFTY_IN4];
+	if(DataTable[REG_SAFETY_HW_MODE])
+	{
+		ZbGPIO_SetSafetyLine1(TRUE);
+		ZbGPIO_SetSafetyLine2(TRUE);
+		ZbGPIO_SetSafetyLine3(!DataTable[REG_IGNORE_SAFETY_SEN3]);
+		ZbGPIO_SetSafetyLine4(!DataTable[REG_IGNORE_SAFETY_SEN4]);
 
-	Int16U NewConfig = (r4 << 3) | (r3 << 2) | (r2 << 1) | r1;
-	Boolean ConfigChanged = (NewConfig != PrevConfig);
-	PrevConfig = NewConfig;
+		return FALSE;
+	}
+	else
+	{
+		Int16U r1 = DataTable[REG_EN_SFTY_IN1];
+		Int16U r2 = DataTable[REG_EN_SFTY_IN2];
+		Int16U r3 = DataTable[REG_EN_SFTY_IN3];
+		Int16U r4 = DataTable[REG_EN_SFTY_IN4];
 
-	ZbGPIO_SetSafetyLine1(r1);
-	ZbGPIO_SetSafetyLine2(r2);
-	ZbGPIO_SetSafetyLine3(r3);
-	ZbGPIO_SetSafetyLine4(r4);
+		Int16U NewConfig = (r4 << 3) | (r3 << 2) | (r2 << 1) | r1;
+		Boolean ConfigChanged = (NewConfig != PrevConfig);
+		PrevConfig = NewConfig;
 
-	return ConfigChanged;
+		ZbGPIO_SetSafetyLine1(r1);
+		ZbGPIO_SetSafetyLine2(r2);
+		ZbGPIO_SetSafetyLine3(r3);
+		ZbGPIO_SetSafetyLine4(r4);
+
+		return ConfigChanged;
+	}
 }
 // ----------------------------------------
 
@@ -128,8 +148,18 @@ void CONTROL_UpdateLow()
 {
 	static Int64U IgnoreSafetyTimeout = 0;
 
-	// Check safety circuit
-	if(CONTROL_State == DS_SafetyActive)
+	// Аппаратный режим работы контура безопасности без возможности отключения
+	if(DataTable[REG_SAFETY_HW_MODE])
+	{
+		CONTROL_SelectSafetyConfiguration();
+		if(ZbGPIO_GetSafetyState(FALSE))
+			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
+		else
+			CONTROL_SafetyGood();
+	}
+
+	// Режим работы контура безопасности с возможностью отключения
+	else if(CONTROL_State == DS_SafetyActive)
 	{
 		if(CONTROL_SelectSafetyConfiguration())
 			IgnoreSafetyTimeout = CONTROL_TimeCounter + IGNORE_ON_SFTY_CHANGE_MS;
@@ -137,7 +167,7 @@ void CONTROL_UpdateLow()
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 	}
 
-	// Check pressure
+	// Проверка давления
 	if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive || CONTROL_State == DS_SafetyTrig)
 		if(CONTROL_FilterPressure(ZbGPIO_GetPressureState(DataTable[REG_PRESSURE_DISABLE])))
 			CONTROL_RequestDPC(&CONTROL_PressureTrigger);
@@ -179,24 +209,48 @@ static void CONTROL_CommutateNone()
 }
 // ----------------------------------------
 
+static void CONTROL_SafetyGood()
+{
+	if(SafetyState != SS_Good && CONTROL_State != DS_SafetyTrig && CONTROL_State != DS_Fault)
+	{
+		ZbGPIO_SafetyRelay(TRUE);
+		CONTROL_CommutateNone();
+		ZbGPIO_LightSafetySensorTrig(FALSE);
+
+		SafetyState = SS_Good;
+	}
+}
+// ----------------------------------------
+
+static void CONTROL_CommonSafetyTrigAction()
+{
+	if(SafetyState != SS_Trigged)
+	{
+		ZbGPIO_SafetyRelay(FALSE);
+
+		ZbIOE_ExternalOutput(FALSE);
+		ZbIOE_SafetyTrigFlag();
+		CONTROL_CommutateNone();
+		ZbIOE_ExternalOutput(TRUE);
+
+		SafetyState = SS_Trigged;
+	}
+}
+// ----------------------------------------
+
 static void CONTROL_SafetyCircuitTrigger()
 {
-	ZbGPIO_SafetyRelay(FALSE);
+	CONTROL_CommonSafetyTrigAction();
+
 	ZbGPIO_LightSafetySensorTrig(TRUE);
-
-	ZbIOE_ExternalOutput(FALSE);
-	ZbIOE_SafetyTrigFlag();
-	CONTROL_CommutateNone();
-	ZbIOE_ExternalOutput(TRUE);
-
-	CONTROL_SetDeviceState(DS_SafetyTrig);
+	if(!DataTable[REG_SAFETY_HW_MODE] || CONTROL_State == DS_SafetyActive)
+		CONTROL_SetDeviceState(DS_SafetyTrig);
 }
 // ----------------------------------------
 
 static void CONTROL_PressureTrigger()
 {
-	ZbGPIO_SafetyRelay(FALSE);
-	CONTROL_CommutateNone();
+	CONTROL_CommonSafetyTrigAction();
 
 	DataTable[REG_FAULT_REASON] = FAULT_LOW_PRESSURE;
 	ZbGPIO_LightPressureFault(TRUE);
@@ -216,9 +270,6 @@ static void CONTROL_FillWPPartDefault()
 
 static void CONTROL_SetDeviceState(DeviceState NewState)
 {
-	if (NewState == DS_None || NewState == DS_Enabled || NewState == DS_SafetyActive)
-		ZbGPIO_SafetyRelay(TRUE);
-
 	// Set new state
 	CONTROL_State = NewState;
 	DataTable[REG_DEV_STATE] = NewState;
@@ -311,7 +362,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				*pUserError = ERR_OPERATION_BLOCKED;
 			break;
 
-		case ACT_DBG_TEST_BLACK_BOX:
+		case ACT_DBG_BLACK_BOX:
 			if(CONTROL_State == DS_None)
 			{
 				Int16U BBRelayIndex = DataTable[REG_PCB_V22_AND_LOWER] ? T2_OLD_BB_RELAY : T2_BB_RELAY_ACTIVATE;
@@ -321,6 +372,35 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				DELAY_US(500000);
 				ZbIOE_OutputValuesCompose(BBRelayIndex, FALSE);
 				ZbIOE_RegisterFlushWrite();
+				DELAY_US(500000);
+			}
+			break;
+
+		case ACT_DBG_CS_STOP_OFF:
+			if(CONTROL_State == DS_None)
+			{
+				if(DataTable[REG_PCB_V22_AND_LOWER])
+				{
+					ZbIOE_OutputValuesReset();
+					ZbIOE_OutputValuesCompose(T2_OLD_SAFETY_RELAY, TRUE);
+					ZbIOE_RegisterFlushWrite();
+				}
+				else
+					ZbGPIO_SafetyRelay(TRUE);
+			}
+			break;
+
+		case ACT_DBG_CS_STOP_ON:
+			if(CONTROL_State == DS_None)
+			{
+				if(DataTable[REG_PCB_V22_AND_LOWER])
+				{
+					ZbIOE_OutputValuesReset();
+					ZbIOE_OutputValuesCompose(T2_OLD_SAFETY_RELAY, FALSE);
+					ZbIOE_RegisterFlushWrite();
+				}
+				else
+					ZbGPIO_SafetyRelay(FALSE);
 			}
 			else
 				*pUserError = ERR_OPERATION_BLOCKED;
