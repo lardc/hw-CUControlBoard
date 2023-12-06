@@ -224,10 +224,9 @@ static void CONTROL_SafetyGood()
 
 static void CONTROL_CommonSafetyTrigAction()
 {
-	if(SafetyState != SS_Trigged)
+	if(SafetyState != SS_Trigged || !DataTable[REG_SAFETY_HW_MODE])
 	{
 		ZbGPIO_SafetyRelay(FALSE);
-
 		ZbIOE_ExternalOutput(FALSE);
 		ZbIOE_SafetyTrigFlag();
 		CONTROL_CommutateNone();
@@ -270,6 +269,12 @@ static void CONTROL_FillWPPartDefault()
 
 static void CONTROL_SetDeviceState(DeviceState NewState)
 {
+	if(!DataTable[REG_SAFETY_HW_MODE] && \
+			(NewState == DS_None || NewState == DS_Enabled || NewState == DS_SafetyActive))
+	{
+		ZbGPIO_SafetyRelay(TRUE);
+	}
+
 	// Set new state
 	CONTROL_State = NewState;
 	DataTable[REG_DEV_STATE] = NewState;
@@ -358,9 +363,11 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				DELAY_US(500000);
 				ZbGPIO_LightPressureFault(FALSE);
 			}
+			else
+				*pUserError = ERR_OPERATION_BLOCKED;
 			break;
 
-		case ACT_DBG_TEST_BLACK_BOX:
+		case ACT_DBG_BLACK_BOX:
 			if(CONTROL_State == DS_None)
 			{
 				Int16U BBRelayIndex = DataTable[REG_PCB_V22_AND_LOWER] ? T2_OLD_BB_RELAY : T2_BB_RELAY_ACTIVATE;
@@ -370,7 +377,38 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				DELAY_US(500000);
 				ZbIOE_OutputValuesCompose(BBRelayIndex, FALSE);
 				ZbIOE_RegisterFlushWrite();
+				DELAY_US(500000);
 			}
+			break;
+
+		case ACT_DBG_CS_STOP_OFF:
+			if(CONTROL_State == DS_None)
+			{
+				if(DataTable[REG_PCB_V22_AND_LOWER])
+				{
+					ZbIOE_OutputValuesReset();
+					ZbIOE_OutputValuesCompose(T2_OLD_SAFETY_RELAY, TRUE);
+					ZbIOE_RegisterFlushWrite();
+				}
+				else
+					ZbGPIO_SafetyRelay(TRUE);
+			}
+			break;
+
+		case ACT_DBG_CS_STOP_ON:
+			if(CONTROL_State == DS_None)
+			{
+				if(DataTable[REG_PCB_V22_AND_LOWER])
+				{
+					ZbIOE_OutputValuesReset();
+					ZbIOE_OutputValuesCompose(T2_OLD_SAFETY_RELAY, FALSE);
+					ZbIOE_RegisterFlushWrite();
+				}
+				else
+					ZbGPIO_SafetyRelay(FALSE);
+			}
+			else
+				*pUserError = ERR_OPERATION_BLOCKED;
 			break;
 
 		case ACT_WRITE_PIN:
