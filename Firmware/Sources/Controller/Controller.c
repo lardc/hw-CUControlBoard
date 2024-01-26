@@ -146,13 +146,21 @@ void inline CONTROL_RequestDPC(FUNC_AsyncDelegate Action)
 #endif
 void CONTROL_UpdateLow()
 {
+	static Int16U SafetyHysteresis = 0;
 	static Int64U IgnoreSafetyTimeout = 0;
 
 	// Аппаратный режим работы контура безопасности без возможности отключения
 	if(DataTable[REG_SAFETY_HW_MODE])
 	{
 		CONTROL_SelectSafetyConfiguration();
+
+		// Гистерезис на срабатывание датчика
 		if(ZbGPIO_GetSafetyState(FALSE))
+			SafetyHysteresis = SAFETY_RELEASE_TIMEOUT;
+		else if(SafetyHysteresis)
+			SafetyHysteresis--;
+
+		if(SafetyHysteresis)
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 		else
 			CONTROL_SafetyGood();
