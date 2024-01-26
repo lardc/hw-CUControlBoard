@@ -27,6 +27,7 @@
 #define COMM_DELAY_SHORT_MS			20
 #define PRESSURE_FILTER_T			750
 #define IGNORE_ON_SFTY_CHANGE_MS	100		// Таймаут игнорирования входа безопасности после переконфигурации, мс
+#define SAFETY_RELEASE_TIMEOUT		1000	// Время до снятия сигнала безопасности, мс
 
 
 #endif // __GLOBAL_H
