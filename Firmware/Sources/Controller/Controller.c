@@ -156,7 +156,8 @@ void CONTROL_UpdateLow()
 
 		// Гистерезис на срабатывание датчика
 		if(ZbGPIO_GetSafetyState(FALSE))
-			SafetyHysteresis = SAFETY_RELEASE_TIMEOUT;
+			SafetyHysteresis = DataTable[REG_SAFETY_RELAY_HYST_ALT] ?
+					DataTable[REG_SAFETY_RELAY_HYST_ALT] : SAFETY_RELEASE_TIMEOUT;
 		else if(SafetyHysteresis)
 			SafetyHysteresis--;
 
