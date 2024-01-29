@@ -12,6 +12,10 @@
 #include "Global.h"
 
 
+// Definitions
+#define MAX_SAFETY_RELAY_HYST_ALT	2000
+
+
 // Types
 //
 typedef struct __TableItemConstraint
