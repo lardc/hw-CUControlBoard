@@ -161,10 +161,16 @@ void CONTROL_UpdateLow()
 		else if(SafetyHysteresis)
 			SafetyHysteresis--;
 
+		// Обработка события
+		// Срабатывания контура
 		if(SafetyHysteresis)
-			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
-		else
-			CONTROL_SafetyGood();
+		{
+			if(SafetyState != SS_Trigged)
+				CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
+		}
+		// Снятия срабатывания контура
+		else if(SafetyState != SS_Good && CONTROL_State != DS_SafetyTrig && CONTROL_State != DS_Fault)
+			CONTROL_RequestDPC(&CONTROL_SafetyGood);
 	}
 
 	// Режим работы контура безопасности с возможностью отключения
@@ -220,29 +226,25 @@ static void CONTROL_CommutateNone()
 
 static void CONTROL_SafetyGood()
 {
-	if(SafetyState != SS_Good && CONTROL_State != DS_SafetyTrig && CONTROL_State != DS_Fault)
-	{
-		ZbGPIO_SafetyRelay(TRUE);
-		CONTROL_CommutateNone();
-		ZbGPIO_LightSafetySensorTrig(FALSE);
+	ZbGPIO_SafetyRelay(TRUE);
+	CONTROL_CommutateNone();
 
-		SafetyState = SS_Good;
-	}
+	ZbGPIO_LightSafetySensorTrig(FALSE);
+	SafetyState = SS_Good;
 }
 // ----------------------------------------
 
 static void CONTROL_CommonSafetyTrigAction()
 {
-	if(SafetyState != SS_Trigged || !DataTable[REG_SAFETY_HW_MODE])
-	{
-		ZbGPIO_SafetyRelay(FALSE);
-		ZbIOE_ExternalOutput(FALSE);
-		ZbIOE_SafetyTrigFlag();
-		CONTROL_CommutateNone();
-		ZbIOE_ExternalOutput(TRUE);
+	ZbGPIO_LightSafetySensorTrig(TRUE);
 
-		SafetyState = SS_Trigged;
-	}
+	ZbGPIO_SafetyRelay(FALSE);
+	ZbIOE_ExternalOutput(FALSE);
+	ZbIOE_SafetyTrigFlag();
+	CONTROL_CommutateNone();
+	ZbIOE_ExternalOutput(TRUE);
+
+	SafetyState = SS_Trigged;
 }
 // ----------------------------------------
 
@@ -250,7 +252,6 @@ static void CONTROL_SafetyCircuitTrigger()
 {
 	CONTROL_CommonSafetyTrigAction();
 
-	ZbGPIO_LightSafetySensorTrig(TRUE);
 	if(!DataTable[REG_SAFETY_HW_MODE] || CONTROL_State == DS_SafetyActive)
 		CONTROL_SetDeviceState(DS_SafetyTrig);
 }
@@ -261,7 +262,6 @@ static void CONTROL_PressureTrigger()
 	CONTROL_CommonSafetyTrigAction();
 
 	DataTable[REG_FAULT_REASON] = FAULT_LOW_PRESSURE;
-	ZbGPIO_LightPressureFault(TRUE);
 	CONTROL_SetDeviceState(DS_Fault);
 }
 // ----------------------------------------
@@ -449,7 +449,9 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_COMM2_4_NO_PE:
 		case ACT_COMM2_4_GATE_SL:
 		case ACT_COMM2_4_VGNT:
-			if(CurrentCommMode == CM_CUHV6)
+			if(DataTable[REG_SAFETY_HW_MODE] && SafetyState == SS_Trigged)
+				*pUserError = ERR_OPERATION_BLOCKED;
+			else if(CurrentCommMode == CM_CUHV6)
 				return FALSE;
 			else
 			{
@@ -478,7 +480,9 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_COMM6_SL:
 		case ACT_COMM6_BV_D:
 		case ACT_COMM6_BV_R:
-			if(CurrentCommMode != CM_CUHV6)
+			if(DataTable[REG_SAFETY_HW_MODE] && SafetyState == SS_Trigged)
+				*pUserError = ERR_OPERATION_BLOCKED;
+			else if(CurrentCommMode != CM_CUHV6)
 				return FALSE;
 			else
 			{
