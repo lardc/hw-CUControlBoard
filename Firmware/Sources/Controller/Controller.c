@@ -45,7 +45,6 @@ volatile Int16U CONTROL_BootLoaderRequest = 0;
 
 // Forward functions
 //
-static void CONTROL_CommonSafetyTrigAction();
 static void CONTROL_SafetyCircuitTrigger();
 static void CONTROL_PressureTrigger();
 static void CONTROL_SafetyGood();
@@ -234,7 +233,7 @@ static void CONTROL_SafetyGood()
 }
 // ----------------------------------------
 
-static void CONTROL_CommonSafetyTrigAction()
+static void CONTROL_SafetyCircuitTrigger()
 {
 	ZbGPIO_LightSafetySensorTrig(TRUE);
 
@@ -245,12 +244,6 @@ static void CONTROL_CommonSafetyTrigAction()
 	ZbIOE_ExternalOutput(TRUE);
 
 	SafetyState = SS_Trigged;
-}
-// ----------------------------------------
-
-static void CONTROL_SafetyCircuitTrigger()
-{
-	CONTROL_CommonSafetyTrigAction();
 
 	if(!DataTable[REG_SAFETY_HW_MODE] || CONTROL_State == DS_SafetyActive)
 		CONTROL_SetDeviceState(DS_SafetyTrig);
@@ -259,7 +252,8 @@ static void CONTROL_SafetyCircuitTrigger()
 
 static void CONTROL_PressureTrigger()
 {
-	CONTROL_CommonSafetyTrigAction();
+	ZbGPIO_LightPressureFault(TRUE);
+	CONTROL_CommutateNone();
 
 	DataTable[REG_FAULT_REASON] = FAULT_LOW_PRESSURE;
 	CONTROL_SetDeviceState(DS_Fault);
@@ -316,7 +310,8 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			{
 				CONTROL_CommutateNone();
 				CONTROL_SafetyHWTrigger(FALSE);
-				ZbGPIO_LightSafetySensorTrig(FALSE);
+				if(!DataTable[REG_SAFETY_HW_MODE])
+					ZbGPIO_LightSafetySensorTrig(FALSE);
 				CONTROL_SetDeviceState(DS_None);
 			}
 			else if(CONTROL_State != DS_None)
@@ -340,7 +335,8 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 					CONTROL_CommutateNone();
 
 				CONTROL_SafetyHWTrigger(FALSE);
-				ZbGPIO_LightSafetySensorTrig(FALSE);
+				if(!DataTable[REG_SAFETY_HW_MODE])
+					ZbGPIO_LightSafetySensorTrig(FALSE);
 				CONTROL_SetDeviceState(DS_Enabled);
 			}
 			else
