@@ -253,6 +253,7 @@ static void CONTROL_SafetyCircuitTrigger()
 static void CONTROL_PressureTrigger()
 {
 	ZbGPIO_LightPressureFault(TRUE);
+	CONTROL_CommutateNone();
 
 	DataTable[REG_FAULT_REASON] = FAULT_LOW_PRESSURE;
 	CONTROL_SetDeviceState(DS_Fault);
