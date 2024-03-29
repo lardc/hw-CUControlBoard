@@ -1296,6 +1296,16 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 			}
 			break;
 
+		case ACT_COMM6_NO_PE:
+			{
+				ZbIOE_OutputValuesReset();
+				ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_1, TRUE);
+				ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_2, TRUE);
+				ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_3, TRUE);
+				ZbIOE_RegisterFlushWrite();
+			}
+			break;
+
 		case ACT_COMM6_NONE:
 		default:
 			COMM_CommutateNone();
