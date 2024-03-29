@@ -88,7 +88,7 @@ TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START] =
 											   {0, INT16U_MAX, 0},														// 67
 											   {0, 0, 0},																// 68
 											   {0, 0, 0},																// 69
-											   {MODULE_DIRECT, MODULE_REVERSE, MODULE_DIRECT},							// 70
+											   {MODULE_DIRECT, MODULE_MD3_BP, MODULE_DIRECT},							// 70
 											   {1, 1, 1},																// 71
 											   {0, 0, 0},																// 72
 											   {0, 0, 0},																// 73

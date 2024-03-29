@@ -643,6 +643,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 						case MODULE_MT3:
 						case MODULE_MT5:
 						case MODULE_MD3:
+						case MODULE_MD3_BP:
 						case MODULE_MD5:
 						case MODULE_MDT3:
 						case MODULE_MDT5:
@@ -681,6 +682,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 						case MODULE_MT3:
 						case MODULE_MT4:
 						case MODULE_MD3:
+						case MODULE_MD3_BP:
 						case MODULE_MD4:
 						case MODULE_MDT3:
 						case MODULE_MDT4:
@@ -804,6 +806,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 						case MODULE_MT3:
 						case MODULE_MT5:
 						case MODULE_MD3:
+						case MODULE_MD3_BP:
 						case MODULE_MD5:
 						case MODULE_MDT3:
 						case MODULE_MDT5:
@@ -832,6 +835,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 						case MODULE_MT3:
 						case MODULE_MT4:
 						case MODULE_MD3:
+						case MODULE_MD3_BP:
 						case MODULE_MD4:
 						case MODULE_MDT3:
 						case MODULE_MDT4:
