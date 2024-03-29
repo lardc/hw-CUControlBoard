@@ -35,22 +35,23 @@
 //
 const CommutationTableItem CommutationTable2[COMMUTATION2_TABLE_SIZE] =
 				{
-						{BOARD1, PIN_A1},			// 0	// BV:		HV2 to POWER_A
-						{BOARD1, PIN_A2},			// 1	// BV:		HV1 to POWER_A
-						{BOARD1, PIN_A4},			// 2	// Gate:	Power Anode to POWER_A
+						{BOARD1, PIN_A1},			// 0	// BVT:		HV2 to POWER_A
+						{BOARD1, PIN_A2},			// 1	// BVT:		HV1 to POWER_A
+						{BOARD1, PIN_A4},			// 2	// GTU:		Power Anode to POWER_A
 						{BOARD1, PIN_A5},			// 3
-						{BOARD1, PIN_B1},			// 4	// BV:		HV2 to POWER_C
-						{BOARD1, PIN_B2},			// 5	// BV:		HV1 to POWER_C
-						{BOARD1, PIN_B4},			// 6	// Gate+SL:	Power and Control Cathode to POWER_C
+						{BOARD1, PIN_B1},			// 4	// BVT:		HV2 to POWER_C
+						{BOARD1, PIN_B2},			// 5	// BVT:		HV1 to POWER_C
+						{BOARD1, PIN_B4},			// 6	// GTU+SL:	Power and Control Cathode to POWER_C
 						{BOARD1, PIN_B5},			// 7
 						{BOARD1, PIN_C1},			// 8
 						{BOARD1, PIN_C2},			// 9
-						{BOARD1, PIN_C4},			// 10	// Gate:	Gate Control Anode to CTRL_A
+						{BOARD1, PIN_C4},			// 10	// GTU:		GTU Control Anode to CTRL_A
 						{BOARD1, PIN_C5},			// 11	// SL: 		SL Control Anode to CTRL_A
 						{BOARD1, PIN_D1},			// 12
 						{BOARD1, PIN_D2},			// 13
-						{BOARD1, PIN_D4},			// 14	// Gate		Gate Potential Control Anode to POTENTIAL_CTRL_A
+						{BOARD1, PIN_D4},			// 14	// GTU		GTU Potential Control Anode to POTENTIAL_CTRL_A
 						{BOARD1, PIN_D5},			// 15	// SL:		SL control Cathode to CTRL_C (для двухпроводной схемы Vgt)
+
 						{BOARD2, PIN_A1},			// 16
 						{BOARD2, PIN_A2},			// 17
 						{BOARD2, PIN_A4},			// 18
@@ -66,7 +67,7 @@ const CommutationTableItem CommutationTable2[COMMUTATION2_TABLE_SIZE] =
 						{BOARD2, PIN_D1},			// 28
 						{BOARD2, PIN_D2},			// 29
 						{BOARD2, PIN_D4},			// 30	// SL: 		Potential Cathode to POTENTIAL_C
-						{BOARD2, PIN_D5},			// 31	// Gate		Gate Potential Control Cathode to POTENTIAL_CTRL_C
+						{BOARD2, PIN_D5},			// 31	// GTU		GTU Potential Control Cathode to POTENTIAL_CTRL_C
 															// SL: 		Potential Cathode to POTENTIAL_C (REVERSE)
 				};
 
@@ -74,20 +75,21 @@ const CommutationTableItem CommutationTable4[COMMUTATION4_TABLE_SIZE] =
 				{
 						{BOARD1, PIN_A1},			// 0	// BVT:		HV+ to POW_A
 						{BOARD1, PIN_A2},			// 1	// BVT:		HV+ to POW_C
-						{BOARD1, PIN_A4},			// 2	// Gate:	Power Anode to POW_A
-						{BOARD1, PIN_A5},			// 3	// Gate:	Power Anode to POW_C
+						{BOARD1, PIN_A4},			// 2	// GTU:		Power Anode to POW_A
+						{BOARD1, PIN_A5},			// 3	// GTU:		Power Anode to POW_C
 						{BOARD1, PIN_B1},			// 4	// BVT:		HV- to POW_C
 						{BOARD1, PIN_B2},			// 5	// BVT:		HV- to POW_A
-						{BOARD1, PIN_B4},			// 6	// Gate: 	Power and Control Cathode to POW_A
-						{BOARD1, PIN_B5},			// 7	// Gate: 	Power and Control Cathode to POW_C
+						{BOARD1, PIN_B4},			// 6	// GTU: 	Power and Control Cathode to POW_A
+						{BOARD1, PIN_B5},			// 7	// GTU: 	Power and Control Cathode to POW_C
 						{BOARD1, PIN_C1},			// 8	// SL: 		Control Cathode (C-) to POW_A
 						{BOARD1, PIN_C2},			// 9	// SL: 		Control Cathode	(C-) to POW_C
 						{BOARD1, PIN_C4},			// 10	// SL: 		Potential Anode to POT_A
 						{BOARD1, PIN_C5},			// 11	// SL: 		Potential Anode to POT_C
 						{BOARD1, PIN_D1},			// 12	// SL: 		Potential Cathode to POT_A
 						{BOARD1, PIN_D2},			// 13	// SL: 		Potential Cathode to POT_C
-						{BOARD1, PIN_D4},			// 14	// Gate: 	Potential Control Cathode to POT_A
-						{BOARD1, PIN_D5},			// 15	// Gate: 	Potential Control Cathode to POT_C
+						{BOARD1, PIN_D4},			// 14	// GTU: 	Potential Control Cathode to POT_A
+						{BOARD1, PIN_D5},			// 15	// GTU: 	Potential Control Cathode to POT_C
+
 						{BOARD2, PIN_A1},			// 16
 						{BOARD2, PIN_A2},			// 17
 						{BOARD2, PIN_A4},			// 18
@@ -98,8 +100,8 @@ const CommutationTableItem CommutationTable4[COMMUTATION4_TABLE_SIZE] =
 						{BOARD2, PIN_B5},			// 23	// BCUHC4:	IN+/IN- to OUT+/OUT-
 						{BOARD2, PIN_C1},			// 24
 						{BOARD2, PIN_C2},			// 25
-						{BOARD2, PIN_C4},			// 26	// Gate:	Control Anode to CTRL_A
-						{BOARD2, PIN_C5},			// 27	// Gate:	Potential Control Anode to POT_CTRL_A
+						{BOARD2, PIN_C4},			// 26	// GTU:	Control Anode to CTRL_A
+						{BOARD2, PIN_C5},			// 27	// GTU:	Potential Control Anode to POT_CTRL_A
 						{BOARD2, PIN_D1},			// 28
 						{BOARD2, PIN_D2},			// 29
 						{BOARD2, PIN_D4},			// 30	// SL:		Control Anode (C+) to CTRL_A
@@ -112,50 +114,52 @@ const CommutationTableItem CommutationTable6[COMMUTATION6_TABLE_SIZE] =
 						{BOARD1, PIN_A2},			// 1	// SL:		HC+ to POWER_3		// 3-top
 						{BOARD1, PIN_A4},			// 2	// SL:		HC+ to POWER_1		// 1-top
 						{BOARD1, PIN_A5},			// 3	// SL:		HC- to POWER_1		// 1-bottom
-						{BOARD1, PIN_B1},			// 4	// BVLP:	HV- to Isolation
+						{BOARD1, PIN_B1},			// 4	// BVTLP:	HV- to Isolation
 						{BOARD1, PIN_B2},			// 5
 						{BOARD1, PIN_B4},			// 6	// SL:		HC- to POWER_2		// 2-bottom
 						{BOARD1, PIN_B5},			// 7	// SL:		HC- to POWER_3		// 3-bottom
-						{BOARD1, PIN_C1},			// 8	// BVLP:	LPHV+ to POTENTIAL_1
-						{BOARD1, PIN_C2},			// 9	// BVLP:	LPHV- to POTENTIAL_1
+						{BOARD1, PIN_C1},			// 8	// BVTLP:	LPHV+ to POTENTIAL_1
+						{BOARD1, PIN_C2},			// 9	// BVTLP:	LPHV- to POTENTIAL_1
 						{BOARD1, PIN_C4},			// 10	// SL: 		Potential Anode to POTENTIAL_1
 						{BOARD1, PIN_C5},			// 11	// SL: 		Potential Cathode to POTENTIAL_1
-						{BOARD1, PIN_D1},			// 12	// BVLP:	LPHV+ to POTENTIAL_2
-						{BOARD1, PIN_D2},			// 13	// BVLP:	LPHV- to POTENTIAL_2
+						{BOARD1, PIN_D1},			// 12	// BVTLP:	LPHV+ to POTENTIAL_2
+						{BOARD1, PIN_D2},			// 13	// BVTLP:	LPHV- to POTENTIAL_2
 						{BOARD1, PIN_D4},			// 14	// SL: 		Potential Anode to POTENTIAL_2
 						{BOARD1, PIN_D5},			// 15	// SL:		Potential Cathode to POTENTIAL_2
-						{BOARD2, PIN_A1},			// 16	// BV:		HV+ to POWER_2
-						{BOARD2, PIN_A2},			// 17	// BV:		HV- to POWER_2
-						{BOARD2, PIN_A4},			// 18	// Gate:	Power Anode to POWER_2
-						{BOARD2, PIN_A5},			// 19	// Gate:	Power Cathode to POWER_2
-						{BOARD2, PIN_B1},			// 20	// BV:		HV+ to POWER_3
-						{BOARD2, PIN_B2},			// 21	// BV:		HV- to POWER_3
-						{BOARD2, PIN_B4},			// 22	// Gate:	Power Anode to POWER_3
-						{BOARD2, PIN_B5},			// 23	// Gate:	Power Cathode to POWER_3
-						{BOARD2, PIN_C1},			// 24	// BVLP:	LPHV+ to POTENTIAL_3
-						{BOARD2, PIN_C2},			// 25	// BVLP:	LPHV- to POTENTIAL_3
+
+						{BOARD2, PIN_A1},			// 16	// BVT:		HV+ to POWER_2
+						{BOARD2, PIN_A2},			// 17	// BVT:		HV- to POWER_2
+						{BOARD2, PIN_A4},			// 18	// GTU:		Power Anode to POWER_2
+						{BOARD2, PIN_A5},			// 19	// GTU:		Power Cathode to POWER_2
+						{BOARD2, PIN_B1},			// 20	// BVT:		HV+ to POWER_3
+						{BOARD2, PIN_B2},			// 21	// BVT:		HV- to POWER_3
+						{BOARD2, PIN_B4},			// 22	// GTU:		Power Anode to POWER_3
+						{BOARD2, PIN_B5},			// 23	// GTU:		Power Cathode to POWER_3
+						{BOARD2, PIN_C1},			// 24	// BVTLP:	LPHV+ to POTENTIAL_3
+						{BOARD2, PIN_C2},			// 25	// BVTLP:	LPHV- to POTENTIAL_3
 						{BOARD2, PIN_C4},			// 26	// SL: 		Potential Anode to POTENTIAL_3
 						{BOARD2, PIN_C5},			// 27	// SL:		Potential Cathode to POTENTIAL_3
-						{BOARD2, PIN_D1},			// 28	// BV:		HV+ to POWER_1
-						{BOARD2, PIN_D2},			// 29	// BV:		HV- to POWER_1
-						{BOARD2, PIN_D4},			// 30	// Gate:	Power Anode to POWER_1
-						{BOARD2, PIN_D5},			// 31	// Gate:	Power Cathode to POWER_1
-						{BOARD3, PIN_A1},			// 32	// BVLP:	HV+ to CTRL_A2
+						{BOARD2, PIN_D1},			// 28	// BVT:		HV+ to POWER_1
+						{BOARD2, PIN_D2},			// 29	// BVT:		HV- to POWER_1
+						{BOARD2, PIN_D4},			// 30	// GTU:		Power Anode to POWER_1
+						{BOARD2, PIN_D5},			// 31	// GTU:		Power Cathode to POWER_1
+
+						{BOARD3, PIN_A1},			// 32	// BVTLP:	HV+ to CTRL_A2
 						{BOARD3, PIN_A2},			// 33
 						{BOARD3, PIN_A4},			// 34	// SL:		Control Anode to CTRL_A2
-						{BOARD3, PIN_A5},			// 35	// Gate:	Control Anode to CTRL_A2
-						{BOARD3, PIN_B1},			// 36	// BVLP:	HV+ to CTRL_C2
+						{BOARD3, PIN_A5},			// 35	// GTU:		Control Anode to CTRL_A2
+						{BOARD3, PIN_B1},			// 36	// BVTLP:	HV+ to CTRL_C2
 						{BOARD3, PIN_B2},			// 37
 						{BOARD3, PIN_B4},			// 38	// SL:		Control Cathode to CTRL_C2
-						{BOARD3, PIN_B5},			// 39	// Gate:	Control Cathode to CTRL_C2
-						{BOARD3, PIN_C1},			// 40	// BVLP:	HV+ to CTRL_A1
+						{BOARD3, PIN_B5},			// 39	// GTU:		Control Cathode to CTRL_C2
+						{BOARD3, PIN_C1},			// 40	// BVTLP:	HV+ to CTRL_A1
 						{BOARD3, PIN_C2},			// 41
 						{BOARD3, PIN_C4},			// 42	// SL:		Control Anode to CTRL_A1
-						{BOARD3, PIN_C5},			// 43	// Gate:	Control Anode to CTRL_A1
-						{BOARD3, PIN_D1},			// 44	// BVLP:	HV+ to CTRL_C1
+						{BOARD3, PIN_C5},			// 43	// GTU:		Control Anode to CTRL_A1
+						{BOARD3, PIN_D1},			// 44	// BVTLP:	HV+ to CTRL_C1
 						{BOARD3, PIN_D2},			// 45
 						{BOARD3, PIN_D4},			// 46	// SL:		Control Cathode to CTRL_C1
-						{BOARD3, PIN_D5}			// 47	// Gate:	Control Cathode to CTRL_C1
+						{BOARD3, PIN_D5}			// 47	// GTU:		Control Cathode to CTRL_C1
 				};
 
 const CommutationTableItem CommutationTable6Gate4Wire[COMMUTATION6_TABLE_SIZE] =
