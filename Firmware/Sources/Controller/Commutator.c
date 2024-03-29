@@ -1137,6 +1137,165 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 			}
 			break;
 
+		case ACT_COMM6_BV_D:
+			{
+				ZbIOE_OutputValuesReset();
+
+				if(ModulePosition == 1)
+				{
+					switch(ModuleType)
+					{
+						case MODULE_MT1:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_3, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+							}
+							break;
+						case MODULE_MT3:
+						case MODULE_MT5:
+						case MODULE_MTD3:
+						case MODULE_MTD5:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_2, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_2);
+							}
+							break;
+						case MODULE_MT4:
+						case MODULE_MTD4:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_2, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+							}
+							break;
+						default:
+							{
+								ZbIOE_OutputValuesReset();
+								*pUserError = ERR_WRONG_CMD;
+							}
+							break;
+					}
+				}
+				else
+				{
+					switch(ModuleType)
+					{
+						case MODULE_MT3:
+						case MODULE_MT4:
+						case MODULE_MDT3:
+						case MODULE_MDT4:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+							}
+							break;
+						case MODULE_MT5:
+						case MODULE_MDT5:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_3, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+							}
+							break;
+						default:
+							{
+								ZbIOE_OutputValuesReset();
+								*pUserError = ERR_WRONG_CMD;
+							}
+							break;
+					}
+				}
+				ZbIOE_RegisterFlushWrite();
+			}
+			break;
+
+		case ACT_COMM6_BV_R:
+			{
+				ZbIOE_OutputValuesReset();
+
+				if(ModulePosition == 1)
+				{
+					switch(ModuleType)
+					{
+						case MODULE_MT1:
+						case MODULE_MD1:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+							}
+							break;
+						case MODULE_MT3:
+						case MODULE_MT5:
+						case MODULE_MD3:
+						case MODULE_MD3_BP:
+						case MODULE_MD5:
+						case MODULE_MDT3:
+						case MODULE_MDT5:
+						case MODULE_MTD3:
+						case MODULE_MTD5:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_2, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_2);
+							}
+							break;
+						case MODULE_MT4:
+						case MODULE_MD4:
+						case MODULE_MTD4:
+						case MODULE_MDT4:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_2, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+							}
+							break;
+					}
+				}
+				else
+				{
+					switch(ModuleType)
+					{
+						case MODULE_MT3:
+						case MODULE_MT4:
+						case MODULE_MD3:
+						case MODULE_MD3_BP:
+						case MODULE_MD4:
+						case MODULE_MDT3:
+						case MODULE_MDT4:
+						case MODULE_MTD3:
+						case MODULE_MTD4:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_3, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+							}
+							break;
+						case MODULE_MT5:
+						case MODULE_MD5:
+						case MODULE_MTD5:
+						case MODULE_MDT5:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+							}
+							break;
+						default:
+							{
+								ZbIOE_OutputValuesReset();
+								*pUserError = ERR_WRONG_CMD;
+							}
+							break;
+					}
+				}
+				ZbIOE_RegisterFlushWrite();
+			}
+			break;
+
 		case ACT_COMM6_NONE:
 		default:
 			COMM_CommutateNone();
