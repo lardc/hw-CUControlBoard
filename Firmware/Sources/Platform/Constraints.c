@@ -20,7 +20,7 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											   {NO, YES, NO},															// 3
 											   {NO, YES, NO},															// 4
 											   {NO, YES, NO},															// 5
-											   {0, 6, 0},																// 6
+											   {0, COMM_CUHV6_GATE_4WIRE, 0},											// 6
 											   {NO, YES, YES},															// 7
 											   {NO, YES, NO},															// 8
 											   {NO, YES, NO},															// 9

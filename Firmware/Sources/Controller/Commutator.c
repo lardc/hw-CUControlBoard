@@ -11,6 +11,7 @@
 #include "CommutationTable.h"
 #include "Global.h"
 #include "DataTable.h"
+#include "Constraints.h"
 
 
 // Variables
@@ -41,6 +42,7 @@ void COMM_Init()
 			break;
 
 		case 6:
+		case COMM_CUHV6_GATE_4WIRE:
 			CurrentCommMode = CM_CUHV6;
 			break;
 	}

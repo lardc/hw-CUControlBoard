@@ -476,6 +476,8 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_COMM6_SL:
 		case ACT_COMM6_BV_D:
 		case ACT_COMM6_BV_R:
+		case ACT_COMM6_NO_PE:
+		case ACT_COMM6_GATE_SL:
 			if(DataTable[REG_SAFETY_HW_MODE] && SafetyState == SS_Trigged)
 				*pUserError = ERR_OPERATION_BLOCKED;
 			else if(CurrentCommMode != CM_CUHV6)
@@ -487,7 +489,12 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				else if(CONTROL_State == DS_None)
 					*pUserError = ERR_DEVICE_NOT_READY;
 				else
-					COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
+				{
+					if(DataTable[REG_COMM_NUM] == 6)
+						COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
+					else
+						COMM6_G4W_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
+				}
 			}
 			break;
 
