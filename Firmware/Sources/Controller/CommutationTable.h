@@ -137,16 +137,16 @@
 #define T6_G4W_PE_POW_2			5
 #define T6_G4W_PE_POW_3			6
 
-#define T6_GATE_POW_A_1			30
-#define T6_GATE_POW_A_2			18
-#define T6_GATE_POW_A_3			22
-#define T6_GATE_POW_C_1			31
-#define T6_GATE_POW_C_2			19
-#define T6_GATE_POW_C_3			23
-#define T6_GATE_CTL_A_1			43
-#define T6_GATE_CTL_A_2			35
-#define T6_GATE_CTL_C_1			47
-#define T6_GATE_CTL_C_2			39
+#define T6_G4W_GATE_POW_A_1		30
+#define T6_G4W_GATE_POW_A_2		18
+#define T6_G4W_GATE_POW_A_3		22
+#define T6_G4W_GATE_POW_C_1		31
+#define T6_G4W_GATE_POW_C_2		19
+#define T6_G4W_GATE_POW_C_3		23
+#define T6_G4W_GATE_CTL_A_1		43
+#define T6_G4W_GATE_CTL_A_2		35
+#define T6_G4W_GATE_CTL_A_POT_1	46
+#define T6_G4W_GATE_CTL_A_POT_2	38
 
 #define T6_G4W_SL_POT_A_1		10
 #define T6_G4W_SL_POT_A_2		14
