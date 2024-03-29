@@ -878,7 +878,7 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 }
 // ----------------------------------------
 
-void COMM6_G4W_CathodPE(Int16U TableID)
+void COMM6_G4W_CathodePE(Int16U TableID)
 {
 	switch(TableID)
 	{
@@ -936,7 +936,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_3, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
 							break;
 						case MODULE_MT3:
@@ -947,7 +947,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_2, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_2, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_2);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_2);
 							}
 							break;
 						case MODULE_MT4:
@@ -956,7 +956,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_2, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 							}
 							break;
 						default:
@@ -979,7 +979,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 							}
 							break;
 						case MODULE_MT5:
@@ -988,7 +988,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_3, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
 							break;
 						default:
@@ -1052,7 +1052,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_3, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
 							break;
 						case MODULE_MT3:
@@ -1069,7 +1069,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_2, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_2, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_2);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_2);
 							}
 							break;
 						case MODULE_MT4:
@@ -1081,7 +1081,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_A_2, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 							}
 							break;
 						default:
@@ -1110,7 +1110,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_A_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 							}
 							break;
 						case MODULE_MT5:
@@ -1122,7 +1122,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_A_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_3, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
 							break;
 						default:
@@ -1149,7 +1149,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_3, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
 							break;
 						case MODULE_MT3:
@@ -1159,7 +1159,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_2, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_2);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_2);
 							}
 							break;
 						case MODULE_MT4:
@@ -1167,7 +1167,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_2, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 							}
 							break;
 						default:
@@ -1189,7 +1189,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 							}
 							break;
 						case MODULE_MT5:
@@ -1197,7 +1197,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_3, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
 							break;
 						default:
@@ -1225,7 +1225,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
 							break;
 						case MODULE_MT3:
@@ -1240,7 +1240,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_2, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_2);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_2);
 							}
 							break;
 						case MODULE_MT4:
@@ -1250,7 +1250,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_2, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 							}
 							break;
 					}
@@ -1271,7 +1271,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_3, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 							}
 							break;
 						case MODULE_MT5:
@@ -1281,7 +1281,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 							{
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_3, TRUE);
 								ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_1, TRUE);
-								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
 							break;
 						default:
