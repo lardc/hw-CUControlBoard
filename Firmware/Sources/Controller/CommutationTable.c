@@ -157,3 +157,55 @@ const CommutationTableItem CommutationTable6[COMMUTATION6_TABLE_SIZE] =
 						{BOARD3, PIN_D4},			// 46	// SL:		Control Cathode to CTRL_C1
 						{BOARD3, PIN_D5}			// 47	// Gate:	Control Cathode to CTRL_C1
 				};
+
+const CommutationTableItem CommutationTable6Gate4Wire[COMMUTATION6_TABLE_SIZE] =
+				{
+						{BOARD1, PIN_A1},			// 0	//
+						{BOARD1, PIN_A2},			// 1	//
+						{BOARD1, PIN_A4},			// 2	//
+						{BOARD1, PIN_A5},			// 3	//
+						{BOARD1, PIN_B1},			// 4	//
+						{BOARD1, PIN_B2},			// 5	//
+						{BOARD1, PIN_B4},			// 6	//
+						{BOARD1, PIN_B5},			// 7	//
+						{BOARD1, PIN_C1},			// 8	//
+						{BOARD1, PIN_C2},			// 9	//
+						{BOARD1, PIN_C4},			// 10	//
+						{BOARD1, PIN_C5},			// 11	//
+						{BOARD1, PIN_D1},			// 12	//
+						{BOARD1, PIN_D2},			// 13	//
+						{BOARD1, PIN_D4},			// 14	//
+						{BOARD1, PIN_D5},			// 15	//
+						{BOARD2, PIN_A1},			// 16	//
+						{BOARD2, PIN_A2},			// 17	//
+						{BOARD2, PIN_A4},			// 18	//
+						{BOARD2, PIN_A5},			// 19	//
+						{BOARD2, PIN_B1},			// 20	//
+						{BOARD2, PIN_B2},			// 21	//
+						{BOARD2, PIN_B4},			// 22	//
+						{BOARD2, PIN_B5},			// 23	//
+						{BOARD2, PIN_C1},			// 24	//
+						{BOARD2, PIN_C2},			// 25	//
+						{BOARD2, PIN_C4},			// 26	//
+						{BOARD2, PIN_C5},			// 27	//
+						{BOARD2, PIN_D1},			// 28	//
+						{BOARD2, PIN_D2},			// 29	//
+						{BOARD2, PIN_D4},			// 30	//
+						{BOARD2, PIN_D5},			// 31	//
+						{BOARD3, PIN_A1},			// 32	//
+						{BOARD3, PIN_A2},			// 33	//
+						{BOARD3, PIN_A4},			// 34	//
+						{BOARD3, PIN_A5},			// 35	//
+						{BOARD3, PIN_B1},			// 36	//
+						{BOARD3, PIN_B2},			// 37	//
+						{BOARD3, PIN_B4},			// 38	//
+						{BOARD3, PIN_B5},			// 39	//
+						{BOARD3, PIN_C1},			// 40	//
+						{BOARD3, PIN_C2},			// 41	//
+						{BOARD3, PIN_C4},			// 42	//
+						{BOARD3, PIN_C5},			// 43	//
+						{BOARD3, PIN_D1},			// 44	//
+						{BOARD3, PIN_D2},			// 45	//
+						{BOARD3, PIN_D4},			// 46	//
+						{BOARD3, PIN_D5}			// 47	//
+				};
