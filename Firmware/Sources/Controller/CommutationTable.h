@@ -151,9 +151,9 @@
 #define T6_G4W_SL_POT_A_1		10
 #define T6_G4W_SL_POT_A_2		14
 #define T6_G4W_SL_POT_A_3		26
-#define T6_G4W_SL-GTU_POT_C_1	11
-#define T6_G4W_SL-GTU_POT_C_2	15
-#define T6_G4W_SL-GTU_POT_C_3	27
+#define T6_G4W_SL_GTU_POT_C_1	11
+#define T6_G4W_SL_GTU_POT_C_2	15
+#define T6_G4W_SL_GTU_POT_C_3	27
 
 #define T6_G4W_BVT_POS_POW_1	28
 #define T6_G4W_BVT_POS_POW_2	16

@@ -877,3 +877,139 @@ void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, 
 	OldActionID = ActionID;
 }
 // ----------------------------------------
+
+void COMM6_G4W_CathodPE(Int16U TableID)
+{
+	switch(TableID)
+	{
+		case T6_G4W_PE_POW_1:
+			ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_2, TRUE);
+			ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_3, TRUE);
+			break;
+		case T6_G4W_PE_POW_2:
+			ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_1, TRUE);
+			ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_3, TRUE);
+			break;
+		case T6_G4W_PE_POW_3:
+			ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_1, TRUE);
+			ZbIOE_OutputValuesCompose(T6_G4W_PE_POW_2, TRUE);
+			break;
+		default:
+			break;
+	}
+}
+// ----------------------------------------
+
+void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, pInt16U pUserError)
+{
+	if (ActionID == OldActionID) return;
+
+	if (ActionID != ACT_COMM6_NONE && OldActionID != ACT_COMM6_NONE)
+		COMM_CommutateNone();
+
+	if (ActionID != ACT_COMM6_NONE)
+		ZbGPIO_ConnectProtectiveEarth(FALSE);
+
+	switch(ActionID)
+	{
+		case ACT_COMM6_GATE:
+			{
+				ZbIOE_OutputValuesReset();
+
+				if(ModulePosition == 1)
+				{
+					ZbIOE_OutputValuesCompose(T6_G4W_GATE_CTL_A_1, TRUE);
+					ZbIOE_OutputValuesCompose(T6_G4W_GATE_CTL_A_POT_1, TRUE);
+				}
+				else
+				{
+					ZbIOE_OutputValuesCompose(T6_G4W_GATE_CTL_A_2, TRUE);
+					ZbIOE_OutputValuesCompose(T6_G4W_GATE_CTL_A_POT_2, TRUE);
+				}
+
+				if(ModulePosition == 1)
+				{
+					switch(ModuleType)
+					{
+						case MODULE_MT1:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_3, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+							}
+							break;
+						case MODULE_MT3:
+						case MODULE_MT5:
+						case MODULE_MTD3:
+						case MODULE_MTD5:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_2, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_2, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_2);
+							}
+							break;
+						case MODULE_MT4:
+						case MODULE_MTD4:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_2, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_1, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+							}
+							break;
+						default:
+							{
+								ZbIOE_OutputValuesReset();
+								*pUserError = ERR_WRONG_CMD;
+							}
+							break;
+					}
+				}
+				else
+				{
+					switch(ModuleType)
+					{
+						case MODULE_MT3:
+						case MODULE_MT4:
+						case MODULE_MDT3:
+						case MODULE_MDT4:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_1, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_1);
+							}
+							break;
+						case MODULE_MT5:
+						case MODULE_MDT5:
+							{
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_3, TRUE);
+								ZbIOE_OutputValuesCompose(T6_G4W_SL_GTU_POT_C_3, TRUE);
+								COMM6_G4W_CathodPE(T6_G4W_PE_POW_3);
+							}
+							break;
+						default:
+							{
+								ZbIOE_OutputValuesReset();
+								*pUserError = ERR_WRONG_CMD;
+							}
+							break;
+					}
+				}
+				ZbIOE_RegisterFlushWrite();
+			}
+			break;
+
+		case ACT_COMM6_NONE:
+		default:
+			COMM_CommutateNone();
+			break;
+	}
+
+	COMM_CommDelay(ActionID);
+	OldActionID = ActionID;
+}
+// ----------------------------------------
