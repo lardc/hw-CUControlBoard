@@ -124,6 +124,43 @@
 #define T6_BV_POS_POW_2			16
 #define T6_BV_POS_POW_3			20
 
+// Commutation type 6 (для четырёхпроводного GTU)
+//
+#define T6_G4W_SL_POW_A_1		2
+#define T6_G4W_SL_POW_A_2		0
+#define T6_G4W_SL_POW_A_3		1
+#define T6_G4W_SL_POW_C_1		3
+#define T6_G4W_SL_POW_C_2		8
+#define T6_G4W_SL_POW_C_3		9
+
+#define T6_G4W_PE_POW_1			4
+#define T6_G4W_PE_POW_2			5
+#define T6_G4W_PE_POW_3			6
+
+#define T6_GATE_POW_A_1			30
+#define T6_GATE_POW_A_2			18
+#define T6_GATE_POW_A_3			22
+#define T6_GATE_POW_C_1			31
+#define T6_GATE_POW_C_2			19
+#define T6_GATE_POW_C_3			23
+#define T6_GATE_CTL_A_1			43
+#define T6_GATE_CTL_A_2			35
+#define T6_GATE_CTL_C_1			47
+#define T6_GATE_CTL_C_2			39
+
+#define T6_G4W_SL_POT_A_1		10
+#define T6_G4W_SL_POT_A_2		14
+#define T6_G4W_SL_POT_A_3		26
+#define T6_G4W_SL-GTU_POT_C_1	11
+#define T6_G4W_SL-GTU_POT_C_2	15
+#define T6_G4W_SL-GTU_POT_C_3	27
+
+#define T6_G4W_BVT_POS_POW_1	28
+#define T6_G4W_BVT_POS_POW_2	16
+#define T6_G4W_BVT_POS_POW_3	20
+#define T6_G4W_BVT_NEG_POW_1	29
+#define T6_G4W_BVT_NEG_POW_2	17
+#define T6_G4W_BVT_NEG_POW_3	21
 
 // Types
 typedef struct __CommutationTableItem
