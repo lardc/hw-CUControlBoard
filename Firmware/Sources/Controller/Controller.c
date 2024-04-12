@@ -1,4 +1,4 @@
-п»ї// ----------------------------------------
+// ----------------------------------------
 // Controller logic
 // ----------------------------------------
 
@@ -148,31 +148,31 @@ void CONTROL_UpdateLow()
 	static Int16U SafetyHysteresis = 0;
 	static Int64U IgnoreSafetyTimeout = 0;
 
-	// РђРїРїР°СЂР°С‚РЅС‹Р№ СЂРµР¶РёРј СЂР°Р±РѕС‚С‹ РєРѕРЅС‚СѓСЂР° Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё Р±РµР· РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РѕС‚РєР»СЋС‡РµРЅРёСЏ
+	// Аппаратный режим работы контура безопасности без возможности отключения
 	if(DataTable[REG_SAFETY_HW_MODE])
 	{
 		CONTROL_SelectSafetyConfiguration();
 
-		// Р“РёСЃС‚РµСЂРµР·РёСЃ РЅР° СЃСЂР°Р±Р°С‚С‹РІР°РЅРёРµ РґР°С‚С‡РёРєР°
+		// Гистерезис на срабатывание датчика
 		if(ZbGPIO_GetSafetyState(FALSE))
 			SafetyHysteresis = DataTable[REG_SAFETY_RELAY_HYST_ALT] ?
 					DataTable[REG_SAFETY_RELAY_HYST_ALT] : SAFETY_RELEASE_TIMEOUT;
 		else if(SafetyHysteresis)
 			SafetyHysteresis--;
 
-		// РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёСЏ
-		// РЎСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ РєРѕРЅС‚СѓСЂР°
+		// Обработка события
+		// Срабатывания контура
 		if(SafetyHysteresis)
 		{
 			if(SafetyState != SS_Trigged)
 				CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 		}
-		// РЎРЅСЏС‚РёСЏ СЃСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ РєРѕРЅС‚СѓСЂР°
+		// Снятия срабатывания контура
 		else if(SafetyState != SS_Good && CONTROL_State != DS_SafetyTrig && CONTROL_State != DS_Fault)
 			CONTROL_RequestDPC(&CONTROL_SafetyGood);
 	}
 
-	// Р РµР¶РёРј СЂР°Р±РѕС‚С‹ РєРѕРЅС‚СѓСЂР° Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ РѕС‚РєР»СЋС‡РµРЅРёСЏ
+	// Режим работы контура безопасности с возможностью отключения
 	else if(CONTROL_State == DS_SafetyActive)
 	{
 		if(CONTROL_SelectSafetyConfiguration())
@@ -181,7 +181,7 @@ void CONTROL_UpdateLow()
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 	}
 
-	// РџСЂРѕРІРµСЂРєР° РґР°РІР»РµРЅРёСЏ
+	// Проверка давления
 	if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive || CONTROL_State == DS_SafetyTrig)
 		if(CONTROL_FilterPressure(ZbGPIO_GetPressureState(DataTable[REG_PRESSURE_DISABLE])))
 			CONTROL_RequestDPC(&CONTROL_PressureTrigger);
@@ -491,9 +491,9 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				else
 				{
 					if(DataTable[REG_COMM_NUM] == 6)
-						COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
+						COMM6_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], DataTable[REG_MODULE_CASE], pUserError);
 					else
-						COMM6_G4W_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], pUserError);
+						COMM6_G4W_Commutate(ActionID, DataTable[REG_MODULE_TYPE], DataTable[REG_MODULE_POS], DataTable[REG_MODULE_CASE], pUserError);
 				}
 			}
 			break;

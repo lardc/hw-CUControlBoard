@@ -79,6 +79,7 @@
 //
 #define REG_MODULE_TYPE				70	// Module type
 #define REG_MODULE_POS				71	// Active module position
+#define REG_MODULE_CASE				72	// Module case
 //
 #define REG_EN_SFTY_IN1				80	// Enable safety input #1
 #define REG_EN_SFTY_IN2				81	// Enable safety input #2
@@ -136,6 +137,16 @@
 #define MODULE_MDT5					14
 #define MODULE_REVERSE				15
 #define MODULE_MD3_BP				16
+
+// MODULE CASES
+//
+#define MODULE_CASE_A2				1001
+#define MODULE_CASE_B1				1006
+#define MODULE_CASE_C1				1002
+#define MODULE_CASE_D0				1005
+#define MODULE_CASE_E0				1003
+#define MODULE_CASE_F1				1004
+#define MODULE_CASE_ADAP			1007
 
 // FAULT CODES
 //

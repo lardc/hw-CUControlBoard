@@ -1,4 +1,4 @@
-﻿// ----------------------------------------
+// ----------------------------------------
 // Commutation controller
 // ----------------------------------------
 
@@ -26,7 +26,7 @@ void COMM_CommutateNone();
 
 void COMM2_Commutate(Int16U ActionID);
 void COMM4_Commutate(Int16U ActionID, Int16U ModuleType, pInt16U pUserError);
-void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, pInt16U pUserError);
-void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, pInt16U pUserError);
+void COMM6_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, Int16U Case, pInt16U pUserError);
+void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePosition, Int16U Case, pInt16U pUserError);
 
 #endif // __COMMUTATOR_H
