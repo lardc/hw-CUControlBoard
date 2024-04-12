@@ -1292,8 +1292,8 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								}
 								else
 								{
-									ZbIOE_OutputValuesCompose(T6_G4W_G4W_BVT_POS_POW_1, TRUE);
-									ZbIOE_OutputValuesCompose(T6_G4W_G4W_BVT_NEG_POW_3, TRUE);
+									ZbIOE_OutputValuesCompose(T6_G4W_BVT_POS_POW_1, TRUE);
+									ZbIOE_OutputValuesCompose(T6_G4W_BVT_NEG_POW_3, TRUE);
 								}
 								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 							}
