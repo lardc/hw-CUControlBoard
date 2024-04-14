@@ -1095,7 +1095,6 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 				{
 					switch(ModuleType)
 					{
-						case MODULE_MT1:
 						case MODULE_MT3:
 						case MODULE_MT4:
 						case MODULE_MT5:
@@ -1113,6 +1112,7 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 				{
 					switch(ModuleType)
 					{
+						case MODULE_MT1:
 						case MODULE_MT3:
 						case MODULE_MT4:
 						case MODULE_MT5:
