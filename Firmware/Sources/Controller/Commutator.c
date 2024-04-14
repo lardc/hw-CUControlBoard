@@ -1141,10 +1141,11 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 									ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_A_2, TRUE);
 									ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_3, TRUE);
 
-									if(IsThyristor && ActionID == ACT_COMM6_GATE_SL)
+									if(IsThyristor)
 									{
-										ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_2, TRUE);
 										ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_3, TRUE);
+										if(ActionID == ACT_COMM6_GATE_SL)
+											ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_2, TRUE);
 									}
 								}
 								else
@@ -1154,10 +1155,11 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 									ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_A_1, TRUE);
 									ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_3, TRUE);
 
-									if(IsThyristor && ActionID == ACT_COMM6_GATE_SL)
+									if(IsThyristor)
 									{
-										ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
 										ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_3, TRUE);
+										if(ActionID == ACT_COMM6_GATE_SL)
+											ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
 									}
 								}
 								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
@@ -1179,10 +1181,11 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_2, TRUE);
 								COMM6_G4W_CathodePE(T6_G4W_PE_POW_2);
 
-								if(IsThyristor && ActionID == ACT_COMM6_GATE_SL)
+								if(IsThyristor)
 								{
-									ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
 									ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_2, TRUE);
+									if(ActionID == ACT_COMM6_GATE_SL)
+										ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
 								}
 							}
 							break;
@@ -1197,10 +1200,11 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_1, TRUE);
 								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 
-								if(IsThyristor && ActionID == ACT_COMM6_GATE_SL)
+								if(IsThyristor)
 								{
-									ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_2, TRUE);
 									ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_1, TRUE);
+									if(ActionID == ACT_COMM6_GATE_SL)
+										ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_2, TRUE);
 								}
 							}
 							break;
@@ -1232,10 +1236,11 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_1, TRUE);
 								COMM6_G4W_CathodePE(T6_G4W_PE_POW_1);
 
-								if(IsThyristor && ActionID == ACT_COMM6_GATE_SL)
+								if(IsThyristor)
 								{
-									ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_3, TRUE);
 									ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_1, TRUE);
+									if(ActionID == ACT_COMM6_GATE_SL)
+										ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_3, TRUE);
 								}
 							}
 							break;
@@ -1250,10 +1255,11 @@ void COMM6_G4W_Commutate(Int16U ActionID, Int16U ModuleType, Int16U ModulePositi
 								ZbIOE_OutputValuesCompose(T6_G4W_SL_POW_C_3, TRUE);
 								COMM6_G4W_CathodePE(T6_G4W_PE_POW_3);
 
-								if(IsThyristor && ActionID == ACT_COMM6_GATE_SL)
+								if(IsThyristor)
 								{
 									ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_A_1, TRUE);
-									ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_3, TRUE);
+									if(ActionID == ACT_COMM6_GATE_SL)
+										ZbIOE_OutputValuesCompose(T6_G4W_GATE_POW_C_3, TRUE);
 								}
 							}
 							break;
