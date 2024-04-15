@@ -136,7 +136,7 @@
 #define MODULE_MTD5					13
 #define MODULE_MDT5					14
 #define MODULE_REVERSE				15
-#define MODULE_MD3_BP				16
+#define MODULE_MD3_BP				22
 
 // MODULE CASES
 //
