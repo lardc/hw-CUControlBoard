@@ -39,6 +39,8 @@
 #define ACT_COMM6_SL				122 // Connect Static Losses tester
 #define ACT_COMM6_BV_D				123 // Connect direct BV tester
 #define ACT_COMM6_BV_R				124 // Connect reverse BV tester
+#define ACT_COMM6_NO_PE				125 // Connect other blocks (disconnect protective earth from lines)
+#define ACT_COMM6_GATE_SL			126	// Connect GTU and SL for Ih - GOST measurement
 //
 #define ACT_SAVE_TO_ROM				200	// Save parameters to EEPROM module
 #define ACT_RESTORE_FROM_ROM		201	// Restore parameters from EEPROM module
@@ -64,6 +66,7 @@
 										// 0 или 2 - режим CUHV2 или CUHV4 на базе ЭМ CURelyBoard v.2.x
 										// 4 - режим CUHV4 на базе ЭМ CURelyBoard v.3.x
 										// 6 - режим CUHV6
+										// 7 - режим CUHV6 с четырёхпроводным GTU
 #define REG_SAFETY_HW_MODE			7	// Аппаратный режим контура безопасности без возможности отключения (игнорирует регистр 3)
 #define REG_IGNORE_SAFETY_SEN3		8	// Отключение обработки входа безопасности 3 (используется при заданном регистре 7)
 #define REG_IGNORE_SAFETY_SEN4		9	// Отключение обработки входа безопасности 4 (используется при заданном регистре 7)
@@ -76,6 +79,7 @@
 //
 #define REG_MODULE_TYPE				70	// Module type
 #define REG_MODULE_POS				71	// Active module position
+#define REG_MODULE_CASE				72	// Module case
 //
 #define REG_EN_SFTY_IN1				80	// Enable safety input #1
 #define REG_EN_SFTY_IN2				81	// Enable safety input #2
@@ -132,6 +136,17 @@
 #define MODULE_MTD5					13
 #define MODULE_MDT5					14
 #define MODULE_REVERSE				15
+#define MODULE_MD3_BP				22
+
+// MODULE CASES
+//
+#define MODULE_CASE_A2				1001
+#define MODULE_CASE_B1				1006
+#define MODULE_CASE_C1				1002
+#define MODULE_CASE_D0				1005
+#define MODULE_CASE_E0				1003
+#define MODULE_CASE_F1				1004
+#define MODULE_CASE_ADAP			1007
 
 // FAULT CODES
 //

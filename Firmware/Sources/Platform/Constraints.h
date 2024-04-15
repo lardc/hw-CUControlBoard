@@ -14,6 +14,7 @@
 
 // Definitions
 #define MAX_SAFETY_RELAY_HYST_ALT	2000
+#define COMM_CUHV6_GATE_4WIRE		7
 
 
 // Types

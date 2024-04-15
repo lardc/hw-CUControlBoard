@@ -71,7 +71,7 @@ void ZbIOE_MakeTablesBinding(CommutationMode Mode)
 			break;
 	}
 
-	VConstraint[REG_TABLE_INDEX	- DATA_TABLE_WR_START].Max = UsedBoardsCount - 1;
+	VConstraint[REG_TABLE_INDEX	- DATA_TABLE_WR_START].Max = UsedBoardsCount * 16 - 1;
 	VConstraint[REG_RAW_BOARD	- DATA_TABLE_WR_START].Max = UsedBoardsCount - 1;
 	VConstraint[REG_MODULE_POS	- DATA_TABLE_WR_START].Max = (Mode == CM_CUHV6) ? 2 : 1;
 }

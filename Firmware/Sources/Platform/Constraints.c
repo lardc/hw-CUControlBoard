@@ -20,7 +20,7 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											   {NO, YES, NO},															// 3
 											   {NO, YES, NO},															// 4
 											   {NO, YES, NO},															// 5
-											   {0, 6, 0},																// 6
+											   {0, COMM_CUHV6_GATE_4WIRE, 0},											// 6
 											   {NO, YES, YES},															// 7
 											   {NO, YES, NO},															// 8
 											   {NO, YES, NO},															// 9
@@ -88,9 +88,9 @@ TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START] =
 											   {0, INT16U_MAX, 0},														// 67
 											   {0, 0, 0},																// 68
 											   {0, 0, 0},																// 69
-											   {MODULE_DIRECT, MODULE_REVERSE, MODULE_DIRECT},							// 70
-											   {1, 1, 1},																// 71
-											   {0, 0, 0},																// 72
+											   {MODULE_DIRECT, MODULE_MD3_BP, MODULE_DIRECT},							// 70
+											   {1, 2, 1},																// 71
+											   {0, INT16U_MAX, 0},														// 72
 											   {0, 0, 0},																// 73
 											   {0, 0, 0},																// 74
 											   {0, 0, 0},																// 75
