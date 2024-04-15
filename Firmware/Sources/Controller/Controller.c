@@ -1,4 +1,4 @@
-// ----------------------------------------
+п»ї// ----------------------------------------
 // Controller logic
 // ----------------------------------------
 
@@ -148,31 +148,31 @@ void CONTROL_UpdateLow()
 	static Int16U SafetyHysteresis = 0;
 	static Int64U IgnoreSafetyTimeout = 0;
 
-	// Аппаратный режим работы контура безопасности без возможности отключения
+	// РђРїРїР°СЂР°С‚РЅС‹Р№ СЂРµР¶РёРј СЂР°Р±РѕС‚С‹ РєРѕРЅС‚СѓСЂР° Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё Р±РµР· РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РѕС‚РєР»СЋС‡РµРЅРёСЏ
 	if(DataTable[REG_SAFETY_HW_MODE])
 	{
 		CONTROL_SelectSafetyConfiguration();
 
-		// Гистерезис на срабатывание датчика
+		// Р“РёСЃС‚РµСЂРµР·РёСЃ РЅР° СЃСЂР°Р±Р°С‚С‹РІР°РЅРёРµ РґР°С‚С‡РёРєР°
 		if(ZbGPIO_GetSafetyState(FALSE))
 			SafetyHysteresis = DataTable[REG_SAFETY_RELAY_HYST_ALT] ?
 					DataTable[REG_SAFETY_RELAY_HYST_ALT] : SAFETY_RELEASE_TIMEOUT;
 		else if(SafetyHysteresis)
 			SafetyHysteresis--;
 
-		// Обработка события
-		// Срабатывания контура
+		// РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёСЏ
+		// РЎСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ РєРѕРЅС‚СѓСЂР°
 		if(SafetyHysteresis)
 		{
 			if(SafetyState != SS_Trigged)
 				CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 		}
-		// Снятия срабатывания контура
+		// РЎРЅСЏС‚РёСЏ СЃСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ РєРѕРЅС‚СѓСЂР°
 		else if(SafetyState != SS_Good && CONTROL_State != DS_SafetyTrig && CONTROL_State != DS_Fault)
 			CONTROL_RequestDPC(&CONTROL_SafetyGood);
 	}
 
-	// Режим работы контура безопасности с возможностью отключения
+	// Р РµР¶РёРј СЂР°Р±РѕС‚С‹ РєРѕРЅС‚СѓСЂР° Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ РѕС‚РєР»СЋС‡РµРЅРёСЏ
 	else if(CONTROL_State == DS_SafetyActive)
 	{
 		if(CONTROL_SelectSafetyConfiguration())
@@ -181,7 +181,7 @@ void CONTROL_UpdateLow()
 			CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
 	}
 
-	// Проверка давления
+	// РџСЂРѕРІРµСЂРєР° РґР°РІР»РµРЅРёСЏ
 	if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive || CONTROL_State == DS_SafetyTrig)
 		if(CONTROL_FilterPressure(ZbGPIO_GetPressureState(DataTable[REG_PRESSURE_DISABLE])))
 			CONTROL_RequestDPC(&CONTROL_PressureTrigger);
