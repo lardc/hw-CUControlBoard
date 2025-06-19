@@ -24,6 +24,7 @@ Boolean ZbGPIO_GetPressureState(Boolean IgnoreEmulation);
 // Indication switches
 void ZbGPIO_LightPressureFault(Boolean Enabled);
 void ZbGPIO_LightSafetySensorTrig(Boolean Enabled);
+void ZbGPIO_LightSafetyResolveAct(Boolean Enabled);
 // Safety relay
 void ZbGPIO_SafetyRelay(Boolean Enabled);
 //
@@ -33,5 +34,6 @@ void ZbGPIO_SetSafetyLine2(Boolean Enabled);
 void ZbGPIO_SetSafetyLine3(Boolean Enabled);
 void ZbGPIO_SetSafetyLine4(Boolean Enabled);
 void ZbGPIO_PowerSafetyRelay(Boolean State);
+
 
 #endif // __ZBGPIO_H

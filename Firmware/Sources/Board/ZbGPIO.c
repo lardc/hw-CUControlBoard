@@ -133,4 +133,10 @@ void ZbGPIO_LightSafetySensorTrig(Boolean Enabled)
 }
 // ----------------------------------------
 
+void ZbGPIO_LightSafetyResolveAct(Boolean Enabled)
+{
+   	ZwGPIO_WritePin(MOSFET_P8, Enabled);
+}
+// ----------------------------------------
+
 // No more.

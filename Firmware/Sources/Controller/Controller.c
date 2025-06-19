@@ -246,6 +246,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive)
 			{
 				ZbGPIO_SafetyHWTriggering(TRUE);
+				ZbGPIO_LightSafetyResolveAct(FALSE);
 				CONTROL_SetDeviceState(DS_SafetyActive);
 			}
 			else
@@ -260,6 +261,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 
 				ZbGPIO_SafetyHWTriggering(FALSE);
 				ZbGPIO_LightSafetySensorTrig(FALSE);
+				ZbGPIO_LightSafetyResolveAct(TRUE);
 				CONTROL_SetDeviceState(DS_Enabled);
 			}
 			else
@@ -285,10 +287,16 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			if(CONTROL_State == DS_None)
 			{
 				ZbGPIO_LightSafetySensorTrig(TRUE);
+				DELAY_US(1000000);
 				ZbGPIO_LightPressureFault(TRUE);
 				DELAY_US(1000000);
+				ZbGPIO_LightSafetyResolveAct(TRUE);
+				DELAY_US(1000000);
 				ZbGPIO_LightSafetySensorTrig(FALSE);
+				DELAY_US(1000000);
 				ZbGPIO_LightPressureFault(FALSE);
+				DELAY_US(1000000);
+				ZbGPIO_LightSafetyResolveAct(FALSE);
 			}
 			break;
 
@@ -304,6 +312,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				{
 					CONTROL_CommutateNone();
 					ZbGPIO_LightSafetySensorTrig(FALSE);
+					ZbGPIO_LightSafetyResolveAct(FALSE);
 					CONTROL_SetDeviceState(DS_SafetyActive);
 				}
 			}

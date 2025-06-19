@@ -76,8 +76,8 @@
 #define SAFETY_CTRL3		22
 #define SAFETY_CTRL4		20
 //
-#define MOSFET_P6			3
-#define MOSFET_P8			6
+#define MOSFET_P6			6
+#define MOSFET_P8			3
 #define MOSFET_P11			8
 #define MOSFET_P13			10
 
