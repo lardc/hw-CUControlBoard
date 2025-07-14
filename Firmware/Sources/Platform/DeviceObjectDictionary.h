@@ -33,6 +33,7 @@
 #define ACT_COMM2_4_NO_PE			115	// Connect other blocks (disconnect protective earth from lines)
 #define ACT_COMM2_4_GATE_SL			116	// Connect GTU and SL for Ih - GOST measurement
 #define ACT_COMM2_4_VGNT			117	// Connect GTU and BVT for Vgnt/Ignt measurement
+#define ACT_COMM2_4_TOU				118	// Connect TOU measurement
 //
 #define ACT_COMM6_NONE				120 // Disconnect all
 #define ACT_COMM6_GATE				121 // Connect Gate tester
