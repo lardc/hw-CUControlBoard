@@ -181,6 +181,15 @@ void COMM2_Commutate(Int16U ActionID)
 			}
 			break;
 
+		case ACT_COMM2_4_TOU:
+			{
+				ZbIOE_OutputValuesReset();
+				if(!BlackBoxNCRelay)
+					ZbIOE_OutputValuesCompose(BBRelayIndex, TRUE);
+				ZbIOE_RegisterFlushWrite();
+			}
+			break;
+
 		case ACT_COMM2_4_GATE_SL:
 			{
 				ZbIOE_OutputValuesReset();
