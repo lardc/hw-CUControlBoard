@@ -445,6 +445,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_COMM2_4_NO_PE:
 		case ACT_COMM2_4_GATE_SL:
 		case ACT_COMM2_4_VGNT:
+		case ACT_COMM2_4_TOU:
 			if(DataTable[REG_SAFETY_HW_MODE] && SafetyState == SS_Trigged)
 				*pUserError = ERR_OPERATION_BLOCKED;
 			else if(CurrentCommMode == CM_CUHV6)
