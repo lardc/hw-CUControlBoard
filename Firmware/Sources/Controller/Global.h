@@ -21,6 +21,7 @@
 //
 #define DT_EPROM_ADDRESS			0
 #define EP_COUNT					1
+#define VALUES_DIAG_SIZE			80		// Размер массива диагностических данных и счетчиков
 #define	SCCI_TIMEOUT_TICKS  		1000
 #define COMM_DELAY_LONG_MS			500
 #define COMM_DELAY_NONE_MS			100

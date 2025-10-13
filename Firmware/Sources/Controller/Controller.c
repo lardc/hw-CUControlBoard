@@ -16,6 +16,7 @@
 #include "DeviceProfile.h"
 #include "CommutationTable.h"
 #include "Commutator.h"
+#include "SaveToFlash.h"
 
 
 // Types
@@ -37,6 +38,9 @@ static volatile Boolean CycleActive = FALSE;
 volatile Int64U CONTROL_TimeCounter = 0;
 volatile DeviceState CONTROL_State = DS_None;
 volatile enum __SafetyState SafetyState = SS_Undef;
+volatile Int16U CONTROL_DiagCounter = 0;
+//
+volatile Int16U CONTROL_DiagData[VALUES_DIAG_SIZE];
 //
 // Boot-loader flag
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
@@ -59,6 +63,12 @@ static void CONTROL_SafetyHWTrigger(Boolean Enable);
 //
 void CONTROL_Init()
 {
+	// Переменные для конфигурации EndPoint
+	Int16U EPIndexes[EP_COUNT] = {EP_DiagData};
+	Int16U EPSized[EP_COUNT] = {VALUES_DIAG_SIZE};
+	pInt16U EPCounters[EP_COUNT] = {(pInt16U)&CONTROL_DiagCounter};
+	pInt16U EPDatas[EP_COUNT] = {(pInt16U)&CONTROL_DiagData};
+
 	// Data-table EPROM service configuration
 	EPROMServiceConfig EPROMService = { &ZbMemory_WriteValuesEPROM, &ZbMemory_ReadValuesEPROM };
 
@@ -70,8 +80,9 @@ void CONTROL_Init()
 
 	COMM_Init();
 
-	// Device profile initialization
+	// Device profile and EndPoint initialization
 	DEVPROFILE_Init(&CONTROL_DispatchAction, &CycleActive);
+	DEVPROFILE_InitEPService(EPIndexes, EPSized, EPCounters, EPDatas);
 	// Reset control values
 	DEVPROFILE_ResetControlSection();
 

@@ -52,6 +52,12 @@
 #define ACT_BOOT_LOADER_REQUEST		320	// Request reboot to bootloader
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
+//
+#define ACT_FLASH_CNT_INIT_READ		334	// Перемещение указателя в область счетчиков
+#define ACT_SET_COUNTER				336	// Установка значения счетчика
+#define ACT_SAVE_COUNTERS			337	// Сохранить счетчики в памяти
+#define ACT_ERASE_COUNTERS			338	// Удалить счетчики из памяти
+#define ACT_FLASH_COUNTER_TO_EP		339 // Выполнить чтение массива из памяти счетчиков отработки в EP
 
 
 // REGISTERS
@@ -72,6 +78,9 @@
 #define REG_IGNORE_SAFETY_SEN3		8	// Отключение обработки входа безопасности 3 (используется при заданном регистре 7)
 #define REG_IGNORE_SAFETY_SEN4		9	// Отключение обработки входа безопасности 4 (используется при заданном регистре 7)
 #define REG_SAFETY_RELAY_HYST_ALT	10	// Альтернативная уставка по гистерезису реле безопасности (в мс)
+//
+#define REG_CNT_NUMBER				60	// Номер счетчика, в который будет записано значение
+#define REG_CNT_VALUE				61  // Значение, которое будет записано в счетчик
 //
 #define REG_TABLE_INDEX				64	// Commutation table index
 #define REG_TABLE_ACTION			65	// Boolean variable for action
@@ -175,5 +184,9 @@
 #define ERR_DEVICE_NOT_READY		3	// Device isn't ready to switch state
 #define ERR_WRONG_PWD				4	// Wrong password - unlock failed
 #define ERR_WRONG_CMD				5	// Wrong command
+
+// Endpoints
+//
+#define EP_DiagData								20	// External information from flash
 
 #endif // __DEV_OBJ_DIC_H
