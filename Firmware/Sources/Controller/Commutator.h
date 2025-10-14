@@ -18,6 +18,7 @@ typedef enum __CommutationMode
 
 // Variables
 extern CommutationMode CurrentCommMode;
+extern Int64U CT_SaveTimer;
 
 // Functions
 //

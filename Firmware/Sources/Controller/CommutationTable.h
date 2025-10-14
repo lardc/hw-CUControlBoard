@@ -17,6 +17,8 @@
 #define COMMUTATION4_TABLE_SIZE		(COMMUTATION4_EXT_BOARDS * 16)
 #define COMMUTATION6_TABLE_SIZE		(COMMUTATION6_EXT_BOARDS * 16)
 
+#define CT_SAVE_TIMEOUT				1800000
+
 
 // Commutation type 2
 //
@@ -173,6 +175,8 @@ typedef struct __CommutationTableItem
 
 
 // Variables
+extern Int32U CycleCounters[COMMUTATION6_TABLE_SIZE];
+
 extern const CommutationTableItem CommutationTable2[];
 extern const CommutationTableItem CommutationTable4[];
 extern const CommutationTableItem CommutationTable6[];

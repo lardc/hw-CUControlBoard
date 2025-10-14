@@ -17,6 +17,7 @@
 #include "CommutationTable.h"
 #include "Commutator.h"
 #include "SaveToFlash.h"
+#include "Constraints.h"
 
 
 // Types
@@ -57,6 +58,7 @@ static void CONTROL_SetDeviceState(DeviceState NewState);
 static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError);
 static Boolean CONTROL_FilterPressure(Boolean Triggered);
 static void CONTROL_SafetyHWTrigger(Boolean Enable);
+void CONTROL_InitStoragePointers();
 
 
 // Functions
@@ -85,6 +87,9 @@ void CONTROL_Init()
 	DEVPROFILE_InitEPService(EPIndexes, EPSized, EPCounters, EPDatas);
 	// Reset control values
 	DEVPROFILE_ResetControlSection();
+	// Инициализация указателей на счетчики и сами счетчики
+	CONTROL_InitStoragePointers();
+	STF_LoadCounters();
 
 	if(ZwSystem_GetDogAlarmFlag())
 	{
@@ -107,6 +112,12 @@ void CONTROL_Idle()
 		FUNC_AsyncDelegate del = DPCDelegate;
 		DPCDelegate = NULL;
 		del();
+	}
+	// Counter data update
+	if (CONTROL_TimeCounter - CT_SaveTimer >= CT_SAVE_TIMEOUT)
+	{
+		STF_SaveCounterData();
+		CT_SaveTimer = CONTROL_TimeCounter;
 	}
 }
 // ----------------------------------------
@@ -298,6 +309,31 @@ static void CONTROL_SetDeviceState(DeviceState NewState)
 static void CONTROL_SafetyHWTrigger(Boolean Enable)
 {
 	ZbGPIO_SafetyHWTriggering(DataTable[REG_SAFETY_DISABLE] ? FALSE : Enable);
+}
+// ----------------------------------------
+
+void CONTROL_InitStoragePointers()
+{
+	Int16U i;
+	switch(DataTable[REG_COMM_NUM])
+	{
+		case 0:
+		case 2:
+			for (i = 0; i < COMMUTATION2_TABLE_SIZE; ++i)
+				STF_AssignCounterPointer(i, (Int32U)&CycleCounters[i]);
+			break;
+
+		case 4:
+			for (i = 0; i < COMMUTATION4_TABLE_SIZE; ++i)
+				STF_AssignCounterPointer(i, (Int32U)&CycleCounters[i]);
+			break;
+
+		case 6:
+		case COMM_CUHV6_GATE_4WIRE:
+			for (i = 0; i < COMMUTATION6_TABLE_SIZE; ++i)
+				STF_AssignCounterPointer(i, (Int32U)&CycleCounters[i]);
+			break;
+	}
 }
 // ----------------------------------------
 

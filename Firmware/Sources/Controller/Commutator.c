@@ -18,6 +18,7 @@
 //
 static Int16U OldActionID = ACT_COMM2_4_NONE;
 CommutationMode CurrentCommMode = CM_CUHV2;
+Int64U CT_SaveTimer = 0;
 
 
 // Forward functions
