@@ -2,12 +2,12 @@
 #include "StorageDescription.h"
 
 // Variables
-const RecordDescription StorageDescription[] =
+RecordDescription StorageDescription[] =
 {
-		{"Register 192",	DT_Int16U, 1,		FALSE},
-		{"Voltage EP1",		DT_Int16U, 100,		FALSE},
-		{"Max current",		DT_Int32U, 1,		TRUE},
-		{"Max voltage",		DT_Int16U, 1,		TRUE}
+		{"Register 192",	DT_Int16U, 1	},
+		{"Voltage EP1",		DT_Int16U, 100	},
+		{"Max current",		DT_Int32U, 1	},
+		{"Max voltage",		DT_Int16U, 1	}
 };
 Int32U TablePointers[sizeof(StorageDescription) / sizeof(StorageDescription[0])] = {0};
 const Int16U StorageSize = sizeof(StorageDescription) / sizeof(StorageDescription[0]);
@@ -49,7 +49,7 @@ CounterDescription CounterStorageDescription2[] =
 	{"28. None"},
 	{"29. None"},
 	{"30. SL: Potential Cathode to POTENTIAL_C"},
-	{"31. GTU: GTU Potential Control Cathode to POTENTIAL_CTRL_C; SL: Potential Cathode to POTENTIAL_C (REVERSE)"}
+	{"31. GTU: POT Ctrl C to POT_CTRL_C; SL: POT С to POT_C (REV)"}
 };
 CounterData CounterTablePointers2[sizeof(CounterStorageDescription2) / sizeof(CounterStorageDescription2[0])] = {0};
 const Int16U CounterStorageSize2 = sizeof(CounterStorageDescription2) / sizeof(CounterStorageDescription2[0]);

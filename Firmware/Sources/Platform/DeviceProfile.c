@@ -15,6 +15,7 @@
 #include "Constraints.h"
 #include "LabelDescription.h"
 #include "SaveToFlash.h"
+#include "CommutationTable.h"
 
 // Types
 //
@@ -315,7 +316,7 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 			break;
 
 		case ACT_SET_COUNTER:
-			//CycleCounters[(Int16U)DataTable[REG_CNT_NUMBER]] = DataTable[REG_CNT_VALUE];
+			CycleCounters[(Int16U)DataTable[REG_CNT_NUMBER]] = DataTable[REG_CNT_VALUE];
 			break;
 
 		case ACT_SAVE_COUNTERS:
@@ -323,7 +324,6 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 			break;
 
 		case ACT_ERASE_COUNTERS:
-			//NFLASH_Unlock();
 			STF_EraseCounterDataSector();
 			break;
 
