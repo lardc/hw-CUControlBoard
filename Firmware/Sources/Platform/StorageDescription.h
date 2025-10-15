@@ -6,7 +6,7 @@
 #include "SaveToFlash.h"
 
 // Variables
-extern RecordDescription StorageDescription[];
+extern const RecordDescription StorageDescription[];
 extern Int32U TablePointers[];
 extern const Int16U StorageSize;
 

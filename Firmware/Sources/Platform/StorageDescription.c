@@ -2,7 +2,7 @@
 #include "StorageDescription.h"
 
 // Variables
-RecordDescription StorageDescription[] =
+const RecordDescription StorageDescription[] =
 {
 		{"Register 192",	DT_Int16U, 1	},
 		{"Voltage EP1",		DT_Int16U, 100	},

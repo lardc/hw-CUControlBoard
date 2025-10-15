@@ -314,26 +314,25 @@ static void CONTROL_SafetyHWTrigger(Boolean Enable)
 
 void CONTROL_InitStoragePointers()
 {
-	Int16U i;
+	Int16U i, TableSize;
 	switch(DataTable[REG_COMM_NUM])
 	{
 		case 0:
 		case 2:
-			for (i = 0; i < COMMUTATION2_TABLE_SIZE; ++i)
-				STF_AssignCounterPointer(i, (Int32U)&CycleCounters[i]);
+			TableSize = COMMUTATION2_TABLE_SIZE;
 			break;
 
 		case 4:
-			for (i = 0; i < COMMUTATION4_TABLE_SIZE; ++i)
-				STF_AssignCounterPointer(i, (Int32U)&CycleCounters[i]);
+			TableSize = COMMUTATION4_TABLE_SIZE;
 			break;
 
 		case 6:
 		case COMM_CUHV6_GATE_4WIRE:
-			for (i = 0; i < COMMUTATION6_TABLE_SIZE; ++i)
-				STF_AssignCounterPointer(i, (Int32U)&CycleCounters[i]);
+			TableSize = COMMUTATION6_TABLE_SIZE;
 			break;
 	}
+	for (i = 0; i < TableSize; ++i)
+		STF_AssignCounterPointer(i, (Int32U)&CycleCounters[i]);
 }
 // ----------------------------------------
 
