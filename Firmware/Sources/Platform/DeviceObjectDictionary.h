@@ -187,6 +187,6 @@
 
 // Endpoints
 //
-#define EP_DiagData								20	// External information from flash
+#define EP_DiagData					20	// External information from flash
 
 #endif // __DEV_OBJ_DIC_H

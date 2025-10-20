@@ -16,6 +16,7 @@
 #include "LabelDescription.h"
 #include "SaveToFlash.h"
 #include "CommutationTable.h"
+#include "StorageDescription.h"
 
 // Types
 //
@@ -316,7 +317,7 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 			break;
 
 		case ACT_SET_COUNTER:
-			CycleCounters[(Int16U)DataTable[REG_CNT_NUMBER]] = DataTable[REG_CNT_VALUE];
+			CycleCounters[(Int16U)DataTable[REG_CNT_NUMBER]] = DEVPROFILE_ReadValue32((pInt16U)DataTable, REG_CNT_VALUE);
 			break;
 
 		case ACT_SAVE_COUNTERS:
@@ -324,7 +325,16 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 			break;
 
 		case ACT_ERASE_COUNTERS:
-			STF_EraseCounterDataSector();
+			{
+				// Обнуляем RAM-значения счётчиков и их кэш, чтобы последующее сохранение не вернуло старые значения
+				Int16U i;
+				for(i = 0; i < CounterStorageSize; ++i)
+				{
+					*(pInt32U)CounterTablePointers[i].Address = 0;
+					CounterTablePointers[i].Value = 0;
+				}
+				STF_EraseCounterDataSector();
+			}
 			break;
 
 		case ACT_FLASH_CNT_INIT_READ:
@@ -340,9 +350,7 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 
 				for(CONTROL_DiagCounter = 0;CONTROL_DiagCounter < VALUES_DIAG_SIZE && MemoryPointer <= MemoryEndPointer;)
 				{
-					Int32U value = STF_ReadCounter();
-					CONTROL_DiagData[CONTROL_DiagCounter++] = value;
-					MemoryPointer += 4;
+					CONTROL_DiagData[CONTROL_DiagCounter++] = STF_ReadCounter();
 				}
 			}
 			break;
