@@ -12,11 +12,11 @@ const RecordDescription StorageDescription[] =
 Int32U TablePointers[sizeof(StorageDescription) / sizeof(StorageDescription[0])] = {0};
 const Int16U StorageSize = sizeof(StorageDescription) / sizeof(StorageDescription[0]);
 
-CounterDescription *CounterStorageDescription;
+const CounterDescription *CounterStorageDescription;
 CounterData *CounterTablePointers;
 Int16U CounterStorageSize;
 
-CounterDescription CounterStorageDescription2[] =
+const CounterDescription CounterStorageDescription2[] =
 {
 	{"0. BVT: HV2 to POWER_A"},
 	{"1. BVT: HV1 to POWER_A"},
@@ -54,7 +54,7 @@ CounterDescription CounterStorageDescription2[] =
 CounterData CounterTablePointers2[sizeof(CounterStorageDescription2) / sizeof(CounterStorageDescription2[0])] = {0};
 const Int16U CounterStorageSize2 = sizeof(CounterStorageDescription2) / sizeof(CounterStorageDescription2[0]);
 
-CounterDescription CounterStorageDescription4[] =
+const CounterDescription CounterStorageDescription4[] =
 {
 	{"0. BVT: HV+ to POW_A"},
 	{"1. BVT: HV+ to POW_C"},
@@ -92,7 +92,7 @@ CounterDescription CounterStorageDescription4[] =
 CounterData CounterTablePointers4[sizeof(CounterStorageDescription4) / sizeof(CounterStorageDescription4[0])] = {0};
 const Int16U CounterStorageSize4 = sizeof(CounterStorageDescription4) / sizeof(CounterStorageDescription4[0]);
 
-CounterDescription CounterStorageDescription6[] =
+const CounterDescription CounterStorageDescription6[] =
 {
 	{"0. SL: HC+ to POWER_2"},
 	{"1. SL: HC+ to POWER_3"},
@@ -146,7 +146,7 @@ CounterDescription CounterStorageDescription6[] =
 CounterData CounterTablePointers6[sizeof(CounterStorageDescription6) / sizeof(CounterStorageDescription6[0])] = {0};
 const Int16U CounterStorageSize6 = sizeof(CounterStorageDescription6) / sizeof(CounterStorageDescription6[0]);
 
-CounterDescription CounterStorageDescription6Gate4Wire[] =
+const CounterDescription CounterStorageDescription6Gate4Wire[] =
 {
 	{"0. SL: HC+ to POWER_2"},
 	{"1. SL: HC+ to POWER_3"},

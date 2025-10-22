@@ -37,6 +37,7 @@ static volatile FUNC_AsyncDelegate DPCDelegate = NULL;
 //
 static volatile Boolean CycleActive = FALSE;
 volatile Int64U CONTROL_TimeCounter = 0;
+Int64U CT_SaveTimer = 0; // Последняя отметка времени автосохранения
 volatile DeviceState CONTROL_State = DS_None;
 volatile enum __SafetyState SafetyState = SS_Undef;
 volatile Int16U CONTROL_DiagCounter = 0;
@@ -329,6 +330,10 @@ void CONTROL_InitStoragePointers()
 		case 6:
 		case COMM_CUHV6_GATE_4WIRE:
 			TableSize = COMMUTATION6_TABLE_SIZE;
+			break;
+
+		default:
+			TableSize = COMMUTATION2_TABLE_SIZE;
 			break;
 	}
 	for (i = 0; i < TableSize; ++i)

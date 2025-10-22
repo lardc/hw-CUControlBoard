@@ -10,14 +10,14 @@ extern const RecordDescription StorageDescription[];
 extern Int32U TablePointers[];
 extern const Int16U StorageSize;
 
-extern CounterDescription *CounterStorageDescription;
+extern const CounterDescription *CounterStorageDescription;
 extern CounterData *CounterTablePointers;
 extern Int16U CounterStorageSize;
 
-extern CounterDescription CounterStorageDescription2[];
-extern CounterDescription CounterStorageDescription4[];
-extern CounterDescription CounterStorageDescription6[];
-extern CounterDescription CounterStorageDescription6Gate4Wire[];
+extern const CounterDescription CounterStorageDescription2[];
+extern const CounterDescription CounterStorageDescription4[];
+extern const CounterDescription CounterStorageDescription6[];
+extern const CounterDescription CounterStorageDescription6Gate4Wire[];
 extern CounterData CounterTablePointers2[];
 extern CounterData CounterTablePointers4[];
 extern CounterData CounterTablePointers6[];
