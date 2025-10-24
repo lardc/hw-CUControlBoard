@@ -12,6 +12,7 @@
 #include "Global.h"
 #include "DataTable.h"
 #include "Constraints.h"
+#include "StorageDescription.h"
 
 
 // Variables
@@ -35,15 +36,30 @@ void COMM_Init()
 		case 0:
 		case 2:
 			CurrentCommMode = CM_CUHV2;
+			CounterStorageDescription = CounterStorageDescription2;
+			CounterTablePointers = CounterTablePointers2;
+			CounterStorageSize = CounterStorageSize2;
 			break;
 
 		case 4:
 			CurrentCommMode = CM_CUHV4;
+			CounterStorageDescription = CounterStorageDescription4;
+			CounterTablePointers = CounterTablePointers4;
+			CounterStorageSize = CounterStorageSize4;
 			break;
 
 		case 6:
+			CurrentCommMode = CM_CUHV6;
+			CounterStorageDescription = CounterStorageDescription6;
+			CounterTablePointers = CounterTablePointers6;
+			CounterStorageSize = CounterStorageSize6;
+			break;
+
 		case COMM_CUHV6_GATE_4WIRE:
 			CurrentCommMode = CM_CUHV6;
+			CounterStorageDescription = CounterStorageDescription6Gate4Wire;
+			CounterTablePointers = CounterTablePointers6Gate4Wire;
+			CounterStorageSize = CounterStorageSize6Gate4Wire;
 			break;
 	}
 	OldActionID = (CurrentCommMode == CM_CUHV6) ? ACT_COMM6_NONE : ACT_COMM2_4_NONE;

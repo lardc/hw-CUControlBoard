@@ -27,6 +27,9 @@ static Boolean SafetyTrig = FALSE;
 
 static CommutationTableItem *UsedCommutationTable = (CommutationTableItem *)CommutationTable2;
 static Int16U UsedBoardsCount = COMMUTATION2_EXT_BOARDS;
+static Int16U PrevCurrentOutputValues[MAX_OUT_BOARDS] = {0};
+
+void ZbIOE_CommutationIncrement(const CommutationTableItem *CommTable, Int16U TableSize);
 
 
 // Functions
@@ -136,12 +139,46 @@ void ZbIOE_RegisterFlushWrite()
 {
 	Int16U i, CurrentOutputValuesCopy[MAX_OUT_BOARDS];
 
+	for (i = 0; i < MAX_OUT_BOARDS; ++i)
+		PrevCurrentOutputValues[i] = 0;
+
 	// Change bytes order
 	for (i = 0; i < UsedBoardsCount; ++i)
 		CurrentOutputValuesCopy[i] = CurrentOutputValues[UsedBoardsCount - 1 - i];
 
 	ZwSPId_Send(CurrentOutputValuesCopy, sizeof(Int16U) * UsedBoardsCount, IOE_OUT_CL, STTNormal);
+
+	switch (DataTable[REG_COMM_NUM])
+	{
+		case 0:
+		case 2:
+			ZbIOE_CommutationIncrement(CommutationTable2, COMMUTATION2_TABLE_SIZE);
+			break;
+
+		case 4:
+			ZbIOE_CommutationIncrement(CommutationTable4, COMMUTATION4_TABLE_SIZE);
+			break;
+
+		case 6:
+			ZbIOE_CommutationIncrement(CommutationTable6, COMMUTATION6_TABLE_SIZE);
+			break;
+
+		case COMM_CUHV6_GATE_4WIRE:
+			ZbIOE_CommutationIncrement(CommutationTable6Gate4Wire, COMMUTATION6_TABLE_SIZE);
+			break;
+	}
+
+	for (i = 0; i < MAX_OUT_BOARDS; ++i)
+		PrevCurrentOutputValues[i] = CurrentOutputValues[i];
 }
 // ----------------------------------------
 
-
+void ZbIOE_CommutationIncrement(const CommutationTableItem *CommTable, Int16U TableSize)
+{
+	Int16U i;
+	for (i = 0; i < TableSize; ++i)
+		if ((PrevCurrentOutputValues[CommTable[i].BoardNum]	& CommTable[i].Bit)	!=
+				(CurrentOutputValues[CommTable[i].BoardNum]	& CommTable[i].Bit))
+			CycleCounters[i]++;
+}
+// ----------------------------------------
