@@ -16,10 +16,10 @@ void ZbGPIO_Init()
 	// Output pins
 	ZwGPIO_WritePin(PE_CTRL_PIN, FALSE);
 	ZwGPIO_WritePin(HW_SAFE_SW_PIN, TRUE);
-	ZwGPIO_WritePin(MOSFET_P6, FALSE);
-	ZwGPIO_WritePin(MOSFET_P8, FALSE);
-	ZwGPIO_WritePin(MOSFET_P11, FALSE);
-	ZwGPIO_WritePin(MOSFET_P13, FALSE);
+	ZwGPIO_WritePin(MOSFET_M1, FALSE);
+	ZwGPIO_WritePin(MOSFET_M2, FALSE);
+	ZwGPIO_WritePin(MOSFET_M3, FALSE);
+	ZwGPIO_WritePin(MOSFET_M4, FALSE);
 	ZwGPIO_WritePin(PIN_LED, FALSE);
 	ZwGPIO_WritePin(CS_RELAY, FALSE);
 	ZwGPIO_WritePin(SAFETY_CTRL1, FALSE);
@@ -29,10 +29,10 @@ void ZbGPIO_Init()
 
    	ZwGPIO_PinToOutput(PE_CTRL_PIN);
    	ZwGPIO_PinToOutput(HW_SAFE_SW_PIN);
-   	ZwGPIO_PinToOutput(MOSFET_P6);
-   	ZwGPIO_PinToOutput(MOSFET_P8);
-   	ZwGPIO_PinToOutput(MOSFET_P11);
-   	ZwGPIO_PinToOutput(MOSFET_P13);
+   	ZwGPIO_PinToOutput(MOSFET_M1);
+   	ZwGPIO_PinToOutput(MOSFET_M2);
+   	ZwGPIO_PinToOutput(MOSFET_M3);
+   	ZwGPIO_PinToOutput(MOSFET_M4);
    	ZwGPIO_PinToOutput(PIN_LED);
    	ZwGPIO_PinToOutput(CS_RELAY);
    	ZwGPIO_PinToOutput(SAFETY_CTRL1);
@@ -48,7 +48,7 @@ void ZbGPIO_Init()
 
 void ZbGPIO_PowerSafetyRelay(Boolean State)
 {
-	ZwGPIO_WritePin(MOSFET_P6, State);
+	ZwGPIO_WritePin(MOSFET_M2, State);
 }
 // ----------------------------------------
 
@@ -123,19 +123,19 @@ Boolean ZbGPIO_GetPressureState(Boolean IgnoreEmulation)
 
 void ZbGPIO_LightPressureFault(Boolean Enabled)
 {
-   	ZwGPIO_WritePin(MOSFET_P13, Enabled);
+   	ZwGPIO_WritePin(MOSFET_M4, Enabled);
 }
 // ----------------------------------------
 
 void ZbGPIO_LightSafetySensorTrig(Boolean Enabled)
 {
-   	ZwGPIO_WritePin(MOSFET_P11, Enabled);
+   	ZwGPIO_WritePin(MOSFET_M3, Enabled);
 }
 // ----------------------------------------
 
 void ZbGPIO_LightSafetyResolveAct(Boolean Enabled)
 {
-   	ZwGPIO_WritePin(MOSFET_P8, Enabled);
+   	ZwGPIO_WritePin(MOSFET_M1, Enabled);
 }
 // ----------------------------------------
 
