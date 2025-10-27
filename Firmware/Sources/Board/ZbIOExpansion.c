@@ -139,9 +139,6 @@ void ZbIOE_RegisterFlushWrite()
 {
 	Int16U i, CurrentOutputValuesCopy[MAX_OUT_BOARDS];
 
-	for (i = 0; i < MAX_OUT_BOARDS; ++i)
-		PrevCurrentOutputValues[i] = 0;
-
 	// Change bytes order
 	for (i = 0; i < UsedBoardsCount; ++i)
 		CurrentOutputValuesCopy[i] = CurrentOutputValues[UsedBoardsCount - 1 - i];
