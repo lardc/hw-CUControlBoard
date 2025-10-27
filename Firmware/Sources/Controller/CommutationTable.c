@@ -33,6 +33,8 @@
 
 // Constants
 //
+Int32U CycleCounters[COMMUTATION6_TABLE_SIZE] = {0};
+
 const CommutationTableItem CommutationTable2[COMMUTATION2_TABLE_SIZE] =
 				{
 						{BOARD1, PIN_A1},			// 0	// BVT:		HV2 to POWER_A

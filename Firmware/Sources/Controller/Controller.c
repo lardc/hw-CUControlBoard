@@ -16,6 +16,8 @@
 #include "DeviceProfile.h"
 #include "CommutationTable.h"
 #include "Commutator.h"
+#include "SaveToFlash.h"
+#include "Constraints.h"
 
 
 // Types
@@ -35,8 +37,12 @@ static volatile FUNC_AsyncDelegate DPCDelegate = NULL;
 //
 static volatile Boolean CycleActive = FALSE;
 volatile Int64U CONTROL_TimeCounter = 0;
+Int64U CT_SaveTimer = 0; // Последняя отметка времени автосохранения
 volatile DeviceState CONTROL_State = DS_None;
 volatile enum __SafetyState SafetyState = SS_Undef;
+volatile Int16U CONTROL_DiagCounter = 0;
+//
+volatile Int16U CONTROL_DiagData[VALUES_DIAG_SIZE];
 //
 // Boot-loader flag
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
@@ -53,12 +59,19 @@ static void CONTROL_SetDeviceState(DeviceState NewState);
 static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError);
 static Boolean CONTROL_FilterPressure(Boolean Triggered);
 static void CONTROL_SafetyHWTrigger(Boolean Enable);
+void CONTROL_InitStoragePointers();
 
 
 // Functions
 //
 void CONTROL_Init()
 {
+	// Переменные для конфигурации EndPoint
+	Int16U EPIndexes[EP_COUNT] = {EP_DiagData};
+	Int16U EPSized[EP_COUNT] = {VALUES_DIAG_SIZE};
+	pInt16U EPCounters[EP_COUNT] = {(pInt16U)&CONTROL_DiagCounter};
+	pInt16U EPDatas[EP_COUNT] = {(pInt16U)&CONTROL_DiagData};
+
 	// Data-table EPROM service configuration
 	EPROMServiceConfig EPROMService = { &ZbMemory_WriteValuesEPROM, &ZbMemory_ReadValuesEPROM };
 
@@ -70,10 +83,14 @@ void CONTROL_Init()
 
 	COMM_Init();
 
-	// Device profile initialization
+	// Device profile and EndPoint initialization
 	DEVPROFILE_Init(&CONTROL_DispatchAction, &CycleActive);
+	DEVPROFILE_InitEPService(EPIndexes, EPSized, EPCounters, EPDatas);
 	// Reset control values
 	DEVPROFILE_ResetControlSection();
+	// Инициализация указателей на счетчики и сами счетчики
+	CONTROL_InitStoragePointers();
+	STF_LoadCounters();
 
 	if(ZwSystem_GetDogAlarmFlag())
 	{
@@ -96,6 +113,12 @@ void CONTROL_Idle()
 		FUNC_AsyncDelegate del = DPCDelegate;
 		DPCDelegate = NULL;
 		del();
+	}
+	// Counter data update
+	if (CONTROL_TimeCounter - CT_SaveTimer >= CT_SAVE_TIMEOUT)
+	{
+		STF_SaveCounterData();
+		CT_SaveTimer = CONTROL_TimeCounter;
 	}
 }
 // ----------------------------------------
@@ -287,6 +310,34 @@ static void CONTROL_SetDeviceState(DeviceState NewState)
 static void CONTROL_SafetyHWTrigger(Boolean Enable)
 {
 	ZbGPIO_SafetyHWTriggering(DataTable[REG_SAFETY_DISABLE] ? FALSE : Enable);
+}
+// ----------------------------------------
+
+void CONTROL_InitStoragePointers()
+{
+	Int16U i, TableSize;
+	switch(DataTable[REG_COMM_NUM])
+	{
+		case 0:
+		case 2:
+			TableSize = COMMUTATION2_TABLE_SIZE;
+			break;
+
+		case 4:
+			TableSize = COMMUTATION4_TABLE_SIZE;
+			break;
+
+		case 6:
+		case COMM_CUHV6_GATE_4WIRE:
+			TableSize = COMMUTATION6_TABLE_SIZE;
+			break;
+
+		default:
+			TableSize = COMMUTATION2_TABLE_SIZE;
+			break;
+	}
+	for (i = 0; i < TableSize; ++i)
+		STF_AssignCounterPointer(i, (Int32U)&CycleCounters[i]);
 }
 // ----------------------------------------
 

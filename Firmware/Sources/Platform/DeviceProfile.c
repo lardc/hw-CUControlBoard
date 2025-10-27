@@ -14,6 +14,9 @@
 #include "Controller.h"
 #include "Constraints.h"
 #include "LabelDescription.h"
+#include "SaveToFlash.h"
+#include "CommutationTable.h"
+#include "StorageDescription.h"
 
 // Types
 //
@@ -151,20 +154,17 @@ void DEVPROFILE_ResetControlSection()
 }
 // ----------------------------------------
 
-void DEVPROFILE_ResetScopes(Int16U ResetPosition, Int16U ScopeMask)
+void DEVPROFILE_ResetScopes()
 {
 	Int16U i;
 
 	for(i = 0; i < EP_COUNT; ++i)
 	{
-		if((1 << i) & ScopeMask)
-		{
-			*(RS232_EPState.EPs[i].pDataCounter) = ResetPosition;
-			*(CAN_EPState.EPs[i].pDataCounter) = ResetPosition;
+			*(RS232_EPState.EPs[i].pDataCounter) = 0;
+			*(CAN_EPState.EPs[i].pDataCounter) = 0;
 
 			MemZero16(RS232_EPState.EPs[i].Data, RS232_EPState.EPs[i].Size);
 			MemZero16(CAN_EPState.EPs[i].Data, CAN_EPState.EPs[i].Size);
-		}
 	}
 }
 // ----------------------------------------
@@ -259,6 +259,7 @@ static Boolean DEVPROFILE_Validate32(Int16U Address, Int32U Data)
 static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 {
 	static Int32U MemoryPointer = 0;
+	static Int32U MemoryEndPointer = 0;
 
 	switch(ActionID)
 	{
@@ -313,6 +314,45 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 
 		case ACT_SELECT_MEM_LABEL:
 			MemoryPointer = LABEL_START_ADDRESS;
+			break;
+
+		case ACT_SET_COUNTER:
+			CycleCounters[(Int16U)DataTable[REG_CNT_NUMBER]] = DEVPROFILE_ReadValue32((pInt16U)DataTable, REG_CNT_VALUE);
+			break;
+
+		case ACT_SAVE_COUNTERS:
+			STF_SaveCounterData();
+			break;
+
+		case ACT_ERASE_COUNTERS:
+			{
+				// Обнуляем RAM-значения счётчиков и их кэш, чтобы последующее сохранение не вернуло старые значения
+				Int16U i;
+				for(i = 0; i < CounterStorageSize; ++i)
+				{
+					*(pInt32U)CounterTablePointers[i].Address = 0;
+					CounterTablePointers[i].Value = 0;
+				}
+				STF_EraseCounterDataSector();
+			}
+			break;
+
+		case ACT_FLASH_CNT_INIT_READ:
+			STF_ResetStateMachine();
+			MemoryPointer = FLASH_COUNTER_START_ADDR;
+			MemoryEndPointer = FLASH_COUNTER_END_ADDR;
+			break;
+
+		case ACT_FLASH_COUNTER_TO_EP:
+			{
+				DEVPROFILE_ResetEPReadState();
+				DEVPROFILE_ResetScopes();
+
+				for(CONTROL_DiagCounter = 0;CONTROL_DiagCounter < VALUES_DIAG_SIZE && MemoryPointer <= MemoryEndPointer;)
+				{
+					CONTROL_DiagData[CONTROL_DiagCounter++] = STF_ReadCounter();
+				}
+			}
 			break;
 
 		default:

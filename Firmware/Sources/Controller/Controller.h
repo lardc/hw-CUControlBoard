@@ -31,6 +31,9 @@ typedef enum __DeviceState
 extern volatile Int64U CONTROL_TimeCounter;
 extern volatile DeviceState CONTROL_State;
 extern volatile Int16U CONTROL_BootLoaderRequest;
+extern volatile Int16U CONTROL_DiagCounter;
+//
+extern volatile Int16U CONTROL_DiagData[VALUES_DIAG_SIZE];
 
 // Functions
 //
