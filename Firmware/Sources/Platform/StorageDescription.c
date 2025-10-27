@@ -2,16 +2,6 @@
 #include "StorageDescription.h"
 
 // Variables
-const RecordDescription StorageDescription[] =
-{
-		{"Register 192",	DT_Int16U, 1	},
-		{"Voltage EP1",		DT_Int16U, 100	},
-		{"Max current",		DT_Int32U, 1	},
-		{"Max voltage",		DT_Int16U, 1	}
-};
-Int32U TablePointers[sizeof(StorageDescription) / sizeof(StorageDescription[0])] = {0};
-const Int16U StorageSize = sizeof(StorageDescription) / sizeof(StorageDescription[0]);
-
 const CounterDescription *CounterStorageDescription;
 CounterData *CounterTablePointers;
 Int16U CounterStorageSize;
