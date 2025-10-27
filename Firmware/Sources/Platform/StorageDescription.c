@@ -49,7 +49,7 @@ const CounterDescription CounterStorageDescription2[] =
 	{"28. None"},
 	{"29. None"},
 	{"30. SL: Potential Cathode to POTENTIAL_C"},
-	{"31. GTU: POT Ctrl C to POT_CTRL_C; SL: POT С to POT_C (REV)"}
+	{"31. GTU: POT Ctrl C to POT_CTRL_C; SL: POT C to POT_C (REV)"}
 };
 CounterData CounterTablePointers2[sizeof(CounterStorageDescription2) / sizeof(CounterStorageDescription2[0])] = {0};
 const Int16U CounterStorageSize2 = sizeof(CounterStorageDescription2) / sizeof(CounterStorageDescription2[0]);
