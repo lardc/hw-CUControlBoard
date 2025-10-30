@@ -242,7 +242,10 @@ static Boolean CONTROL_FilterPressure(Boolean Triggered)
 
 static void CONTROL_CommutateNone()
 {
-	COMM_CommutateNone();
+	if (DataTable[REG_COMM_NUM] == 8)
+		ZbGPIO_PowerSafetyRelay(FALSE);
+	else
+		COMM_CommutateNone();
 }
 // ----------------------------------------
 
@@ -373,6 +376,8 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive)
 			{
 				CONTROL_SafetyHWTrigger(TRUE);
+				if(DataTable[REG_COMM_NUM == 8])
+					ZbGPIO_LightSafetyResolveAct(FALSE);
 				CONTROL_SetDeviceState(DS_SafetyActive);
 			}
 			else
@@ -388,6 +393,8 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				CONTROL_SafetyHWTrigger(FALSE);
 				if(!DataTable[REG_SAFETY_HW_MODE])
 					ZbGPIO_LightSafetySensorTrig(FALSE);
+				if(DataTable[REG_COMM_NUM == 8])
+					ZbGPIO_LightSafetyResolveAct(TRUE);
 				CONTROL_SetDeviceState(DS_Enabled);
 			}
 			else
@@ -418,6 +425,13 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				ZbGPIO_LightPressureFault(TRUE);
 				DELAY_US(500000);
 				ZbGPIO_LightPressureFault(FALSE);
+				DELAY_US(500000);
+				if (DataTable[REG_COMM_NUM] == 8)
+				{
+					ZbGPIO_LightSafetyResolveAct(TRUE);
+					DELAY_US(1000000);
+					ZbGPIO_LightSafetyResolveAct(FALSE);
+				}
 			}
 			else
 				*pUserError = ERR_OPERATION_BLOCKED;
@@ -494,6 +508,24 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_COMM2_4_BV_D:
 		case ACT_COMM2_4_BV_R:
 		case ACT_COMM2_4_NO_PE:
+			if(CONTROL_State == DS_Fault)
+				*pUserError = ERR_OPERATION_BLOCKED;
+			else if(CONTROL_State == DS_None)
+				*pUserError = ERR_DEVICE_NOT_READY;
+			else
+			{
+				if (DataTable[REG_COMM_NUM] == 8)
+					ZbGPIO_PowerSafetyRelay(TRUE);
+				if (CONTROL_State == DS_SafetyTrig)
+				{
+					CONTROL_CommutateNone();
+					ZbGPIO_LightSafetySensorTrig(FALSE);
+					if (DataTable[REG_COMM_NUM] == 8)
+						ZbGPIO_LightSafetyResolveAct(FALSE);
+					CONTROL_SetDeviceState(DS_SafetyActive);
+				}
+			}
+			break;
 		case ACT_COMM2_4_GATE_SL:
 		case ACT_COMM2_4_VGNT:
 		case ACT_COMM2_4_TOU:
