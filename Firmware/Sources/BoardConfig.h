@@ -56,10 +56,10 @@
 #define SAFETY_CTRL3		22
 #define SAFETY_CTRL4		20
 //
-#define MOSFET_P6			3
-#define MOSFET_P8			6
-#define MOSFET_P11			8
-#define MOSFET_P13			10
+#define MOSFET_M1			3
+#define MOSFET_M2			6
+#define MOSFET_M3			8
+#define MOSFET_M4			10
 
 
 #endif // __BOARD_CONFIG_H
