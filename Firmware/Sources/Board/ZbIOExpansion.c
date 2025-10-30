@@ -175,7 +175,8 @@ void ZbIOE_CommutationIncrement(const CommutationTableItem *CommTable, Int16U Ta
 	Int16U i;
 	for (i = 0; i < TableSize; ++i)
 		if ((PrevCurrentOutputValues[CommTable[i].BoardNum]	& CommTable[i].Bit)	!=
-				(CurrentOutputValues[CommTable[i].BoardNum]	& CommTable[i].Bit))
+				(CurrentOutputValues[CommTable[i].BoardNum]	& CommTable[i].Bit) &&
+				((PrevCurrentOutputValues[CommTable[i].BoardNum] & CommTable[i].Bit) == 0))
 			CycleCounters[i]++;
 }
 // ----------------------------------------
