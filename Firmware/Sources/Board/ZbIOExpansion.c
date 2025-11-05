@@ -139,9 +139,6 @@ void ZbIOE_RegisterFlushWrite()
 {
 	Int16U i, CurrentOutputValuesCopy[MAX_OUT_BOARDS];
 
-	for (i = 0; i < MAX_OUT_BOARDS; ++i)
-		PrevCurrentOutputValues[i] = 0;
-
 	// Change bytes order
 	for (i = 0; i < UsedBoardsCount; ++i)
 		CurrentOutputValuesCopy[i] = CurrentOutputValues[UsedBoardsCount - 1 - i];
@@ -178,7 +175,8 @@ void ZbIOE_CommutationIncrement(const CommutationTableItem *CommTable, Int16U Ta
 	Int16U i;
 	for (i = 0; i < TableSize; ++i)
 		if ((PrevCurrentOutputValues[CommTable[i].BoardNum]	& CommTable[i].Bit)	!=
-				(CurrentOutputValues[CommTable[i].BoardNum]	& CommTable[i].Bit))
+				(CurrentOutputValues[CommTable[i].BoardNum]	& CommTable[i].Bit) &&
+				((PrevCurrentOutputValues[CommTable[i].BoardNum] & CommTable[i].Bit) == 0))
 			CycleCounters[i]++;
 }
 // ----------------------------------------
