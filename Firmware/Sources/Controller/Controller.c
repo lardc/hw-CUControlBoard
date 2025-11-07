@@ -37,7 +37,6 @@ static volatile FUNC_AsyncDelegate DPCDelegate = NULL;
 //
 static volatile Boolean CycleActive = FALSE;
 volatile Int64U CONTROL_TimeCounter = 0;
-Int64U CT_SaveTimer = 0; // Последняя отметка времени автосохранения
 volatile DeviceState CONTROL_State = DS_None;
 volatile enum __SafetyState SafetyState = SS_Undef;
 volatile Int16U CONTROL_DiagCounter = 0;
@@ -115,11 +114,7 @@ void CONTROL_Idle()
 		del();
 	}
 	// Counter data update
-	if (CONTROL_TimeCounter - CT_SaveTimer >= CT_SAVE_TIMEOUT)
-	{
-		STF_SaveCounterData();
-		CT_SaveTimer = CONTROL_TimeCounter;
-	}
+	STF_SaveCounterDataTimed(CONTROL_TimeCounter);
 }
 // ----------------------------------------
 

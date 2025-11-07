@@ -17,8 +17,6 @@
 #define COMMUTATION4_TABLE_SIZE		(COMMUTATION4_EXT_BOARDS * 16)
 #define COMMUTATION6_TABLE_SIZE		(COMMUTATION6_EXT_BOARDS * 16)
 
-#define CT_SAVE_TIMEOUT				1800000 // Значение в мс (30 мин)
-
 
 // Commutation type 2
 //
