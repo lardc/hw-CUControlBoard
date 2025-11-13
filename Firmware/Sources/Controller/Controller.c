@@ -371,7 +371,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 			if(CONTROL_State == DS_Enabled || CONTROL_State == DS_SafetyActive)
 			{
 				CONTROL_SafetyHWTrigger(TRUE);
-				if(DataTable[REG_COMM_NUM == 8])
+				if(DataTable[REG_COMM_NUM] == 8)
 					ZbGPIO_LightSafetyResolveAct(FALSE);
 				CONTROL_SetDeviceState(DS_SafetyActive);
 			}
@@ -388,7 +388,7 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 				CONTROL_SafetyHWTrigger(FALSE);
 				if(!DataTable[REG_SAFETY_HW_MODE])
 					ZbGPIO_LightSafetySensorTrig(FALSE);
-				if(DataTable[REG_COMM_NUM == 8])
+				if(DataTable[REG_COMM_NUM] == 8)
 					ZbGPIO_LightSafetyResolveAct(TRUE);
 				CONTROL_SetDeviceState(DS_Enabled);
 			}
