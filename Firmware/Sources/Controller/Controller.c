@@ -503,24 +503,6 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 		case ACT_COMM2_4_BV_D:
 		case ACT_COMM2_4_BV_R:
 		case ACT_COMM2_4_NO_PE:
-			if(CONTROL_State == DS_Fault)
-				*pUserError = ERR_OPERATION_BLOCKED;
-			else if(CONTROL_State == DS_None)
-				*pUserError = ERR_DEVICE_NOT_READY;
-			else
-			{
-				if (DataTable[REG_COMM_NUM] == 8)
-					ZbGPIO_PowerSafetyRelay(TRUE);
-				if (CONTROL_State == DS_SafetyTrig)
-				{
-					CONTROL_CommutateNone();
-					ZbGPIO_LightSafetySensorTrig(FALSE);
-					if (DataTable[REG_COMM_NUM] == 8)
-						ZbGPIO_LightSafetyResolveAct(FALSE);
-					CONTROL_SetDeviceState(DS_SafetyActive);
-				}
-			}
-			break;
 		case ACT_COMM2_4_GATE_SL:
 		case ACT_COMM2_4_VGNT:
 		case ACT_COMM2_4_TOU:
@@ -536,10 +518,14 @@ static Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U pUserError)
 					*pUserError = ERR_DEVICE_NOT_READY;
 				else
 				{
-					if(CONTROL_State == DS_SafetyTrig)
+					if (DataTable[REG_COMM_NUM] == 8)
+						ZbGPIO_PowerSafetyRelay(TRUE);
+					if (CONTROL_State == DS_SafetyTrig)
 					{
 						CONTROL_CommutateNone();
 						ZbGPIO_LightSafetySensorTrig(FALSE);
+						if (DataTable[REG_COMM_NUM] == 8)
+							ZbGPIO_LightSafetyResolveAct(FALSE);
 						CONTROL_SetDeviceState(DS_SafetyActive);
 					}
 					else if(CurrentCommMode == CM_CUHV2)
