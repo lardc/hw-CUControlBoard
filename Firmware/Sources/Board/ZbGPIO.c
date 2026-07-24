@@ -128,13 +128,13 @@ void ZbGPIO_LightSafetySensorTrig(Boolean Enabled)
 
 void ZbGPIO_LightSafetyResolveAct(Boolean Enabled)
 {
-	ZwGPIO_WritePin(MOSFET_M1, Enabled);
+	ZwGPIO_WritePin(MOSFET_M2, Enabled);
 }
 // ----------------------------------------
 
 void ZbGPIO_PowerSafetyRelay(Boolean State)
 {
-	ZwGPIO_WritePin(MOSFET_M2, State);
+	ZwGPIO_WritePin(MOSFET_M1, State);
 }
 // ----------------------------------------
 

@@ -32,6 +32,7 @@ void COMM_Init()
 {
 	switch(DataTable[REG_COMM_NUM])
 	{
+		case 8:
 		case 0:
 		case 2:
 			CurrentCommMode = CM_CUHV2;
