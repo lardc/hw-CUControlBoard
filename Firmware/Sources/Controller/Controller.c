@@ -147,29 +147,43 @@ void CONTROL_UpdateLow()
 {
 	static Int16U SafetyHysteresis = 0;
 	static Int64U IgnoreSafetyTimeout = 0;
+	static Boolean SafetyHwInitialized = FALSE;
 
 	// Аппаратный режим работы контура безопасности без возможности отключения
 	if(DataTable[REG_SAFETY_HW_MODE])
 	{
 		CONTROL_SelectSafetyConfiguration();
 
-		// Гистерезис на срабатывание датчика
-		if(ZbGPIO_GetSafetyState(FALSE))
-			SafetyHysteresis = DataTable[REG_SAFETY_RELAY_HYST_ALT] ?
-					DataTable[REG_SAFETY_RELAY_HYST_ALT] : SAFETY_RELEASE_TIMEOUT;
-		else if(SafetyHysteresis)
-			SafetyHysteresis--;
-
-		// Обработка события
-		// Срабатывания контура
-		if(SafetyHysteresis)
+		if(!SafetyHwInitialized)
 		{
-			if(SafetyState != SS_Trigged)
-				CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
+			ZbGPIO_SafetyRelay(TRUE);
+			ZbGPIO_LightSafetySensorTrig(FALSE);
+			SafetyState = SS_Good;
+			SafetyHysteresis = 0;
+			IgnoreSafetyTimeout = CONTROL_TimeCounter + IGNORE_ON_SFTY_CHANGE_MS;
+			SafetyHwInitialized = TRUE;
 		}
-		// Снятия срабатывания контура
-		else if(SafetyState != SS_Good && CONTROL_State != DS_SafetyTrig && CONTROL_State != DS_Fault)
-			CONTROL_RequestDPC(&CONTROL_SafetyGood);
+
+		if(CONTROL_TimeCounter > IgnoreSafetyTimeout)
+		{
+			// Гистерезис на срабатывание датчика
+			if(ZbGPIO_GetSafetyState(FALSE))
+				SafetyHysteresis = DataTable[REG_SAFETY_RELAY_HYST_ALT] ?
+						DataTable[REG_SAFETY_RELAY_HYST_ALT] : SAFETY_RELEASE_TIMEOUT;
+			else if(SafetyHysteresis)
+				SafetyHysteresis--;
+
+			// Обработка события
+			// Срабатывания контура
+			if(SafetyHysteresis)
+			{
+				if(SafetyState != SS_Trigged)
+					CONTROL_RequestDPC(&CONTROL_SafetyCircuitTrigger);
+			}
+			// Снятия срабатывания контура
+			else if(SafetyState != SS_Good && CONTROL_State != DS_SafetyTrig && CONTROL_State != DS_Fault)
+				CONTROL_RequestDPC(&CONTROL_SafetyGood);
+		}
 	}
 
 	// Режим работы контура безопасности с возможностью отключения
